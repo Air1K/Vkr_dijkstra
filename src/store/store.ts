@@ -102,7 +102,6 @@ export default class Store {
          }
 
     }
-
     async matrixSmejUsel(G1, G2, ves){
         let a, b;
 
@@ -128,14 +127,87 @@ export default class Store {
         }
 
 
-
-        matrixSmej[a][b] = ves;
-        matrixSmej[b][a] = ves;
+        var _ves: number = +ves
+        matrixSmej[a][b] = _ves;
+        matrixSmej[b][a] = _ves;
         this.setMatrix(matrixSmej)
         console.log(this.matrixsmesh);
         let json = JSON.stringify(this.matrixsmesh);
         sessionStorage.setItem("matrixSmej", json);
     }
 
+    search(A1, A2){
+        let mass: (boolean | number) [][] = []
+        let a, b;
+        let PutNaiden = false;
+
+
+        //ПОИСК ID A1 и A2
+        for(let i = 0; i < this.idGraph.length; i++){
+            if(this.idGraph[i].num == A1){
+                a = i;
+            }
+            if(this.idGraph[i].num == A2){
+                b = i;
+            }
+        }
+
+        let search_flag = a;
+
+        //Заполнение массива для расчетов
+        for(let i = 0; i < this.idGraph.length; i++){
+            console.log("AA__!!!!")
+            if(i === a){
+                mass.push([0, null, true])
+                i++;
+                console.log(a, b)
+            }else {
+                mass.push([999999, null, false])
+                console.log(a, b)
+            }
+
+        }
+        console.log(mass)
+        console.log(this.matrixsmesh)
+        //Поиск наименьших значений
+        while (!PutNaiden){
+            if(!PutNaiden){
+                for(let j = 0; j < this.idGraph.length; j++){
+                    console.log("Ш1");
+                    if(mass[j][0] > this.matrixsmesh[search_flag][j] + mass[search_flag][0] && this.matrixsmesh[search_flag][j]!=0 && !mass[j][2]){
+                        console.log("Ш2");
+                        mass[j][0] = this.matrixsmesh[search_flag][j] + mass[search_flag][0];
+                        console.log(this.matrixsmesh[search_flag][j],"---------", mass[search_flag][0])
+                        mass[j][1] = search_flag;
+                    }
+                    if(j === this.idGraph.length -1 ){
+                        const min_el = this.minEl(mass)
+                        mass[min_el][2] = true;
+                        search_flag = min_el;
+                        if(min_el == b){
+                            PutNaiden = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        console.log(mass)
+    }
+
+    // Поиск наименьшего значения
+    minEl(mass: (boolean | number) [][]){
+        var min: number | boolean = 999999999
+        var X = 0
+        for (let i = 0; i < this.idGraph.length; i++){
+            console.log("____________" + mass[i][0])
+            if(mass[i][0] < min && !mass[i][2] ){
+                min = mass[i][0]
+                X = i;
+            }
+        }
+        console.log(min, X)
+        return X
+    }
 
 }

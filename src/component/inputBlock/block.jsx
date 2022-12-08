@@ -7,7 +7,7 @@ const Block = () => {
 
     async function addGraph(x, y, num){
         await store.addGraph(x, y, num)
-        await console.log(store.idGraph[6].num)
+        // await console.log(store.idGraph[6].num)
         await store.matrixSme()
     }
 

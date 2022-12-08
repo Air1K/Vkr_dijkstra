@@ -2,7 +2,6 @@ import {Graph} from "../models/Graph";
 import {makeAutoObservable} from "mobx";
 import {IdGraph} from "../models/IdFraph";
 import {Session} from "inspector";
-
 // let arr: Graph[] = [];
 
 
@@ -15,6 +14,7 @@ export default class Store {
     isLoading = false;
     arr: Graph[] = [];
     matrixsmesh = [];
+    mass_putei = [];
     constructor() {
         makeAutoObservable(this);
     }
@@ -34,6 +34,11 @@ export default class Store {
     // setIGraph(arr: Graph[]) {
     //     this.arr.push(arr);
     // }
+
+    setMass_putei(mass_putei: (boolean | number)[][]) {
+        this.mass_putei = mass_putei;
+    }
+
     setMessages(message: string) {
         this.messages = message;
     }
@@ -52,6 +57,29 @@ export default class Store {
             const mass_smej = JSON.parse(sessionStorage.getItem("matrixSmej"))
             this.setMatrix(mass_smej)
         }
+    }
+
+    updatepro(){
+
+    }
+
+    addMatrixEl(){
+        const matrixSmej = this.matrixsmesh
+
+        let i = this.matrixsmesh.length;
+            matrixSmej[i] = []
+            for(let j = 0; j<this.idGraph.length; j++){
+                if(i == j){
+                    matrixSmej[i][j] = 0
+                }else {
+                    matrixSmej[i][j] = 99999
+                    matrixSmej[j][i] = 99999
+                }
+            }
+
+        this.setMatrix(matrixSmej);
+        let json = JSON.stringify(this.matrixsmesh);
+        sessionStorage.setItem("matrixSmej", json);
     }
 
     addGraph(OX: number, OY: number, num: number) {
@@ -73,7 +101,7 @@ export default class Store {
 
             let json = JSON.stringify(this.idGraph);
             sessionStorage.setItem("graph", json);
-
+            this.addMatrixEl();
         } catch (e) {
             console.log("!!!!!!!!!!!");
 
@@ -92,7 +120,7 @@ export default class Store {
                      if(i == j){
                          matrixSmej[i][j] = 0
                      }else {
-                         matrixSmej[i][j] = 999999999
+                         matrixSmej[i][j] = 99999
                      }
                  }
              }
@@ -153,40 +181,47 @@ export default class Store {
         }
 
         let search_flag = a;
+        let mass_arr = []
 
         //Заполнение массива для расчетов
         for(let i = 0; i < this.idGraph.length; i++){
-            console.log("AA__!!!!")
+
             if(i === a){
                 mass.push([0, null, true])
-                i++;
-                console.log(a, b)
+
             }else {
-                mass.push([999999, null, false])
-                console.log(a, b)
+                mass.push([9999, null, false])
+
+
             }
 
         }
         console.log(mass)
         console.log(this.matrixsmesh)
         //Поиск наименьших значений
+
+        let index_el = 0;
         while (!PutNaiden){
             if(!PutNaiden){
                 for(let j = 0; j < this.idGraph.length; j++){
-                    console.log("Ш1");
-                    if(mass[j][0] > this.matrixsmesh[search_flag][j] + mass[search_flag][0] && this.matrixsmesh[search_flag][j]!=0 && !mass[j][2]){
-                        console.log("Ш2");
+
+                    if(mass[j][0] >= this.matrixsmesh[search_flag][j] + mass[search_flag][0] && this.matrixsmesh[search_flag][j]!=0 && !mass[j][2]){
+
                         mass[j][0] = this.matrixsmesh[search_flag][j] + mass[search_flag][0];
-                        console.log(this.matrixsmesh[search_flag][j],"---------", mass[search_flag][0])
                         mass[j][1] = search_flag;
+
                     }
                     if(j === this.idGraph.length -1 ){
                         const min_el = this.minEl(mass)
                         mass[min_el][2] = true;
                         search_flag = min_el;
+
+
                         if(min_el == b){
+
+                            console.log(mass_arr);
+                            // this.setMass_putei(mass_arr);
                             PutNaiden = true;
-                            break;
                         }
                     }
                 }
@@ -197,16 +232,21 @@ export default class Store {
 
     // Поиск наименьшего значения
     minEl(mass: (boolean | number) [][]){
+
         var min: number | boolean = 999999999
         var X = 0
+        if(mass[3][0] == 24){
+            console.log("AAAAAAAAAAAAAAAA")
+        }
+        this.setMass_putei(mass);
+        console.log(mass[3][0]);
         for (let i = 0; i < this.idGraph.length; i++){
-            console.log("____________" + mass[i][0])
             if(mass[i][0] < min && !mass[i][2] ){
                 min = mass[i][0]
                 X = i;
             }
         }
-        console.log(min, X)
+        console.log(this.mass_putei);
         return X
     }
 

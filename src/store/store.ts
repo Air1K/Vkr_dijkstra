@@ -9,12 +9,15 @@ import {Session} from "inspector";
 export default class Store {
     idGraph = [{} as Graph];
     //
+    a = null;
+    b = null;
     isAuth = false;
     messages = '';
     isLoading = false;
     arr: Graph[] = [];
     matrixsmesh = [];
     mass_putei = [];
+    mass_putei_exit = [];
     constructor() {
         makeAutoObservable(this);
     }
@@ -31,6 +34,12 @@ export default class Store {
         this.matrixsmesh = matrixsmesh;
     }
 
+    setA(a: number){
+        this.a = a;
+    }
+    setB(b: number){
+        this.b = b;
+    }
     // setIGraph(arr: Graph[]) {
     //     this.arr.push(arr);
     // }
@@ -39,6 +48,9 @@ export default class Store {
         this.mass_putei = mass_putei;
     }
 
+    setMass_putei_exit(setMass_putei_exit){
+        this.mass_putei_exit = setMass_putei_exit;
+    }
     setMessages(message: string) {
         this.messages = message;
     }
@@ -222,6 +234,22 @@ export default class Store {
                             console.log(mass_arr);
                             // this.setMass_putei(mass_arr);
                             PutNaiden = true;
+                            if(PutNaiden){
+                                let i = b;
+                                let search: (number | boolean) = mass[b][1];
+                                let arr_mass_exit = [b];
+
+                                while(arr_mass_exit[arr_mass_exit.length-1] !== 0) {
+                                    arr_mass_exit.push(search);
+
+                                    const ass =  Number(search)
+                                    search = Number(mass[ass][1]);
+                                }
+                                this.setMass_putei_exit(arr_mass_exit.reverse())
+
+                                this.setA(a);
+                                this.setB(b);
+                            }
                         }
                     }
                 }
@@ -246,6 +274,7 @@ export default class Store {
                 X = i;
             }
         }
+
         console.log(this.mass_putei);
         return X
     }

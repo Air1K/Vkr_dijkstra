@@ -4,7 +4,6 @@ import {Context} from "../../index";
 import styles from './styleArea.module.sass'
 
 const Area = () => {
-    const [massMatrix, setMassMatrix] = useState([])
     const {store} = useContext(Context);
     console.log(store.idGraph)
     let length_mass_graph = 0;
@@ -13,12 +12,24 @@ const Area = () => {
     }
     console.log(store.matrixsmesh)
 
-    function sliv(index_){
 
-        for(let i = 0; i < store.matrixsmesh.length; i++){
-
+    const Strelka = (props) => {
+        const index_ = props.ellement;
+        console.log(index_, store.mass_putei_exit.length-1)
+        if(index_ < store.mass_putei_exit.length-1) {
+            return (<div>➜</div>)
         }
+        return null;
+    }
 
+    const Otvet = () => {
+
+
+        if(store.b != null) {
+            console.log(store.mass_putei_exit)
+            return (<div> = &nbsp; {store.mass_putei[store.b][0]}</div>)
+        }
+        return null;
     }
 
     return (
@@ -48,6 +59,12 @@ const Area = () => {
 
 
                     </table>
+                    <div className={styles.puti}>
+                        Оптимальный маршрут:  &nbsp; {(store.mass_putei_exit.map((node_, indexe) => <div className={styles.puti} key={node_}> {store.idGraph[node_].num}&nbsp; <Strelka ellement={indexe} /> &nbsp;</div> ))
+                    }
+                    <Otvet/>
+                    </div>
+
                 </div>
             </div>
         </div>

@@ -3,12 +3,12 @@ import {makeAutoObservable} from "mobx";
 import {IdGraph} from "../models/IdFraph";
 import {Session} from "inspector";
 // let arr: Graph[] = [];
-
+import {IUser} from "../models/IUser";
 
 
 export default class Store {
     idGraph = [{} as Graph];
-    //
+    user = {} as IUser
     a = null;
     b = null;
     isAuth = false;
@@ -32,6 +32,10 @@ export default class Store {
 
     setMatrix(matrixsmesh: number[][]) {
         this.matrixsmesh = matrixsmesh;
+    }
+
+    setUser(user: IUser) {
+        this.user = user;
     }
 
     setA(a: number){
@@ -73,6 +77,28 @@ export default class Store {
 
     updatepro(){
 
+    }
+
+    async login(email: string, password: string) {
+        try {
+            const obj = {
+                email: email,
+                id: 'default',
+                username: 'default',
+                name: 'default',
+                role: 'storekeeper'
+            }
+            // const response = await AuthService.login(email, password);
+            // console.log(response);
+            // localStorage.setItem('token', response.data.accessToken);
+            this.setAuth(true);
+            this.setUser(obj);
+
+
+        } catch (e) {
+            console.log(e.response?.data?.message);
+            this.setMessages(e.response?.data?.message);
+        }
     }
 
     addMatrixEl(){

@@ -5,12 +5,16 @@
     "module": "es6",
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "jsx": "preserve",
+    "removeComments": false,
+    "jsx": "react",
     "allowJs": false,
     "moduleResolution": "node",
     "lib": [
       "dom",
       "es7"
+    ],
+    "include": [
+      "src"
     ]
   }
 }

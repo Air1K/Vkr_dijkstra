@@ -1,9 +1,10 @@
 import React, {useContext, useEffect} from 'react';
 import styles from './style/main/style-main.module.sass'
-import Block from "./component/inputBlock/block";
-import Area from "./component/area/area";
-import Search from "./component/search/search";
+import Main from './component/main'
 import {Context} from "./index";
+import {BrowserRouter, Routes, Route,  Navigate} from "react-router-dom";
+import Authorization from "./component/autorization/autorization";
+import VvodPlana from "./component/vvodPlana";
 
 function App() {
     const {store} = useContext(Context);
@@ -12,9 +13,14 @@ function App() {
     })
     return (
         <div className={styles.app}>
-            <Search/>
-            <Area/>
-            <Block/>
+
+            <BrowserRouter>
+                <Routes>
+                    <Route path="authorization" element={<Authorization/>}/>
+                    <Route path="main" element={<Main/>}/>
+                    <Route path="main/plan" element={<VvodPlana/>}/>
+                </Routes>
+            </BrowserRouter>
         </div>
     );
 }

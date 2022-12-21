@@ -1,7 +1,10 @@
+
 import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../index";
 import {Link, Navigate} from "react-router-dom";
 import './main_style.sass'
+import Fon from '../img/uborka-sklada-form2.jpg'
+import styles from './stylesMain_2.module.sass'
 const Main = () => {
     const {store} = useContext(Context);
     const [auth, setAuth] = useState(store.isAuth)
@@ -41,16 +44,18 @@ const Main = () => {
     }
 
     return (
-        <div>
-            <h2>Главное окно АС"Складская логистика"</h2>
-            {auth ? (
-                <RoleFunck/>
-            ) : (
-                <div>
-                    <Navigate to={'/authorization'} />
-                </div>
-            )}
-
+        <div className={styles.main}>
+            <img className={styles.img} src={Fon} alt=""/>
+            <div className={styles.fon}>
+                <h2 style={{textAlign:"center"}}>Главное окно АС"Складская логистика"</h2>
+                {auth ? (
+                    <RoleFunck/>
+                ) : (
+                    <div>
+                        <Navigate to={'/authorization'} />
+                    </div>
+                )}
+            </div>
 
         </div>
     );

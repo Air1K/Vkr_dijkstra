@@ -8,6 +8,7 @@ const NewComponentMain = () => {
         <div>
             {store.isAuth ? (<Navigate to={'/main'} />):(<Navigate to={'/authorization'} />)}
         </div>
+
     );
 };
 

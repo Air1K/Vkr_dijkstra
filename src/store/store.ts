@@ -170,6 +170,43 @@ export default class Store {
     }
     async matrixSmejUsel(G1, G2, ves){
         let a, b;
+        let ass = true;
+        let ass2 = true;
+        if(!this.idGraph[0]?.num){
+            alert("Массив точек пуст");
+            return
+        }
+
+        for(let i = 0; i < this.idGraph?.length; i++){
+
+            console.log(this.idGraph[i]?.num, "--", G1, "--", G2)
+            if(this.idGraph[i]?.num === (G1)){
+                ass = false
+            }
+            if(this.idGraph[i]?.num === (G2)){
+                ass2 = false
+            }
+        }
+
+        if(ass){
+            alert("Введено имя не существующего узла 1");
+            return
+        }
+        if(ass2){
+            alert("Введено имя не существующего узла 2");
+            return
+        }
+
+        console.log(ves)
+        if(!ves) {
+            alert("Введено некорректное значение");
+            return
+        }
+
+        if(ves < 0) {
+            alert("Введено некорректное значение");
+            return
+        }
 
         if(this.idGraph.length!=this.matrixsmesh.length){
             await this.matrixSme();
@@ -289,11 +326,11 @@ export default class Store {
 
         var min: number | boolean = 999999999
         var X = 0
-        if(mass[3][0] == 24){
-            console.log("AAAAAAAAAAAAAAAA")
-        }
+        // if(mass[3][0] == 24){
+        //     console.log("AAAAAAAAAAAAAAAA")
+        // }
         this.setMass_putei(mass);
-        console.log(mass[3][0]);
+        // console.log(mass[3][0]);
         for (let i = 0; i < this.idGraph.length; i++){
             if(mass[i][0] < min && !mass[i][2] ){
                 min = mass[i][0]

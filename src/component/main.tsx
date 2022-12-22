@@ -5,6 +5,8 @@ import {Link, Navigate} from "react-router-dom";
 import './main_style.sass'
 import Fon from '../img/uborka-sklada-form2.jpg'
 import styles from './stylesMain_2.module.sass'
+import Otchet from "./otchet/otchet";
+
 const Main = () => {
     const {store} = useContext(Context);
     const [auth, setAuth] = useState(store.isAuth)
@@ -20,8 +22,8 @@ const Main = () => {
             return (<div>
                 <ul className="snip1143">
                     <li><Link to ="plan" data-hover="Сформировать план склада">Ввод плана склада</Link></li>
-                    <li><Link to ="#" data-hover="Найти оптимальный маршрут">Поиск оптимального маршрута</Link></li>
-                    <li><Link to ="#" data-hover="Сформировать отчет">Формирование отчета</Link></li>
+                    <li><Link to ="search" data-hover="Найти оптимальный маршрут">Поиск оптимального маршрута</Link></li>
+                    <li><Link to ="otchet" data-hover="Сформировать отчет">Формирование отчета</Link></li>
                     <li><Link to ="#" data-hover="Exit">Выйти из системы</Link></li>
                 </ul>
                 {/*<a href="#">Ввод плана склада</a>*/}
@@ -56,7 +58,6 @@ const Main = () => {
                     </div>
                 )}
             </div>
-
         </div>
     );
 };

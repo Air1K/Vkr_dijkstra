@@ -6,6 +6,9 @@ import {BrowserRouter, Routes, Route,  Navigate} from "react-router-dom";
 import Authorization from "./component/autorization/autorization";
 import VvodPlana from "./component/vvodPlana";
 import NewComponentMain from "./component/newComponentMain";
+import Search from "./component/search/search";
+import Otchet from "./component/otchet/otchet";
+import './style/style.sass'
 
 function App() {
     const {store} = useContext(Context);
@@ -19,10 +22,11 @@ function App() {
                     <Route path="" element={<NewComponentMain/>}/>
                     <Route path="authorization" element={<Authorization/>}/>
                     <Route path="main" element={<Main/>}/>
+                    <Route path="main/search" element={<Search/>}/>
                     <Route path="main/plan" element={<VvodPlana/>}/>
+                    <Route path="main/otchet" element={<Otchet/>}/>
                 </Routes>
             </BrowserRouter>
-
         </div>
     );
 }

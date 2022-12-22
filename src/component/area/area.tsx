@@ -13,24 +13,9 @@ const Area = () => {
     console.log(store.matrixsmesh)
 
 
-    const Strelka = (props) => {
-        const index_ = props.ellement;
-        console.log(index_, store.mass_putei_exit.length-1)
-        if(index_ < store.mass_putei_exit.length-1) {
-            return (<div>➜</div>)
-        }
-        return null;
-    }
-
-    const Otvet = () => {
 
 
-        if(store.b != null) {
-            console.log(store.mass_putei_exit)
-            return (<div> = &nbsp; {store.mass_putei[store.b][0]}</div>)
-        }
-        return null;
-    }
+
 
     return (
         <div className={styles.midle}>
@@ -59,11 +44,7 @@ const Area = () => {
 
 
                     </table>
-                    <div className={styles.puti}>
-                        Оптимальный маршрут:  &nbsp; {(store.mass_putei_exit.map((node_, indexe) => <div className={styles.puti} key={node_}> {store.idGraph[node_].num}&nbsp; <Strelka ellement={indexe} /> &nbsp;</div> ))
-                    }
-                    <Otvet/>
-                    </div>
+
 
                 </div>
             </div>

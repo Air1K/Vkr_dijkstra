@@ -302,7 +302,7 @@ export default class Store {
                                 let search: (number | boolean) = mass[b][1];
                                 let arr_mass_exit = [b];
 
-                                while(arr_mass_exit[arr_mass_exit.length-1] !== 0) {
+                                while(arr_mass_exit[arr_mass_exit.length-1] !== a) {
                                     arr_mass_exit.push(search);
 
                                     const ass =  Number(search)

@@ -20,6 +20,8 @@ const InputTochek = () => {
                     {/*<input type="text" placeholder="Введите"/>*/}
                     {/*<input type="text" />*/}
                     {/* <input type="number" placeholder='Номер узла' /> */}
+                    <br/>
+                    Название узла:
                     <input type="text" placeholder="Название узла" value={name_usel} onChange={event => setNameUsel(event.target.value)} />
                     <button onClick={()=>{addGraph(1, 2, name_usel)}}>Добавить узел</button>
                 </div>

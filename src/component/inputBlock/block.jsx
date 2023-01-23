@@ -32,16 +32,22 @@ const Block = () => {
                 <h6>
                     Создание зон склада
                 </h6>
+                Название зоны:
                 <input type="text" value={nameS} onChange = {(e)=>{setNameS(e.target.value)}} placeholder='Название' />
+                Краткое название зоны (необязательно):
                 <input type="text" placeholder='Краткое название (необязательно)' />
+                Введите первый узел:
                 <input type="text" value={G1} onChange={event => setG1(event.target.value)} placeholder="Введите первый узел"/>
+                Введите второй узел:
                 <input type="text" value={G2} onChange={event => setG2(event.target.value)} placeholder="Введите второй узел"/>
+                Введите расстояние между узлами:
                 <input type="number" value={ves} onChange={event => setVes(event.target.value)} placeholder="Введите расстояние между узлами"/>
                 Ед. измерения
                 <select value="Ед. измерения" style={{display: 'flex'}}>
+                    <option>м.</option>
                     <option>мм.</option>
                     <option>см.</option>
-                    <option>м.</option>
+                    <option>дм.</option>
                 </select>
                 Вид зоны
                 <select style={{display: 'flex'}}>

@@ -14,9 +14,9 @@ const Otchet = () => {
             </div>
             <div className={styles_1.table}>
                 <table>
-                    <tr style={{display: "table-row"}}>
+                    <thead style={{display: "table-row"}}>
                         <th style={{textAlign:'center'}}>Оптимальный маршрут</th>
-                    </tr>
+                    </thead>
                     <tr style={{display: "table"}}>
                         <th>Название маршрута</th>
                         <th>Номер маршрута</th>

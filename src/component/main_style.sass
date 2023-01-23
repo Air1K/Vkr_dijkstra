@@ -1,56 +1,60 @@
 
-  .snip1143
-    font-family: 'Raleway', Arial, sans-serif
-    text-align: center
-    text-transform: uppercase
-    font-weight: 500
+nav.primary-navigation
+  margin: 0 auto
+  display: block
+  text-align: center
+  background-color: rgba(197, 197, 197, 0.78)
+  font-size: 16px
+  width: 90%
 
-  .snip1143 *
-    box-sizing: border-box
-    -webkit-transition: all 0.35s ease
-    transition: all 0.35s ease
+nav.primary-navigation ul li
+  list-style: none
+  margin: 0 auto
+  border-left: 2px solid #3ca0e7
+  display: inline-block
+  padding: 0 15px
+  position: relative
+  text-decoration: none
+  text-align: center
+  font-family: arvo
 
-  .snip1143 li
-    display: inline-block
-    list-style: outside none none
-    margin: 0 1.5em
-    overflow: hidden
+nav.primary-navigation li a
+  color: black
 
-  .snip1143 a
-    padding: 0.3em 0
-    color: rgba(42, 42, 42, 0.62)
-    position: relative
-    display: inline-block
-    letter-spacing: 1px
-    margin: 0
-    text-decoration: none
+nav.primary-navigation li a:hover
+  color: #3ca0e7
 
-  .snip1143 a:before,
-  .snip1143 a:after
-    position: absolute
-    -webkit-transition: all 0.35s ease
-    transition: all 0.35s ease
+nav.primary-navigation li:hover
+  cursor: pointer
 
-  .snip1143 a:before
-    top: 100%
-    display: block
-    height: 3px
-    width: 100%
-    content: ""
-    background-color: #c0392b
+nav.primary-navigation ul li ul
+  visibility: hidden
+  opacity: 0
+  position: absolute
+  padding-left: 0
+  left: 0
+  display: none
+  background: white
 
-  .snip1143 a:after
-    padding: 0.3em 0
-    position: absolute
-    top: 100%
-    left: 0
-    content: attr(data-hover)
-    color: rgb(42, 42, 42)
-    white-space: nowrap
+nav.primary-navigation ul li:hover > ul,
+nav.primary-navigation ul li ul:hover
+  visibility: visible
+  opacity: 1
+  display: block
+  min-width: 250px
+  text-align: left
+  padding-top: 20px
+  box-shadow: 0px 3px 5px -1px #ccc
 
-  .snip1143 li:hover a,
-  .snip1143 .current a
-    transform: translateY(-100%)
+nav.primary-navigation ul li ul li
+  clear: both
+  width: 100%
+  text-align: left
+  margin-bottom: 20px
+  border-style: none
 
-
+nav.primary-navigation ul li ul li a:hover
+  padding-left: 10px
+  border-left: 2px solid #3ca0e7
+  transition: all 0.3s ease
 

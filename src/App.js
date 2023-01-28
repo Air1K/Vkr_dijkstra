@@ -9,6 +9,7 @@ import NewComponentMain from "./component/newComponentMain";
 import Search from "./component/search/search";
 import Otchet from "./component/otchet/otchet";
 import './style/style.sass'
+import NewPlan from "./component/newPlan/newPlan";
 
 function App() {
     const {store} = useContext(Context);

@@ -5,9 +5,12 @@ import './main_style.sass'
 import Fon from '../img/uborka-sklada-form2.jpg'
 import styles from './stylesMain_2.module.sass'
 import Otchet from "./otchet/otchet";
+import NewPlan from "./newPlan/newPlan";
+import BlokNewPlan from "./newPlan/blokNewPlan/blokNewPlan";
 
 const Main = () => {
     const {store} = useContext(Context);
+    const [visible, setVisible] = useState(false)
     const [auth, setAuth] = useState(store.isAuth)
     const [role, setRole] = useState('')
     useEffect(() => {
@@ -18,28 +21,39 @@ const Main = () => {
 
     const RoleFunck = () => {
         if (role === 'storekeeper') {
+
             return (<div className={styles.div_main}>
+
                 <nav role="navigation" className="primary-navigation">
+
                     <ul>
-                        <li><Link to="plan" data-hover="Сформировать план склада">План склада</Link>
+                        <li><a href="#" data-hover="Сформировать план склада">План склада</a>
                             <ul className="dropdown">
-                                <li><a href="#">Web Development</a></li>
-                                <li><a href="#">Web Design</a></li>
-                                <li><a href="#">Illustration</a></li>
-                                <li><a href="#">Iconography</a></li>
+                                <li><a href="#" onClick={() => {
+                                    setVisible(true)
+                                }}>Создать план</a></li>
+                                <li><Link to="plan">Создать точки и зоны</Link></li>
+                                <li><a href="#">Добавить тип зоны</a></li>
+                                <li><a href="#">Единицы измерения</a></li>
+                                <li><a href="#">Отобразить план</a></li>
                             </ul>
                         </li>
                         <li><Link to="search" data-hover="Найти оптимальный маршрут">Оптимальный маршрут</Link></li>
                         <li><Link to="otchet" data-hover="Сформировать отчет">Формирование отчета</Link></li>
                         <li><Link to="#" data-hover="Exit">Выйти из системы</Link></li>
-                        <li style={{height:"64px"}} className={styles.div_li}><div className={'input-field '} style={{ display: "flex", alignItems: "center"}}>
-                            <select className="browser-default" style={{backgroundColor:"rgb(255 255 255 / 0%)", border: '1px solid #f2f2f200'}}>
-                                <option value="" disabled selected>Выбрать план склада</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
-                            </select>
-                        </div></li>
+                        <li style={{height: "64px"}} className={styles.div_li}>
+                            <div className={'input-field '} style={{display: "flex", alignItems: "center"}}>
+                                <select className="browser-default" style={{
+                                    backgroundColor: "rgb(255 255 255 / 0%)",
+                                    border: '1px solid #f2f2f200'
+                                }}>
+                                    <option value="" disabled selected>Выбрать план склада</option>
+                                    <option value="1">Option 1</option>
+                                    <option value="2">Option 2</option>
+                                    <option value="3">Option 3</option>
+                                </select>
+                            </div>
+                        </li>
                     </ul>
 
                 </nav>
@@ -67,6 +81,9 @@ const Main = () => {
 
     return (
         <div className={styles.main}>
+            <NewPlan visible={visible} setVisible={setVisible}>
+                <BlokNewPlan setVisible={setVisible}/>
+            </NewPlan>
             <img className={styles.img} src={Fon} alt=""/>
             <div className={styles.fon}>
                 <h2 style={{textAlign: "center", margin: 0}}>Главное окно АС"Складская логистика"</h2>

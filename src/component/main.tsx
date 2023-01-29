@@ -5,12 +5,14 @@ import './main_style.sass'
 import Fon from '../img/uborka-sklada-form2.jpg'
 import styles from './stylesMain_2.module.sass'
 import Otchet from "./otchet/otchet";
-import NewPlan from "./newPlan/newPlan";
-import BlokNewPlan from "./newPlan/blokNewPlan/blokNewPlan";
+import MyModal from "./meny/myModal/myModal";
+import BlokNewPlan from "./meny/plan/blokNewPlan/blokNewPlan";
+import NewZone from "./meny/plan/newZone/newZone";
 
 const Main = () => {
     const {store} = useContext(Context);
     const [visible, setVisible] = useState(false)
+    const [visibleZon, setVisibleZon] = useState(false)
     const [auth, setAuth] = useState(store.isAuth)
     const [role, setRole] = useState('')
     useEffect(() => {
@@ -33,7 +35,9 @@ const Main = () => {
                                     setVisible(true)
                                 }}>Создать план</a></li>
                                 <li><Link to="plan">Создать точки и зоны</Link></li>
-                                <li><a href="#">Добавить тип зоны</a></li>
+                                <li><a href="#" onClick={() => {
+                                    setVisibleZon(true)
+                                }}>Добавить тип зоны</a></li>
                                 <li><a href="#">Единицы измерения</a></li>
                                 <li><a href="#">Отобразить план</a></li>
                             </ul>
@@ -81,9 +85,12 @@ const Main = () => {
 
     return (
         <div className={styles.main}>
-            <NewPlan visible={visible} setVisible={setVisible}>
+            <MyModal visible={visible} setVisible={setVisible}>
                 <BlokNewPlan setVisible={setVisible}/>
-            </NewPlan>
+            </MyModal>
+            <MyModal visible={visibleZon} setVisible={setVisibleZon}>
+                <NewZone setVisible={setVisibleZon}/>
+            </MyModal>
             <img className={styles.img} src={Fon} alt=""/>
             <div className={styles.fon}>
                 <h2 style={{textAlign: "center", margin: 0}}>Главное окно АС"Складская логистика"</h2>

@@ -3,16 +3,22 @@ import BackIco from "../backIco";
 import InputTochek from "../inputBlock/inputTochek";
 import Area from "../area/area";
 import Block from "../inputBlock/block";
-
+import styles from './stylesNodeAndConnect.module.sass'
 
 
 const PlanMain = () => {
     return (
-        <div>
+        <div className={styles.mainNodeAndConnect}>
             <BackIco/>
-            <InputTochek/>
+            <div className={styles.componentNodeAndConnect}>
+                <InputTochek/>
+                <Block/>
+            </div>
+
+
+
             <Area/>
-            <Block/>
+
 
         </div>
     );

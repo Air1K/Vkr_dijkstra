@@ -1,10 +1,10 @@
 import React from 'react';
-import Area from "./area/area";
-import Block from "./inputBlock/block.jsx";
+import Area from "./meny/plan/nodeAndZon/area/area";
+import Block from "./meny/plan/nodeAndZon/inputBlock/block.jsx";
 import styles from './vvodPlanaStyle.module.sass'
-import InputTochek from "./inputBlock/inputTochek";
+import InputTochek from "./meny/plan/nodeAndZon/inputBlock/inputTochek";
 import BackIco from "./backIco";
-import PlanMain from "./main_plan/plan_main";
+import PlanMain from "./meny/plan/nodeAndZon/main_plan/plan_main";
 
 const VvodPlana = () => {
     return (

@@ -2,5 +2,6 @@ export interface Graph{
 
     X: number;
     Y: number;
-    num: number;
+    rotation: [];
+    num: string;
 }

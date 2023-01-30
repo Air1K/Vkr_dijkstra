@@ -64,6 +64,7 @@ export default class Store {
     }
 
 
+
     update(){
         if(sessionStorage.getItem("graph")){
             const mass = JSON.parse(sessionStorage.getItem("graph"))
@@ -146,7 +147,37 @@ export default class Store {
         }
         console.log(this.matrixsmesh.length)
     }
+    editGraph(id:number, OX: number, OY: number, num: string) {
+        try {
+            let obj = []
+            if(sessionStorage.getItem("graph")){
+                obj = this.idGraph
+            }
+            if(num !== ""){
+                obj[id].num = num
+            }
 
+            if(OX !== null){
+                obj[id].X = OX
+            }
+
+            if(OY !== null){
+                obj[id].Y = OY
+            }
+
+            // arr.push(obj)
+            this.setGraph(obj)
+            // this.setIGraph([obj])
+
+
+            let json = JSON.stringify(this.idGraph);
+            sessionStorage.setItem("graph", json);
+        } catch (e) {
+            console.log("!!!!!!!!!!!");
+
+        }
+        console.log(this.matrixsmesh.length)
+    }
 
      matrixSme(){
          if(this.matrixsmesh.length == 0){

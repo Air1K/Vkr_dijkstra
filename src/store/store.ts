@@ -26,6 +26,11 @@ export default class Store {
         this.isAuth = bool;
     }
 
+    setEditEl(id: number, X: number, Y: number){
+        this.idGraph[id].X = X;
+        this.idGraph[id].Y = Y;
+    }
+
     setGraph(idGraph: Graph[]) {
         this.idGraph = idGraph;
     }
@@ -147,29 +152,15 @@ export default class Store {
         }
         console.log(this.matrixsmesh.length)
     }
-    editGraph(id:number, OX: number, OY: number, num: string) {
+    editGraph(obj) {
         try {
-            let obj = []
-            if(sessionStorage.getItem("graph")){
-                obj = this.idGraph
-            }
-            if(num !== ""){
-                obj[id].num = num
-            }
-
-            if(OX !== null){
-                obj[id].X = OX
-            }
-
-            if(OY !== null){
-                obj[id].Y = OY
-            }
-
+            console.log(obj)
             // arr.push(obj)
-            this.setGraph(obj)
+
+            for(let i = 0; i< obj.length; i++){
+                this.setEditEl(obj[i].id, obj[i].X, obj[i].Y)
+            }
             // this.setIGraph([obj])
-
-
             let json = JSON.stringify(this.idGraph);
             sessionStorage.setItem("graph", json);
         } catch (e) {

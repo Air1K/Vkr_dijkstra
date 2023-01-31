@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import styles from "./stylesBlock.module.sass";
 import {Context} from "../../../../../index";
 
-const InputTochek = () => {
+const InputTochek = ({editNodeS, setEditNodeS}) => {
     const {store} = useContext(Context);
 
     const [lengthidGraph, setLengthidGraph] = useState(store.idGraph.length)
@@ -36,7 +36,7 @@ const InputTochek = () => {
                     <br/>
                     Название узла:
                     <input type="text" placeholder="Название узла" value={name_usel} onChange={event => setNameUsel(event.target.value)} />
-                    <button onClick={async ()=>{await addGraph(await group(), 5, name_usel)}}>Добавить узел</button>
+                    <button onClick={async ()=>{await addGraph(await group(), 5, name_usel); setEditNodeS(true)}}>Добавить узел</button>
                 </div>
             </div>
         </div>

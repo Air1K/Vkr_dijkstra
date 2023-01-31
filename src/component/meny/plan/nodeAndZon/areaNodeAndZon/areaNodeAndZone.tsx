@@ -1,100 +1,124 @@
-import React, {createRef, useContext, useEffect, useRef, useState} from 'react';
+import React, {createRef, useContext, useEffect, useMemo, useRef, useState} from 'react';
 import styles from './styleAreaAndZone.module.sass'
 import {motion, useDragControls} from "framer-motion"
 import {Context} from "../../../../../index";
+import {createUseStyles} from "react-jss";
+import AreaMotion from "./areaMotion/areaMotion";
 
-
-const AreaNodeAndZone = () => {
+const AreaNodeAndZone = ({editNodeS, setEditNodeS}) => {
     const {store} = useContext(Context);
 
-    const controls = useDragControls()
+
     const parentRef = useRef<HTMLDivElement>(null)
 
-    const [obj, setObj] = useState(store.idGraph);
+    // const [obj, setObj] = useState(store.idGraph);
+    //
+    // const [height, setHeight] = useState<number>();
+    // const [width, setWidth] = useState<number>();
+    // const [xParent, setXParent] = useState<number>();
+    // const [yParent, setYParent] = useState<number>();
+    // let parent
+    // let parentElement
+    const [checkDrag, setCheckDrag] = useState(false)
 
-    const [height, setHeight] = useState<number>();
-    const [width, setWidth] = useState<number>();
-    const [xParent, setXParent] = useState<number>();
-    const [yParent, setYParent] = useState<number>();
-    let parent
-    useEffect(() => {
-        parent = parentRef.current.getBoundingClientRect();
-        const height = parent.height - 37;
-        const width = parent.width - 37;
-        setYParent(parentRef.current.offsetTop)
-        setXParent(parentRef.current.offsetLeft)
-        console.log(xParent)
-        setHeight(height);
-        setWidth(width)
-        console.log(height, "height", " /// ", width, "width",);
-    }, [parentRef]);
+    const [nameVisible, setNameVisible] = useState(true)
+
+    const [classeStyles, setClasseStyles] = useState({})
+    const bool = true
+
+    const [otrisovka, setOtrisovka] = useState(false)
+
     // useEffect(()=>{
     //     if()
     // },[controls])
-
-
-
-    const schetc = (id) => {
-        let otstup = id * 25 + 5
-        return otstup
+    let obj = []
+    for (let j = 0; j < store.idGraph.length; j++) {
+        obj[j] = {
+            id: j,
+            X: store.idGraph[j].X,
+            Y: store.idGraph[j].Y,
+        }
     }
 
 
-    const editNode = (info, id)=>{
-        // store.idGraph[id].X =
-        const x = info.point.x - (xParent+8);
-        const y = info.point.y - (yParent+12.5);
-
-
-        store.editGraph(id, x, y, '')
+    let offseteNode = []
+    for (let j = 0; j < store.idGraph.length; j++) {
+        offseteNode[j] = {
+            id: j,
+            Xoffs: 0,
+            Yoffs: 0,
+        }
     }
 
-    const [checkDrag, setCheckDrag] = useState(false)
+    const editNode = (info, id) => {
+        try {
+
+            offseteNode[id].Xoffs = offseteNode[id].Xoffs + info.offset.x
+            offseteNode[id].Yoffs = offseteNode[id].Yoffs + info.offset.y
+            const x = offseteNode[id].Xoffs + store.idGraph[id].X;
+            console.log(x, " = ", info.offset.x, "+", store.idGraph[id].X)
+            const y = offseteNode[id].Yoffs + store.idGraph[id].Y;
+
+            obj[id].X = x;
+            obj[id].Y = y;
+
+
+            console.log(obj)
+        } catch (e) {
+            console.log("JJJJJ")
+        }
+    }
 
     return (
-        <div>
+        <div className={styles.main_app}>
             <div ref={parentRef} className={styles.mainAreaNodeAndZon}>
-                {/*<div className={styles.node}>*/}
-                {/*</div>*/}
-                {(store.idGraph.map((graph, id) =>
-                    <motion.div
-                                key={id}
-                                drag
-                                dragMomentum={false}
-                                dragElastic={.5}
-                                // whileHover={{scale: 1.1}}
-                                // whileTap={{boxShadow: "0px 0px 15px rgba(0,0,0,0.2)"}}
-                                // onDragEnd={(event, info) => { editNode(info, id); console.log(info.point.x - (xParent + 18), info.point.y - (yParent + 18))}}
-                                dragControls={controls}
-                                dragConstraints={parentRef}
-                                className={styles.node}
-                                // style={{top: graph.Y+"px", left: graph.X + 'px', transformOrigin:"50% 50%"}}
-                                dragListener={checkDrag}
-                    >
-                        {id}
-                        <div className={styles.numNode}>
-                            {graph.num}
-                        </div>
-                    </motion.div>
-                ))
+
+                {
+                    store.idGraph.map((graph, id) =>
+
+                        <AreaMotion graph={graph}
+                                    id={id}
+                                    parentRef={parentRef}
+                                    editNodeS={editNodeS}
+                                    editNode={editNode}
+                                    checkDrag = {checkDrag}
+                                    setEditNodeS = {setEditNodeS}
+                                    nameVisible = {nameVisible}
+                        />
+                    )
                 }
-                <div className={styles.checkboxAndButton}>
-                    <p>
-                        <label>
-                            <input type="checkbox" defaultChecked={checkDrag}
-                                   onChange={() => setCheckDrag(!checkDrag)}/>
-                            <span>Edit</span>
-                        </label>
-                    </p>
-                    <p>
-                        <button disabled={true} onClick={() => { store.update();
-                        }}>Включено <br/> автосохранение
-                        </button>
-                    </p>
-                </div>
-
             </div>
-
+            <div className={styles.checkboxAndButton}>
+                <p>
+                    <label>
+                        <input type="checkbox" defaultChecked={checkDrag}
+                               onChange={() => {
+                                   setCheckDrag(!checkDrag);
+                               }}/>
+                        <span>edit</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input type="checkbox" disabled={checkDrag} defaultChecked={nameVisible}
+                               onChange={() => {
+                                   setNameVisible(!nameVisible);
+                               }}/>
+                        <span>name</span>
+                    </label>
+                </p>
+                <p>
+                    <button disabled={!checkDrag} onClick={() => {
+                        store.editGraph(obj);
+                    }}>Сохранить
+                    </button>
+                    {/*<button onClick={() => {*/}
+                    {/*    setOtrisovka(true);*/}
+                    {/*    setEditNodeS(true)*/}
+                    {/*}}>Отрисовать*/}
+                    {/*</button>*/}
+                </p>
+            </div>
         </div>
 
     );

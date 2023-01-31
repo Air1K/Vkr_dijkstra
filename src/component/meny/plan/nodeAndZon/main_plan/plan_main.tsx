@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import BackIco from "../../../../backIco";
 import InputTochek from "../inputBlock/inputTochek";
 import Area from "../area/area";
@@ -8,13 +8,16 @@ import AreaNodeAndZone from "../areaNodeAndZon/areaNodeAndZone";
 
 
 const PlanMain = () => {
+    const [editNodeS, setEditNodeS] = useState(true);
+
+
     return (
         <div className={styles.mainNodeAndConnect}>
             <BackIco/>
             <div className={styles.componentNodeAndConnect}>
-                <InputTochek/>
+                <InputTochek editNodeS = {editNodeS} setEditNodeS = {setEditNodeS}/>
                 <Block/>
-                <AreaNodeAndZone/>
+                <AreaNodeAndZone editNodeS = {editNodeS} setEditNodeS = {setEditNodeS}/>
                 <Area/>
             </div>
         </div>

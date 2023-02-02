@@ -68,8 +68,10 @@ const Block = () => {
                 </div>
                 <br/>
                 <button onClick={async () => {
+                    await valid();
                     await store.matrixSmejUsel(G1, G2, ves);
-                    valid()
+                    await store.solutions();
+
                 }}>Создать зону
                 </button>
             </div>

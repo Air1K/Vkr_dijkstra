@@ -18,6 +18,7 @@ export default class Store {
     matrixsmesh = [];
     mass_putei = [];
     mass_putei_exit = [];
+
     constructor() {
         makeAutoObservable(this);
     }
@@ -26,9 +27,43 @@ export default class Store {
         this.isAuth = bool;
     }
 
-    setEditEl(id: number, X: number, Y: number){
+    setEditEl(id: number, X: number, Y: number) {
         this.idGraph[id].X = X;
         this.idGraph[id].Y = Y;
+    }
+
+    setSolutions(idA: number, idB: number, long: number, rotade: number) {
+
+        if (this.idGraph[idA]?.rotation) {
+            console.log("Объекты есть в сторе, будет изменен или добавлен")
+            for (let i = 0; i < this.idGraph[idA].rotation.length; i++) {
+                if (this.idGraph[idA].rotation[i].idB === idB) {
+                    this.idGraph[idA].rotation[idB].long = long;
+                    this.idGraph[idA].rotation[idB].rotations = rotade;
+                    return
+                }
+                else {
+                    const obj = {
+                        idB: idB,
+                        long: long,
+                        rotations: rotade
+                    }
+                    this.idGraph[idA].rotation.push(obj)
+                    return
+                }
+            }
+        } else {
+            console.log("Объекта нет в сторе, будет создан")
+            const obj = {
+                idB: idB,
+                long: long,
+                rotations: rotade
+            }
+            // this.idGraph[idA].rotation = [];
+            this.idGraph[idA].rotation.push(obj)
+            return
+        }
+
     }
 
     setGraph(idGraph: Graph[]) {
@@ -43,12 +78,14 @@ export default class Store {
         this.user = user;
     }
 
-    setA(a: number){
+    setA(a: number) {
         this.a = a;
     }
-    setB(b: number){
+
+    setB(b: number) {
         this.b = b;
     }
+
     // setIGraph(arr: Graph[]) {
     //     this.arr.push(arr);
     // }
@@ -57,9 +94,10 @@ export default class Store {
         this.mass_putei = mass_putei;
     }
 
-    setMass_putei_exit(setMass_putei_exit){
+    setMass_putei_exit(setMass_putei_exit) {
         this.mass_putei_exit = setMass_putei_exit;
     }
+
     setMessages(message: string) {
         this.messages = message;
     }
@@ -69,19 +107,18 @@ export default class Store {
     }
 
 
-
-    update(){
-        if(sessionStorage.getItem("graph")){
+    update() {
+        if (sessionStorage.getItem("graph")) {
             const mass = JSON.parse(sessionStorage.getItem("graph"))
             this.setGraph(mass)
         }
-        if(sessionStorage.getItem("matrixSmej")){
+        if (sessionStorage.getItem("matrixSmej")) {
             const mass_smej = JSON.parse(sessionStorage.getItem("matrixSmej"))
             this.setMatrix(mass_smej)
         }
     }
 
-    updatepro(){
+    updatepro() {
 
     }
 
@@ -107,19 +144,19 @@ export default class Store {
         }
     }
 
-    addMatrixEl(){
+    addMatrixEl() {
         const matrixSmej = this.matrixsmesh
 
         let i = this.matrixsmesh.length;
-            matrixSmej[i] = []
-            for(let j = 0; j<this.idGraph.length; j++){
-                if(i == j){
-                    matrixSmej[i][j] = 0
-                }else {
-                    matrixSmej[i][j] = 99999
-                    matrixSmej[j][i] = 99999
-                }
+        matrixSmej[i] = []
+        for (let j = 0; j < this.idGraph.length; j++) {
+            if (i == j) {
+                matrixSmej[i][j] = 0
+            } else {
+                matrixSmej[i][j] = 99999
+                matrixSmej[j][i] = 99999
             }
+        }
 
         this.setMatrix(matrixSmej);
         let json = JSON.stringify(this.matrixsmesh);
@@ -129,13 +166,14 @@ export default class Store {
     addGraph(OX: number, OY: number, num: number) {
         try {
             let obj = []
-            if(sessionStorage.getItem("graph")){
+            if (sessionStorage.getItem("graph")) {
                 obj = this.idGraph
             }
 
             obj.push({
                 X: OX,
                 Y: OY,
+                rotation: [] = [],
                 num: num
             })
             // arr.push(obj)
@@ -152,12 +190,13 @@ export default class Store {
         }
         console.log(this.matrixsmesh.length)
     }
+
     editGraph(obj) {
         try {
             console.log(obj)
             // arr.push(obj)
 
-            for(let i = 0; i< obj.length; i++){
+            for (let i = 0; i < obj.length; i++) {
                 this.setEditEl(obj[i].id, obj[i].X, obj[i].Y)
             }
             // this.setIGraph([obj])
@@ -170,83 +209,84 @@ export default class Store {
         console.log(this.matrixsmesh.length)
     }
 
-     matrixSme(){
-         if(this.matrixsmesh.length == 0){
-             console.log(this.idGraph.length)
-             const matrixSmej = []
-             for(let i = 0; i<this.idGraph.length; i++){
-                 matrixSmej[i] = []
-                 for(let j = 0; j<this.idGraph.length; j++){
-                     if(i == j){
-                         matrixSmej[i][j] = 0
-                     }else {
-                         matrixSmej[i][j] = 99999
-                     }
-                 }
-             }
-             this.setMatrix(matrixSmej);
+    matrixSme() {
+        if (this.matrixsmesh.length == 0) {
+            console.log(this.idGraph.length)
+            const matrixSmej = []
+            for (let i = 0; i < this.idGraph.length; i++) {
+                matrixSmej[i] = []
+                for (let j = 0; j < this.idGraph.length; j++) {
+                    if (i == j) {
+                        matrixSmej[i][j] = 0
+                    } else {
+                        matrixSmej[i][j] = 99999
+                    }
+                }
+            }
+            this.setMatrix(matrixSmej);
 
-             console.log(this.matrixsmesh)
-         }
+            console.log(this.matrixsmesh)
+        }
 
     }
-    async matrixSmejUsel(G1, G2, ves){
+
+    async matrixSmejUsel(G1, G2, ves) {
         let a, b;
         let ass = true;
         let ass2 = true;
-        if(!this.idGraph[0]?.num){
+        if (!this.idGraph[0]?.num) {
             alert("Массив точек пуст");
             return
         }
 
-        for(let i = 0; i < this.idGraph?.length; i++){
+        for (let i = 0; i < this.idGraph?.length; i++) {
 
             console.log(this.idGraph[i]?.num, "--", G1, "--", G2)
-            if(this.idGraph[i]?.num === (G1)){
+            if (this.idGraph[i]?.num === (G1)) {
                 ass = false
             }
-            if(this.idGraph[i]?.num === (G2)){
+            if (this.idGraph[i]?.num === (G2)) {
                 ass2 = false
             }
         }
 
-        if(ass){
+        if (ass) {
             alert("Введено имя не существующего узла 1");
             return
         }
-        if(ass2){
+        if (ass2) {
             alert("Введено имя не существующего узла 2");
             return
         }
 
         console.log(ves)
-        if(!ves) {
+        if (!ves) {
             alert("Введено некорректное значение");
             return
         }
 
-        if(ves < 0) {
+        if (ves < 0) {
             alert("Введено некорректное значение");
             return
         }
 
-        if(this.idGraph.length!=this.matrixsmesh.length){
+        if (this.idGraph.length != this.matrixsmesh.length) {
             await this.matrixSme();
         }
 
-        for(let i = 0; i < this.idGraph.length; i++){
-            if(this.idGraph[i].num == G1){
+        for (let i = 0; i < this.idGraph.length; i++) {
+            if (this.idGraph[i].num == G1) {
                 a = i;
             }
-            if(this.idGraph[i].num == G2){
+            if (this.idGraph[i].num == G2) {
                 b = i;
             }
         }
 
         const matrixSmej = []
-        for(let i = 0; i<this.idGraph.length; i++){
+        for (let i = 0; i < this.idGraph.length; i++) {
             matrixSmej[i] = []
-            for(let j = 0; j<this.idGraph.length; j++){
+            for (let j = 0; j < this.idGraph.length; j++) {
                 matrixSmej[i][j] = this.matrixsmesh[i][j]
             }
         }
@@ -261,18 +301,18 @@ export default class Store {
         sessionStorage.setItem("matrixSmej", json);
     }
 
-    search(A1, A2){
+    search(A1, A2) {
         let mass: (boolean | number) [][] = []
         let a, b;
         let PutNaiden = false;
 
 
         //ПОИСК ID A1 и A2
-        for(let i = 0; i < this.idGraph.length; i++){
-            if(this.idGraph[i].num == A1){
+        for (let i = 0; i < this.idGraph.length; i++) {
+            if (this.idGraph[i].num == A1) {
                 a = i;
             }
-            if(this.idGraph[i].num == A2){
+            if (this.idGraph[i].num == A2) {
                 b = i;
             }
         }
@@ -281,12 +321,12 @@ export default class Store {
         let mass_arr = []
 
         //Заполнение массива для расчетов
-        for(let i = 0; i < this.idGraph.length; i++){
+        for (let i = 0; i < this.idGraph.length; i++) {
 
-            if(i === a){
+            if (i === a) {
                 mass.push([0, null, true])
 
-            }else {
+            } else {
                 mass.push([9999, null, false])
 
 
@@ -298,36 +338,36 @@ export default class Store {
         //Поиск наименьших значений
 
         let index_el = 0;
-        while (!PutNaiden){
-            if(!PutNaiden){
-                for(let j = 0; j < this.idGraph.length; j++){
+        while (!PutNaiden) {
+            if (!PutNaiden) {
+                for (let j = 0; j < this.idGraph.length; j++) {
 
-                    if(mass[j][0] >= this.matrixsmesh[search_flag][j] + mass[search_flag][0] && this.matrixsmesh[search_flag][j]!=0 && !mass[j][2]){
+                    if (mass[j][0] >= this.matrixsmesh[search_flag][j] + mass[search_flag][0] && this.matrixsmesh[search_flag][j] != 0 && !mass[j][2]) {
 
                         mass[j][0] = this.matrixsmesh[search_flag][j] + mass[search_flag][0];
                         mass[j][1] = search_flag;
 
                     }
-                    if(j === this.idGraph.length -1 ){
+                    if (j === this.idGraph.length - 1) {
                         const min_el = this.minEl(mass)
                         mass[min_el][2] = true;
                         search_flag = min_el;
 
 
-                        if(min_el == b){
+                        if (min_el == b) {
 
                             console.log(mass_arr);
                             // this.setMass_putei(mass_arr);
                             PutNaiden = true;
-                            if(PutNaiden){
+                            if (PutNaiden) {
                                 let i = b;
                                 let search: (number | boolean) = mass[b][1];
                                 let arr_mass_exit = [b];
 
-                                while(arr_mass_exit[arr_mass_exit.length-1] !== a) {
+                                while (arr_mass_exit[arr_mass_exit.length - 1] !== a) {
                                     arr_mass_exit.push(search);
 
-                                    const ass =  Number(search)
+                                    const ass = Number(search)
                                     search = Number(mass[ass][1]);
                                 }
                                 this.setMass_putei_exit(arr_mass_exit.reverse())
@@ -344,7 +384,7 @@ export default class Store {
     }
 
     // Поиск наименьшего значения
-    minEl(mass: (boolean | number) [][]){
+    minEl(mass: (boolean | number) [][]) {
 
         var min: number | boolean = 999999999
         var X = 0
@@ -353,8 +393,8 @@ export default class Store {
         // }
         this.setMass_putei(mass);
         // console.log(mass[3][0]);
-        for (let i = 0; i < this.idGraph.length; i++){
-            if(mass[i][0] < min && !mass[i][2] ){
+        for (let i = 0; i < this.idGraph.length; i++) {
+            if (mass[i][0] < min && !mass[i][2]) {
                 min = mass[i][0]
                 X = i;
             }
@@ -362,6 +402,21 @@ export default class Store {
 
         console.log(this.mass_putei);
         return X
+    }
+
+
+    solutions() {
+        let mass: (number) [][] = []
+        // for(let i = 0; i < this.matrixsmesh.length; i++){
+        //     for(let j = 0; j < this.matrixsmesh.length; j++){
+        //         if(this.matrixsmesh[i][j] < 9999 && this.matrixsmesh[i][j] !== 0){
+        //
+        //         }
+        //     }
+        // }
+        console.log(this.idGraph[0])
+        const a = 10
+        this.setSolutions(a, a, a, a)
     }
 
 }

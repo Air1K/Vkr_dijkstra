@@ -1,7 +1,8 @@
-export interface Graph{
+import {Rotation} from "./Rotation";
 
+export interface Graph{
     X: number;
     Y: number;
-    rotation: [];
+    rotation:  Array<Rotation>;
     num: string;
 }

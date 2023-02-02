@@ -5,7 +5,7 @@ import {Context} from "../../../../../../index";
 
 
 
-const AreaMotion = ({graph, id, parentRef, editNodeS, editNode, setEditNodeS, checkDrag, nameVisible}) => {
+const AreaMotion = ({graph, id, parentRef, editNodeS, editNode, setEditNodeS, checkDrag, nameVisible, idVisible}) => {
     const {store} = useContext(Context);
 
     const controls = useDragControls()
@@ -44,7 +44,7 @@ const AreaMotion = ({graph, id, parentRef, editNodeS, editNode, setEditNodeS, ch
             className={styles.node}
             initial={{ y: graph.Y, x: graph.X}}
         >
-            {id}
+            {idVisible ? (id) : null}
 
             <div className={styles.numNode}>
                 {nameVisible ? (graph.num) : null}

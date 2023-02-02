@@ -22,7 +22,7 @@ const AreaNodeAndZone = ({editNodeS, setEditNodeS}) => {
     const [checkDrag, setCheckDrag] = useState(false)
 
     const [nameVisible, setNameVisible] = useState(true)
-
+    const [idVisible, setIdVisible] = useState(true)
     const [classeStyles, setClasseStyles] = useState({})
     const bool = true
 
@@ -84,6 +84,7 @@ const AreaNodeAndZone = ({editNodeS, setEditNodeS}) => {
                                     checkDrag = {checkDrag}
                                     setEditNodeS = {setEditNodeS}
                                     nameVisible = {nameVisible}
+                                    idVisible = {idVisible}
                         />
                     )
                 }
@@ -105,6 +106,15 @@ const AreaNodeAndZone = ({editNodeS, setEditNodeS}) => {
                                    setNameVisible(!nameVisible);
                                }}/>
                         <span>name</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input type="checkbox" disabled={checkDrag} defaultChecked={idVisible}
+                               onChange={() => {
+                                   setIdVisible(!idVisible);
+                               }}/>
+                        <span>id</span>
                     </label>
                 </p>
                 <p>

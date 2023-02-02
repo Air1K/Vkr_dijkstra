@@ -7,7 +7,7 @@ const Area = () => {
     const {store} = useContext(Context);
     console.log(store.idGraph)
     let length_mass_graph = 0;
-    if (store.idGraph[0].num){
+    if (store.idGraph[0]?.num){
         length_mass_graph = store.idGraph.length
     }
     console.log(store.matrixsmesh)

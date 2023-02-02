@@ -6,8 +6,10 @@ import {Session} from "inspector";
 import {IUser} from "../models/IUser";
 
 
+
 export default class Store {
-    idGraph = [{} as Graph];
+    // idGraph = [{} as Graph];
+    idGraph: Graph[] = [];
     user = {} as IUser
     a = null;
     b = null;
@@ -34,36 +36,47 @@ export default class Store {
 
     setSolutions(idA: number, idB: number, long: number, rotade: number) {
 
-        if (this.idGraph[idA]?.rotation) {
-            console.log("Объекты есть в сторе, будет изменен или добавлен")
-            for (let i = 0; i < this.idGraph[idA].rotation.length; i++) {
-                if (this.idGraph[idA].rotation[i].idB === idB) {
-                    this.idGraph[idA].rotation[idB].long = long;
-                    this.idGraph[idA].rotation[idB].rotations = rotade;
-                    return
+        // if (this.idGraph[idA]?.rotation) {
+        //     console.log("Объекты есть в сторе, будет изменен или добавлен")
+        //     for (let i = 0; i < this.idGraph[idA].rotation.length; i++) {
+        //         if (this.idGraph[idA].rotation[i].idB === idB) {
+        //             this.idGraph[idA].rotation[idB].long = long;
+        //             this.idGraph[idA].rotation[idB].rotations = rotade;
+        //             console.log(this.idGraph[idA].rotation)
+        //             return
+        //         }
+        //         else {
+        //             const obj = {
+        //                 idB: idB,
+        //                 long: long,
+        //                 rotations: rotade
+        //             }
+        //             this.idGraph[idA].rotation.push(obj)
+        //             console.log(this.idGraph[idA].rotation)
+        //             return
+        //         }
+        //     }
+        // } else {
+        //     console.log("Объекта нет в сторе, будет создан")
+        //     const obj = {
+        //         idB: idB,
+        //         long: long,
+        //         rotations: rotade
+        //     }
+        //     // this.idGraph[idA].rotation = [];
+        //     console.log(this.idGraph);
+        //     console.log(this.idGraph[idA]);
+        //
+        //
+        //     return
+        // }
+        const obj = {
+                    idB: idB,
+                    long: long,
+                    rotations: rotade
                 }
-                else {
-                    const obj = {
-                        idB: idB,
-                        long: long,
-                        rotations: rotade
-                    }
-                    this.idGraph[idA].rotation.push(obj)
-                    return
-                }
-            }
-        } else {
-            console.log("Объекта нет в сторе, будет создан")
-            const obj = {
-                idB: idB,
-                long: long,
-                rotations: rotade
-            }
-            // this.idGraph[idA].rotation = [];
-            this.idGraph[idA].rotation.push(obj)
-            return
-        }
-
+        this.idGraph[idA].rotation.push(obj)
+        console.log(this.idGraph[idA].rotation)
     }
 
     setGraph(idGraph: Graph[]) {
@@ -414,9 +427,10 @@ export default class Store {
         //         }
         //     }
         // }
-        console.log(this.idGraph[0])
-        const a = 10
+        console.log(this.idGraph[0].rotation[0].idB)
+        const a = 0
         this.setSolutions(a, a, a, a)
+
     }
 
 }

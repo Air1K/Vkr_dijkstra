@@ -1,8 +1,8 @@
 import {Rotation} from "./Rotation";
 
-export interface Graph{
+export class Graph{
     X: number;
     Y: number;
-    rotation:  Array<Rotation>;
+    rotation:  Array<Rotation> = [];
     num: string;
 }

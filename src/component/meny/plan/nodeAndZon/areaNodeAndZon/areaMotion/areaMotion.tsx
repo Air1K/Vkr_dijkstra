@@ -4,7 +4,6 @@ import {motion, useDragControls} from "framer-motion";
 import {Context} from "../../../../../../index";
 
 
-
 const AreaMotion = ({graph, id, parentRef, editNodeS, editNode, setEditNodeS, checkDrag, nameVisible, idVisible}) => {
     const {store} = useContext(Context);
 
@@ -24,7 +23,7 @@ const AreaMotion = ({graph, id, parentRef, editNodeS, editNode, setEditNodeS, ch
     //     return classStyle
     // }
     //
-    useEffect(()=>{
+    useEffect(() => {
         setEditNodeS(false);
     }, [editNodeS])
     return (
@@ -41,10 +40,19 @@ const AreaMotion = ({graph, id, parentRef, editNodeS, editNode, setEditNodeS, ch
             }}
             dragControls={controls}
             dragConstraints={parentRef}
-            className={styles.node}
-            initial={{ y: graph.Y, x: graph.X}}
+            className={styles.node_main}
+            initial={{y: graph.Y, x: graph.X}}
         >
-            {idVisible ? (id) : null}
+            <div className={styles.node}></div>
+            <div className={styles.idVisible}>{idVisible ? (id) : null}</div>
+            {
+                store.idGraph[id].rotation.map((rotation, id) =>
+
+                    <div key={id} className={styles.line} style={{width: rotation.long + "px", transform: "rotate("+rotation.rotations+"deg)"}}>
+                        <div className={styles.lineVisible}></div>
+                    </div>
+                )
+            }
 
             <div className={styles.numNode}>
                 {nameVisible ? (graph.num) : null}

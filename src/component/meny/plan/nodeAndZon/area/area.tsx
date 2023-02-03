@@ -36,7 +36,7 @@ const Area = () => {
                         {(store.idGraph.map((graph, id) =>
                         <tr key={graph.num}>
                             <th> {graph.num} </th>
-                            {(store.matrixsmesh.map((matrix, index) =><th> {store.matrixsmesh[id][index]} </th>))
+                            {(store.matrixsmesh.map((matrix, index) =><th key={index}> {store.matrixsmesh[id][index]} </th>))
                             }
                         </tr>
                             ))

@@ -34,49 +34,58 @@ export default class Store {
         this.idGraph[id].Y = Y;
     }
 
-    setSolutions(idA: number, idB: number, long: number, rotade: number) {
+    upgradeStore(){
+        let json = JSON.stringify(this.idGraph);
+        sessionStorage.setItem("graph", json);
+    }
 
-        // if (this.idGraph[idA]?.rotation) {
-        //     console.log("Объекты есть в сторе, будет изменен или добавлен")
-        //     for (let i = 0; i < this.idGraph[idA].rotation.length; i++) {
-        //         if (this.idGraph[idA].rotation[i].idB === idB) {
-        //             this.idGraph[idA].rotation[idB].long = long;
-        //             this.idGraph[idA].rotation[idB].rotations = rotade;
-        //             console.log(this.idGraph[idA].rotation)
-        //             return
-        //         }
-        //         else {
-        //             const obj = {
-        //                 idB: idB,
-        //                 long: long,
-        //                 rotations: rotade
-        //             }
-        //             this.idGraph[idA].rotation.push(obj)
-        //             console.log(this.idGraph[idA].rotation)
-        //             return
-        //         }
-        //     }
-        // } else {
-        //     console.log("Объекта нет в сторе, будет создан")
-        //     const obj = {
-        //         idB: idB,
-        //         long: long,
-        //         rotations: rotade
-        //     }
-        //     // this.idGraph[idA].rotation = [];
-        //     console.log(this.idGraph);
-        //     console.log(this.idGraph[idA]);
-        //
-        //
-        //     return
-        // }
-        const obj = {
-                    idB: idB,
-                    long: long,
-                    rotations: rotade
+    setSolutions(idA: number, idB: number, long: number, rotade: number) {
+        if (this.idGraph[idA].rotation[0]?.idB) {
+            console.log("Объекты есть в сторе, поиск объекта")
+            for (let i = 0; i < this.idGraph[idA].rotation.length; i++) {
+                if (this.idGraph[idA].rotation[i].idB === idB) {
+                    this.idGraph[idA].rotation[i].long = long;
+                    this.idGraph[idA].rotation[i].rotations = rotade;
+                    console.log(this.idGraph[i].rotation)
+                    console.log("Найден и изменен")
+                    return
                 }
-        this.idGraph[idA].rotation.push(obj)
-        console.log(this.idGraph[idA].rotation)
+                if(i === this.idGraph[idA].rotation.length - 1) {
+                    const obj = {
+                        idB: idB,
+                        long: long,
+                        rotations: rotade
+                    }
+                    this.idGraph[idA].rotation.push(obj)
+                    console.log(this.idGraph[idA].rotation)
+                    console.log("не найден и создан")
+                    return
+                }
+
+            }
+        } else {
+            console.log("Объекта нет в сторе, будет создан")
+            const obj = {
+                idB: idB,
+                long: long,
+                rotations: rotade
+            }
+            this.idGraph[idA].rotation.push(obj)
+            console.log(this.idGraph);
+            console.log(this.idGraph[idA]);
+
+
+            return
+        }
+
+        console.log("Ошибка в условиях")
+        // const obj = {
+        //             idB: idB,
+        //             long: long,
+        //             rotations: rotade
+        //         }
+        // this.idGraph[idA].rotation.push(obj)
+        // this.idGraph[idA].rotation.push(obj)
     }
 
     setGraph(idGraph: Graph[]) {
@@ -314,6 +323,7 @@ export default class Store {
         sessionStorage.setItem("matrixSmej", json);
     }
 
+
     search(A1, A2) {
         let mass: (boolean | number) [][] = []
         let a, b;
@@ -418,19 +428,32 @@ export default class Store {
     }
 
 
-    solutions() {
-        let mass: (number) [][] = []
-        // for(let i = 0; i < this.matrixsmesh.length; i++){
-        //     for(let j = 0; j < this.matrixsmesh.length; j++){
-        //         if(this.matrixsmesh[i][j] < 9999 && this.matrixsmesh[i][j] !== 0){
-        //
-        //         }
-        //     }
-        // }
-        console.log(this.idGraph[0].rotation[0].idB)
-        const a = 0
-        this.setSolutions(a, a, a, a)
+    solutions(G1, G2) {
 
+        let aSearc, bSearc;
+
+        for (let i = 0; i < this.idGraph.length; i++) {
+            if (this.idGraph[i].num == G1) {
+                aSearc = i;
+            }
+            if (this.idGraph[i].num == G2) {
+                bSearc = i;
+            }
+        }
+        const x1 = this.idGraph[aSearc].X;
+        const y1 = this.idGraph[aSearc].Y;
+        const x2 = this.idGraph[bSearc].X;
+        const y2 = this.idGraph[bSearc].Y;
+
+        const katet1 = x1 - x2;
+        const katet2 = y1 - y2;
+
+        const long = Math.round(Math.sqrt(Math.pow(katet1, 2) + Math.pow(katet2, 2)))
+
+        console.log(long);
+        this.setSolutions(aSearc,  bSearc, long, 0)
+        this.upgradeStore();
+        console.log(this.idGraph[aSearc].rotation.length)
     }
 
 }

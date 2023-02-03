@@ -37,6 +37,7 @@ const AreaNodeAndZone = ({editNodeS, setEditNodeS}) => {
             id: j,
             X: store.idGraph[j].X,
             Y: store.idGraph[j].Y,
+            rotation: store.idGraph[j].rotation
         }
     }
 
@@ -50,6 +51,21 @@ const AreaNodeAndZone = ({editNodeS, setEditNodeS}) => {
         }
     }
 
+    function EditLineDrag(x, y, id){
+        let aSearc, bSearc;
+
+        const x1 = this.idGraph[aSearc].X;
+        const y1 = this.idGraph[aSearc].Y;
+        const x2 = this.idGraph[bSearc].X;
+        const y2 = this.idGraph[bSearc].Y;
+
+        const katet1 = x1 - x2;
+        const katet2 = y1 - y2;
+
+        const long = Math.round(Math.sqrt(Math.pow(katet1, 2) + Math.pow(katet2, 2)))
+        const deg  = (180 / Math.PI * Math.atan2(katet2, katet1)) + 180;
+    }
+
     const editNode = (info, id) => {
         try {
 
@@ -61,6 +77,8 @@ const AreaNodeAndZone = ({editNodeS, setEditNodeS}) => {
 
             obj[id].X = x;
             obj[id].Y = y;
+
+            EditLineDrag(x, y, id)
 
 
             console.log(obj)

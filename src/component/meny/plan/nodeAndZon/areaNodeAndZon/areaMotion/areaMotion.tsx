@@ -8,21 +8,11 @@ const AreaMotion = ({graph, id, parentRef, editNodeS, editNode, setEditNodeS, ch
     const {store} = useContext(Context);
 
     const controls = useDragControls()
-    // const stuleClass = (graph, id)=>{
-    //     if(otrisovka){
-    //         const classStyle = {
-    //             y: store.idGraph[id].Y, x: store.idGraph[id].X
-    //         } as React.CSSProperties
-    //         return classStyle
-    //     }
-    //     const classStyle = {
-    //         // transform:  "translateX(0px) translateY(0px)",
-    //         transform: "none"
-    //     } as React.CSSProperties
-    //     console.log("ASDASDASDASD")
-    //     return classStyle
-    // }
-    //
+
+    const read_lineDrag = ()=>{
+
+    }
+
     useEffect(() => {
         setEditNodeS(false);
     }, [editNodeS])
@@ -33,7 +23,6 @@ const AreaMotion = ({graph, id, parentRef, editNodeS, editNode, setEditNodeS, ch
             dragListener={checkDrag}
             dragMomentum={false}
             dragElastic={.5}
-            whileHover={{scale: 1.1}}
             whileTap={{boxShadow: "0px 0px 15px rgba(0,0,0,0.2)", cursor: "grabbing"}}
             onDragEnd={(event, info) => {
                 editNode(info, id);
@@ -43,8 +32,18 @@ const AreaMotion = ({graph, id, parentRef, editNodeS, editNode, setEditNodeS, ch
             className={styles.node_main}
             initial={{y: graph.Y, x: graph.X}}
         >
-            <div className={styles.node}></div>
-            <div className={styles.idVisible}>{idVisible ? (id) : null}</div>
+            <motion.div
+                whileHover={{
+                    scale: 1.1,
+                    transition: { duration: 0.1 },
+                }}
+                className={styles.node}>
+                <div className={styles.idVisible}>{idVisible ? (id) : null}</div>
+                <div className={styles.numNode}>
+                    {nameVisible ? (graph.num) : null}
+                </div>
+            </motion.div>
+
             {
                 store.idGraph[id].rotation.map((rotation, id) =>
 
@@ -54,9 +53,7 @@ const AreaMotion = ({graph, id, parentRef, editNodeS, editNode, setEditNodeS, ch
                 )
             }
 
-            <div className={styles.numNode}>
-                {nameVisible ? (graph.num) : null}
-            </div>
+
         </motion.div>
     );
 };

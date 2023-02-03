@@ -449,9 +449,8 @@ export default class Store {
         const katet2 = y1 - y2;
 
         const long = Math.round(Math.sqrt(Math.pow(katet1, 2) + Math.pow(katet2, 2)))
-
-        console.log(long);
-        this.setSolutions(aSearc,  bSearc, long, 0)
+        const deg  = (180 / Math.PI * Math.atan2(katet2, katet1)) + 180;
+        this.setSolutions(aSearc,  bSearc, long, deg)
         this.upgradeStore();
         console.log(this.idGraph[aSearc].rotation.length)
     }

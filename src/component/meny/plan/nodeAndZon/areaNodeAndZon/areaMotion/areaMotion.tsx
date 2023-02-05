@@ -4,12 +4,12 @@ import {motion, useDragControls} from "framer-motion";
 import {Context} from "../../../../../../index";
 
 
-const AreaMotion = ({graph, id, parentRef, editNodeS, editNode, setEditNodeS, checkDrag, nameVisible, idVisible}) => {
+const AreaMotion = ({graph, id, parentRef, editNodeS, editNode, editNodeEnd, setEditNodeS, checkDrag, nameVisible, idVisible}) => {
     const {store} = useContext(Context);
 
     const controls = useDragControls()
 
-    const read_lineDrag = ()=>{
+    const read_lineDrag = (info, id)=>{
 
     }
 
@@ -23,9 +23,12 @@ const AreaMotion = ({graph, id, parentRef, editNodeS, editNode, setEditNodeS, ch
             dragListener={checkDrag}
             dragMomentum={false}
             dragElastic={.5}
+            onDrag={(event, info) => {
+                editNode(info, id);
+            }}
             whileTap={{boxShadow: "0px 0px 15px rgba(0,0,0,0.2)", cursor: "grabbing"}}
             onDragEnd={(event, info) => {
-                editNode(info, id);
+                editNodeEnd(info, id);
             }}
             dragControls={controls}
             dragConstraints={parentRef}

@@ -9,7 +9,7 @@ import AreaNodeAndZone from "../areaNodeAndZon/areaNodeAndZone";
 
 const PlanMain = () => {
     const [editNodeS, setEditNodeS] = useState(true);
-
+    const [render_line, setRender_line] = useState(false)
     useEffect(()=>{
         setEditNodeS(false)
     },[])
@@ -19,8 +19,8 @@ const PlanMain = () => {
             <BackIco/>
             <div className={styles.componentNodeAndConnect}>
                 <InputTochek editNodeS = {editNodeS} setEditNodeS = {setEditNodeS}/>
-                <Block/>
-                <AreaNodeAndZone editNodeS = {editNodeS} setEditNodeS = {setEditNodeS}/>
+                <Block render_line ={render_line} setRender_line = {setRender_line}/>
+                <AreaNodeAndZone render_line ={render_line} setRender_line = {setRender_line} editNodeS = {editNodeS} setEditNodeS = {setEditNodeS}/>
                 <Area/>
             </div>
         </div>

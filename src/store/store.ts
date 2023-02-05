@@ -53,7 +53,7 @@ export default class Store {
                     this.Rotation[i].rotations = rotade;
                     this.Rotation[i].centerX = centerX;
                     this.Rotation[i].centerY = centerY;
-                    // console.log(this.idGraph[i].rotation)
+                    console.log(this.Rotation[i])
                     console.log("Найден и изменен")
                     return
                 }
@@ -69,9 +69,9 @@ export default class Store {
                     this.Rotation.push(obj)
                     // console.log(this.idGraph[idA].rotation)
                     console.log("не найден и создан")
+
                     return
                 }
-                alert("Цикл повис")
             }
         } else {
             console.log("Объекта нет в сторе, будет создан")
@@ -107,8 +107,9 @@ export default class Store {
         this.matrixsmesh = matrixsmesh;
     }
 
-    set_Rotation(rotation: []) {
+    async set_Rotation(rotation: Rotation[]) {
         this.Rotation = rotation;
+        await this.upgradeStore()
     }
 
     setUser(user: IUser) {
@@ -471,10 +472,10 @@ export default class Store {
         const centerX = ((x1 + x2)/2) - (long/2) +(25/2)
         const centerY = ((y1 + y2)/2)
         this.setRotation(aSearc,  bSearc, long, deg, centerX, centerY)
-
+        this.upgradeStore()
         console.log(this.Rotation)
 
-        this.upgradeStore();
+
         // console.log(this.idGraph[aSearc].rotation.length)
     }
 

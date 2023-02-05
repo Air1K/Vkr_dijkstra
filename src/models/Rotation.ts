@@ -1,4 +1,4 @@
-export interface Rotation{
+export class Rotation{
     idA: number;
     idB: number
     centerX: number;

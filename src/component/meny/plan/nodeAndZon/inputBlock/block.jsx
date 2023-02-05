@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import styles from './stylesBlock.module.sass'
 import {Context} from "../../../../../index";
 
-const Block = () => {
+const Block = ({render_line, setRender_line}) => {
 
     const {store} = useContext(Context);
 
@@ -18,6 +18,8 @@ const Block = () => {
     const [ves, setVes] = useState('')
 
     const [nameS, setNameS] = useState('')
+
+
 
     const valid = () => {
         if (nameS == '') {
@@ -71,7 +73,7 @@ const Block = () => {
                     await valid();
                     await store.matrixSmejUsel(G1, G2, ves);
                     await store.solutions(G1, G2);
-
+                    setRender_line(!render_line)
                 }}>Создать зону
                 </button>
             </div>

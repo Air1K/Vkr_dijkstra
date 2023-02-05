@@ -4,12 +4,14 @@ import {IdGraph} from "../models/IdFraph";
 import {Session} from "inspector";
 // let arr: Graph[] = [];
 import {IUser} from "../models/IUser";
+import {Rotation} from "../models/Rotation";
 
 
 
 export default class Store {
     // idGraph = [{} as Graph];
     idGraph: Graph[] = [];
+    Rotation: Rotation[] = [];
     user = {} as IUser
     a = null;
     b = null;
@@ -37,44 +39,53 @@ export default class Store {
     upgradeStore(){
         let json = JSON.stringify(this.idGraph);
         sessionStorage.setItem("graph", json);
+
+        let Rotation = JSON.stringify(this.Rotation);
+        sessionStorage.setItem("Rotation", Rotation);
     }
 
-    setSolutions(idA: number, idB: number, long: number, rotade: number) {
-        if (this.idGraph[idA].rotation[0]?.idB) {
+    setRotation(idA: number, idB: number, long: number, rotade: number, centerX: number, centerY: number) {
+        if (this.Rotation.length !== 0) {
             console.log("Объекты есть в сторе, поиск объекта")
-            for (let i = 0; i < this.idGraph[idA].rotation.length; i++) {
-                if (this.idGraph[idA].rotation[i].idB === idB) {
-                    this.idGraph[idA].rotation[i].long = long;
-                    this.idGraph[idA].rotation[i].rotations = rotade;
-                    console.log(this.idGraph[i].rotation)
+            for (let i = 0; i < this.Rotation.length; i++) {
+                if (this.Rotation[i].idA === idA && this.Rotation[i].idB === idB) {
+                    this.Rotation[i].long = long;
+                    this.Rotation[i].rotations = rotade;
+                    this.Rotation[i].centerX = centerX;
+                    this.Rotation[i].centerY = centerY;
+                    // console.log(this.idGraph[i].rotation)
                     console.log("Найден и изменен")
                     return
                 }
-                if(i === this.idGraph[idA].rotation.length - 1) {
+                if(this.Rotation.length-1 === i){
                     const obj = {
+                        idA: idA,
                         idB: idB,
+                        centerX: centerX,
+                        centerY: centerY,
                         long: long,
                         rotations: rotade
                     }
-                    this.idGraph[idA].rotation.push(obj)
-                    console.log(this.idGraph[idA].rotation)
+                    this.Rotation.push(obj)
+                    // console.log(this.idGraph[idA].rotation)
                     console.log("не найден и создан")
                     return
                 }
-
+                alert("Цикл повис")
             }
         } else {
             console.log("Объекта нет в сторе, будет создан")
             const obj = {
+                idA: idA,
                 idB: idB,
+                centerX: centerX,
+                centerY: centerY,
                 long: long,
                 rotations: rotade
             }
-            this.idGraph[idA].rotation.push(obj)
-            console.log(this.idGraph);
-            console.log(this.idGraph[idA]);
-
-
+            this.Rotation.push(obj)
+            // console.log(this.idGraph);
+            // console.log(this.idGraph[idA]);
             return
         }
 
@@ -94,6 +105,10 @@ export default class Store {
 
     setMatrix(matrixsmesh: number[][]) {
         this.matrixsmesh = matrixsmesh;
+    }
+
+    set_Rotation(rotation: []) {
+        this.Rotation = rotation;
     }
 
     setUser(user: IUser) {
@@ -137,6 +152,10 @@ export default class Store {
         if (sessionStorage.getItem("matrixSmej")) {
             const mass_smej = JSON.parse(sessionStorage.getItem("matrixSmej"))
             this.setMatrix(mass_smej)
+        }
+        if (sessionStorage.getItem("Rotation")) {
+            const Rotation = JSON.parse(sessionStorage.getItem("Rotation"))
+            this.set_Rotation(Rotation)
         }
     }
 
@@ -195,7 +214,6 @@ export default class Store {
             obj.push({
                 X: OX,
                 Y: OY,
-                rotation: [] = [],
                 num: num
             })
             // arr.push(obj)
@@ -450,9 +468,14 @@ export default class Store {
 
         const long = Math.round(Math.sqrt(Math.pow(katet1, 2) + Math.pow(katet2, 2)))
         const deg  = (180 / Math.PI * Math.atan2(katet2, katet1)) + 180;
-        this.setSolutions(aSearc,  bSearc, long, deg)
+        const centerX = ((x1 + x2)/2) - (long/2) +(25/2)
+        const centerY = ((y1 + y2)/2)
+        this.setRotation(aSearc,  bSearc, long, deg, centerX, centerY)
+
+        console.log(this.Rotation)
+
         this.upgradeStore();
-        console.log(this.idGraph[aSearc].rotation.length)
+        // console.log(this.idGraph[aSearc].rotation.length)
     }
 
 }

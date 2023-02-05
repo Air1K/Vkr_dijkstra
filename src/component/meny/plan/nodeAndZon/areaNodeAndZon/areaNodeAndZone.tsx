@@ -4,6 +4,7 @@ import {motion, useDragControls} from "framer-motion"
 import {Context} from "../../../../../index";
 import {createUseStyles} from "react-jss";
 import AreaMotion from "./areaMotion/areaMotion";
+import {Rotation} from "../../../../../models/Rotation";
 
 const AreaNodeAndZone = ({editNodeS, setEditNodeS}) => {
     const {store} = useContext(Context);
@@ -28,19 +29,37 @@ const AreaNodeAndZone = ({editNodeS, setEditNodeS}) => {
 
     const [otrisovka, setOtrisovka] = useState(false)
 
-    // useEffect(()=>{
-    //     if()
-    // },[controls])
+
     let obj = []
     for (let j = 0; j < store.idGraph.length; j++) {
         obj[j] = {
             id: j,
             X: store.idGraph[j].X,
             Y: store.idGraph[j].Y,
-            rotation: store.idGraph[j].rotation
+            // rotation: store.idGraph[j].rotation
         }
     }
 
+    const [obj_Rotation, setObj_Rotation] = useState<Rotation[]>(store.Rotation)
+    useEffect( ()=>{
+    //     // let RotationOBJ = []
+    //     // for (let j = 0; j < store.Rotation.length; j++) {
+    //     //     RotationOBJ[j] = {
+    //     //         idA: store.Rotation[j].idA,
+    //     //         idB: store.Rotation[j].idB,
+    //     //         centerX: store.Rotation[j].centerX,
+    //     //         centerY: store.Rotation[j].centerY,
+    //     //         long: store.Rotation[j].long,
+    //     //         rotations: store.Rotation[j].rotations
+    //     //     }
+    //     // }
+    //     //
+    //     // setObj_Rotation([...obj_Rotation, RotationOBJ])
+        store.update();
+        setObj_Rotation(store.Rotation);
+
+        console.log(store.Rotation)
+    },[])
 
     let offseteNode = []
     for (let j = 0; j < store.idGraph.length; j++) {
@@ -51,20 +70,20 @@ const AreaNodeAndZone = ({editNodeS, setEditNodeS}) => {
         }
     }
 
-    function EditLineDrag(x, y, id){
-        let aSearc, bSearc;
-
-        const x1 = this.idGraph[aSearc].X;
-        const y1 = this.idGraph[aSearc].Y;
-        const x2 = this.idGraph[bSearc].X;
-        const y2 = this.idGraph[bSearc].Y;
-
-        const katet1 = x1 - x2;
-        const katet2 = y1 - y2;
-
-        const long = Math.round(Math.sqrt(Math.pow(katet1, 2) + Math.pow(katet2, 2)))
-        const deg  = (180 / Math.PI * Math.atan2(katet2, katet1)) + 180;
-    }
+    // function EditLineDrag(x, y, id){
+    //     let aSearc, bSearc;
+    //
+    //     const x1 = this.idGraph[aSearc].X;
+    //     const y1 = this.idGraph[aSearc].Y;
+    //     const x2 = this.idGraph[bSearc].X;
+    //     const y2 = this.idGraph[bSearc].Y;
+    //
+    //     const katet1 = x1 - x2;
+    //     const katet2 = y1 - y2;
+    //
+    //     const long = Math.round(Math.sqrt(Math.pow(katet1, 2) + Math.pow(katet2, 2)))
+    //     const deg  = (180 / Math.PI * Math.atan2(katet2, katet1)) + 180;
+    // }
 
     const editNode = (info, id) => {
         try {
@@ -78,7 +97,7 @@ const AreaNodeAndZone = ({editNodeS, setEditNodeS}) => {
             obj[id].X = x;
             obj[id].Y = y;
 
-            EditLineDrag(x, y, id)
+            // EditLineDrag(x, y, id)
 
 
             console.log(obj)
@@ -104,6 +123,15 @@ const AreaNodeAndZone = ({editNodeS, setEditNodeS}) => {
                                     nameVisible = {nameVisible}
                                     idVisible = {idVisible}
                         />
+
+                    )
+                }
+                {
+                    obj_Rotation.map((rotation, id) =>
+
+                        <div key={id} className={styles.line} style={{width: rotation.long + "px", transform: "translateX(" + rotation.centerX + "px) translateY(" + rotation.centerY + "px) rotate("+rotation.rotations+"deg)"}}>
+                            <div className={styles.lineVisible}></div>
+                        </div>
                     )
                 }
             </div>

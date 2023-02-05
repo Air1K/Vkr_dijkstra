@@ -43,17 +43,6 @@ const AreaMotion = ({graph, id, parentRef, editNodeS, editNode, setEditNodeS, ch
                     {nameVisible ? (graph.num) : null}
                 </div>
             </motion.div>
-
-            {
-                store.idGraph[id].rotation.map((rotation, id) =>
-
-                    <div key={id} className={styles.line} style={{width: rotation.long + "px", transform: "rotate("+rotation.rotations+"deg)"}}>
-                        <div className={styles.lineVisible}></div>
-                    </div>
-                )
-            }
-
-
         </motion.div>
     );
 };

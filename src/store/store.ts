@@ -36,12 +36,14 @@ export default class Store {
         this.idGraph[id].Y = Y;
     }
 
+    upgradeStoreRotation(){
+        let Rotation = JSON.stringify(this.Rotation);
+        sessionStorage.setItem("Rotation", Rotation);
+    }
+
     upgradeStore(){
         let json = JSON.stringify(this.idGraph);
         sessionStorage.setItem("graph", json);
-
-        let Rotation = JSON.stringify(this.Rotation);
-        sessionStorage.setItem("Rotation", Rotation);
     }
 
     setRotation(idA: number, idB: number, long: number, rotade: number, centerX: number, centerY: number) {
@@ -109,7 +111,7 @@ export default class Store {
 
     async set_Rotation(rotation: Rotation[]) {
         this.Rotation = rotation;
-        await this.upgradeStore()
+        this.upgradeStoreRotation();
     }
 
     setUser(user: IUser) {
@@ -234,7 +236,7 @@ export default class Store {
 
     editGraph(obj) {
         try {
-            console.log(obj)
+            console.log(obj, + "SSSSSSSSSSSSSSSSSS")
             // arr.push(obj)
 
             for (let i = 0; i < obj.length; i++) {
@@ -472,7 +474,7 @@ export default class Store {
         const centerX = ((x1 + x2)/2) - (long/2) +(25/2)
         const centerY = ((y1 + y2)/2)
         this.setRotation(aSearc,  bSearc, long, deg, centerX, centerY)
-        this.upgradeStore()
+        this.upgradeStoreRotation();
         console.log(this.Rotation)
 
 

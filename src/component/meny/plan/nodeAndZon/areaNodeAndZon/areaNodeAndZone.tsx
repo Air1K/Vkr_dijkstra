@@ -6,7 +6,7 @@ import {createUseStyles} from "react-jss";
 import AreaMotion from "./areaMotion/areaMotion";
 import {Rotation} from "../../../../../models/Rotation";
 
-const AreaNodeAndZone = ({render_line, setRender_line ,editNodeS, setEditNodeS}) => {
+const AreaNodeAndZone = ({render_line, setRender_line, editNodeS, setEditNodeS}) => {
     const {store} = useContext(Context);
 
 
@@ -51,9 +51,10 @@ const AreaNodeAndZone = ({render_line, setRender_line ,editNodeS, setEditNodeS})
     }
 
 
-
     store.update();
     const [obj_Rotation, setObj_Rotation] = useState<Rotation[]>(store.Rotation)
+    let copy = Object.assign([], obj_Rotation)
+
     let offseteNode = []
     for (let j = 0; j < store.idGraph.length; j++) {
         offseteNode[j] = {
@@ -63,7 +64,7 @@ const AreaNodeAndZone = ({render_line, setRender_line ,editNodeS, setEditNodeS})
         }
     }
     let cash_1 = [];
-    for (let i = 0; i< store.Rotation.length; i++){
+    for (let i = 0; i < store.Rotation.length; i++) {
         cash_1.push({
             idA: store.Rotation[i].idA,
             idB: store.Rotation[i].idB,
@@ -73,33 +74,16 @@ const AreaNodeAndZone = ({render_line, setRender_line ,editNodeS, setEditNodeS})
             rotations: store.Rotation[i].rotations,
         })
     }
-    useEffect( ()=>{
-        // //     // let RotationOBJ = []
-        // //     // for (let j = 0; j < store.Rotation.length; j++) {
-        // //     //     RotationOBJ[j] = {
-        // //     //         idA: store.Rotation[j].idA,
-        // //     //         idB: store.Rotation[j].idB,
-        // //     //         centerX: store.Rotation[j].centerX,
-        // //     //         centerY: store.Rotation[j].centerY,
-        // //     //         long: store.Rotation[j].long,
-        // //     //         rotations: store.Rotation[j].rotations
-        // //     //     }
-        // //     // }
-        // //     //
-        // //     // setObj_Rotation([...obj_Rotation, RotationOBJ])
-
-        //     setObj_Rotation(store.Rotation);
-        //
-
-
+    useEffect(() => {
         console.log("ОБЪЕКТ ИЗМЕНИЛСЯ")
-    },[])
-    function EditLineDrag(id){
+        setObj_Rotation(store.Rotation);
+    }, [render_line])
 
-        if(store?.Rotation?.length===0){
+    function EditLineDrag(id) {
+
+        if (store?.Rotation?.length === 0) {
             return
-        }
-        else {
+        } else {
 
             for (let i = 0; i < store.Rotation?.length; i++) {
                 if (store.Rotation[i].idA === id || store.Rotation[i].idB === id) {
@@ -110,7 +94,8 @@ const AreaNodeAndZone = ({render_line, setRender_line ,editNodeS, setEditNodeS})
                     const y1 = objCache[A].Y;
                     const x2 = objCache[B].X;
                     const y2 = objCache[B].Y;
-
+                    console.log(A, " - Ax ", objCache[A].X, "/// Ay ", objCache[A].Y)
+                    console.log(B, " - Bx ", objCache[B].X, "/// By ", objCache[B].Y)
                     const katet1 = x1 - x2;
                     const katet2 = y1 - y2;
 
@@ -120,7 +105,7 @@ const AreaNodeAndZone = ({render_line, setRender_line ,editNodeS, setEditNodeS})
                     const center_X = ((x1 + x2) / 2) - (longe / 2) + (25 / 2)
                     const center_Y = ((y1 + y2) / 2)
 
-                    // const {centerX, centerY, long, rotations} = obj_Rotation[i];
+
                     console.log(cash_1)
                     cash_1[i].long = longe;
                     cash_1[i].centerY = center_Y;
@@ -130,52 +115,42 @@ const AreaNodeAndZone = ({render_line, setRender_line ,editNodeS, setEditNodeS})
                     // obj2[i].centerY = centerY;
                     // obj2[i].long = long
                     // obj2[i].rotations = deg;
-
+                    // let {centerX, centerY, long, rotations} = obj_Rotation[i];
+                    store.set_Rotation(cash_1);
+                    copy[i].long = longe;
+                    copy[i].centerY = center_Y;
+                    copy[i].centerX = center_X;
+                    copy[i].rotations = deg;
                     // console.log(obj2)
                     // setObj_Rotation(cash_1);
 
-                    console.log(obj_Rotation)
+                    // console.log(obj_Rotation)
                     // console.log(this.idGraph[i].rotation)
-
-                    return
                 }
             }
         }
-        let aSearc, bSearc;
-
-
-
-
-
-
     }
 
 
-    const editNodeDreag = (info, id) => {
+    const editNodeDreag = async (info, id) => {
 
-                //
-                // // offseteNode[id].Xoffs = offseteNode[id].Xoffs + info.offset.x
-                // // offseteNode[id].Yoffs = offseteNode[id].Yoffs + info.offset.y
-                // const x = offseteNode[id].Xoffs + store.idGraph[id].X;
-                // console.log(x, " = ", info.offset.x, "+", store.idGraph[id].X)
-                // const y = offseteNode[id].Yoffs + store.idGraph[id].Y;
-
-                offseteNode[id].Xoffs = info.offset.x;
-                offseteNode[id].Yoffs = info.offset.y;
-                objCache[id].X = obj[id].X + offseteNode[id].Xoffs;
-                objCache[id].Y = obj[id].Y + offseteNode[id].Yoffs;
-                console.log(objCache[id].X, "info", objCache[id].Y);
-                EditLineDrag(id)
-
-
-                console.log(obj)
-        }
+        offseteNode[id].Xoffs = info.offset.x;
+        offseteNode[id].Yoffs = info.offset.y;
+        objCache[id].X = obj[id].X + offseteNode[id].Xoffs;
+        objCache[id].Y = obj[id].Y + offseteNode[id].Yoffs;
+        console.log(objCache[id].X, "info", objCache[id].Y);
+        EditLineDrag(id)
+        console.log(obj)
+        return;
+    }
 
     const editNodeDreagEnd = (info, id) => {
         obj[id].X = offseteNode[id].Xoffs + obj[id].X;
         obj[id].Y = offseteNode[id].Yoffs + obj[id].Y;
-        console.log("AAAAAAA ---", obj[id].X)
-        setObj_Rotation(cash_1)
+        console.log(store.Rotation)
+        console.log("AAAAAAA ---", obj[id])
+        return
+
     }
 
     return (
@@ -191,18 +166,20 @@ const AreaNodeAndZone = ({render_line, setRender_line ,editNodeS, setEditNodeS})
                                     editNodeS={editNodeS}
                                     editNode={editNodeDreag}
                                     editNodeEnd={editNodeDreagEnd}
-                                    checkDrag = {checkDrag}
-                                    setEditNodeS = {setEditNodeS}
-                                    nameVisible = {nameVisible}
-                                    idVisible = {idVisible}
+                                    checkDrag={checkDrag}
+                                    setEditNodeS={setEditNodeS}
+                                    nameVisible={nameVisible}
+                                    idVisible={idVisible}
                         />
-
                     )
                 }
                 {
                     obj_Rotation.map((rotation, id) =>
 
-                        <div key={id} className={styles.line} style={{width: obj_Rotation[id].long + "px", transform: "translateX(" + obj_Rotation[id].centerX + "px) translateY(" + obj_Rotation[id].centerY + "px) rotate("+obj_Rotation[id].rotations+"deg)"}}>
+                        <div key={id} className={styles.line} style={{
+                            width: rotation.long + "px",
+                            transform: "translateX(" + rotation.centerX + "px) translateY(" + rotation.centerY + "px) rotate(" + rotation.rotations + "deg)"
+                        }}>
                             <div className={styles.lineVisible}></div>
                         </div>
                     )
@@ -239,9 +216,9 @@ const AreaNodeAndZone = ({render_line, setRender_line ,editNodeS, setEditNodeS})
                 <p>
                     <button disabled={!checkDrag} onClick={() => {
                         store.editGraph(obj);
-                        store.set_Rotation(obj_Rotation)
-                        store.update();
-                        console.log(obj_Rotation)
+                        setObj_Rotation(copy);
+                        // store.set_Rotation(obj_Rotation)
+                        // console.log(obj_Rotation)
                     }}>Сохранить
                     </button>
                     {/*<button onClick={() => {*/}

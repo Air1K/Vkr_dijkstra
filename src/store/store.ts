@@ -111,6 +111,7 @@ export default class Store {
 
     async set_Rotation(rotation: Rotation[]) {
         this.Rotation = rotation;
+        console.log(rotation)
         this.upgradeStoreRotation();
     }
 

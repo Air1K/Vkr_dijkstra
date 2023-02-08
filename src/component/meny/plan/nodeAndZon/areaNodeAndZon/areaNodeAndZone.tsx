@@ -6,10 +6,13 @@ import {createUseStyles} from "react-jss";
 import AreaMotion from "./areaMotion/areaMotion";
 import {Rotation} from "../../../../../models/Rotation";
 
-const AreaNodeAndZone = ({render_line, setRender_line, editNodeS, setEditNodeS}) => {
+
+
+
+const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS, setEditNodeS}) => {
     const {store} = useContext(Context);
 
-
+    const [obj_Rotation, setObj_Rotation] = useState<Rotation[]>(store.Rotation)
     const parentRef = useRef<HTMLDivElement>(null)
 
     // const [obj, setObj] = useState(store.idGraph);
@@ -25,34 +28,18 @@ const AreaNodeAndZone = ({render_line, setRender_line, editNodeS, setEditNodeS})
     const [nameVisible, setNameVisible] = useState(true)
     const [idVisible, setIdVisible] = useState(true)
     const [classeStyles, setClasseStyles] = useState({})
-    const bool = true
 
     const [otrisovka, setOtrisovka] = useState(false)
 
 
-    let obj = []
-    for (let j = 0; j < store.idGraph.length; j++) {
-        obj[j] = {
-            id: j,
-            X: store.idGraph[j].X,
-            Y: store.idGraph[j].Y,
-            // rotation: store.idGraph[j].rotation
-        }
-    }
-
-    let objCache = []
-    for (let j = 0; j < store.idGraph.length; j++) {
-        objCache[j] = {
-            id: j,
-            X: store.idGraph[j].X,
-            Y: store.idGraph[j].Y,
-            // rotation: store.idGraph[j].rotation
-        }
-    }
 
 
-    store.update();
-    const [obj_Rotation, setObj_Rotation] = useState<Rotation[]>(store.Rotation)
+
+
+
+
+
+
     let copy = Object.assign([], obj_Rotation)
 
     let offseteNode = []
@@ -143,13 +130,22 @@ const AreaNodeAndZone = ({render_line, setRender_line, editNodeS, setEditNodeS})
         console.log(obj)
         return;
     }
-
-    const editNodeDreagEnd = (info, id) => {
+    function editNodeDragF(id){
         obj[id].X = offseteNode[id].Xoffs + obj[id].X;
         obj[id].Y = offseteNode[id].Yoffs + obj[id].Y;
-        console.log(store.Rotation)
-        console.log("AAAAAAA ---", obj[id])
-        return
+
+    }
+
+    function editObj(id){
+        setObj_Rotation(copy);
+    }
+
+    const editNodeDreagEnd = async (info, id) => {
+
+        await editNodeDragF(id)
+        await editObj(id);
+        console.log(obj[id])
+        // return
 
     }
 
@@ -214,11 +210,12 @@ const AreaNodeAndZone = ({render_line, setRender_line, editNodeS, setEditNodeS})
                     </label>
                 </p>
                 <p>
-                    <button disabled={!checkDrag} onClick={() => {
-                        store.editGraph(obj);
-                        setObj_Rotation(copy);
-                        // store.set_Rotation(obj_Rotation)
-                        // console.log(obj_Rotation)
+                    <button disabled={!checkDrag} onClick={async () => {
+                       await store.editGraph(obj);
+                       await store.set_Rotation(obj_Rotation);
+                        console.log(obj)
+                        console.log(objCache)
+
                     }}>Сохранить
                     </button>
                     {/*<button onClick={() => {*/}

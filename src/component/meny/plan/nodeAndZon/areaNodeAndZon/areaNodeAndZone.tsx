@@ -61,10 +61,7 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
             rotations: store.Rotation[i].rotations,
         })
     }
-    useEffect(() => {
-        console.log("ОБЪЕКТ ИЗМЕНИЛСЯ")
-        setObj_Rotation(store.Rotation);
-    }, [render_line])
+
 
     function EditLineDrag(id) {
 
@@ -81,6 +78,9 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
                     const y1 = objCache[A].Y;
                     const x2 = objCache[B].X;
                     const y2 = objCache[B].Y;
+                    console.log(obj)
+                    console.log(objCache)
+
                     console.log(A, " - Ax ", objCache[A].X, "/// Ay ", objCache[A].Y)
                     console.log(B, " - Bx ", objCache[B].X, "/// By ", objCache[B].Y)
                     const katet1 = x1 - x2;
@@ -145,9 +145,18 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
         await editNodeDragF(id)
         await editObj(id);
         console.log(obj[id])
+        await store.editGraph(obj);
+        await store.set_Rotation(obj_Rotation);
         // return
 
     }
+
+    useEffect( () => {
+        console.log("ОБЪЕКТ ИЗМЕНИЛСЯ")
+        store.update()
+        setObj_Rotation(store.Rotation);
+
+    }, [render_line]);
 
     return (
         <div className={styles.main_app}>
@@ -156,7 +165,8 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
                 {
                     store.idGraph.map((graph, id) =>
 
-                        <AreaMotion graph={graph}
+                        <AreaMotion key ={id}
+                                    graph={graph}
                                     id={id}
                                     parentRef={parentRef}
                                     editNodeS={editNodeS}
@@ -211,8 +221,8 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
                 </p>
                 <p>
                     <button disabled={!checkDrag} onClick={async () => {
-                       await store.editGraph(obj);
-                       await store.set_Rotation(obj_Rotation);
+
+
                         console.log(obj)
                         console.log(objCache)
 

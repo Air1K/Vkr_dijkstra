@@ -13,11 +13,11 @@ import MyModal from "./component/meny/myModal/myModal";
 
 function App() {
     const {store} = useContext(Context);
-    useEffect(async ()=>{
-        await store.update()
-        console.log("Обновил");
+    useEffect( ()=>{
+        store.update()
+        console.log("Обновил !!!!!!!!!!!");
         console.log(store.Rotation);
-    })
+    }, [])
     return (
         <div className={styles.app}>
             <BrowserRouter>

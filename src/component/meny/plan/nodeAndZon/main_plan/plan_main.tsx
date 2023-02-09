@@ -16,8 +16,8 @@ const PlanMain = () => {
     useEffect(()=>{
         setEditNodeS(false)
         store.update();
+        console.log("Идет рендер в маин")
     },[])
-    const [obj_Rotation, setObj_Rotation] = useState<Rotation[]>(store.Rotation)
     let obj = []
     for (let j = 0; j < store.idGraph.length; j++) {
         obj[j] = {

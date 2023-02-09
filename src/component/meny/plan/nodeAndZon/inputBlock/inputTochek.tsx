@@ -37,6 +37,7 @@ const InputTochek = ({editNodeS, setEditNodeS}) => {
                     Название узла:
                     <input type="text" placeholder="Название узла" value={name_usel} onChange={event => setNameUsel(event.target.value)} />
                     <button onClick={async ()=>{await addGraph(await group(), 5, name_usel); setEditNodeS(true)}}>Добавить узел</button>
+                    <button onClick={()=>{ store.dellGraph(name_usel); setEditNodeS(true)}}>Удалить узел</button>
                 </div>
             </div>
         </div>

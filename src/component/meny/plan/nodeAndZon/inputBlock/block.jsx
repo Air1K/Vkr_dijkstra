@@ -72,7 +72,7 @@ const Block = ({render_line, setRender_line}) => {
                 <button onClick={async () => {
                     await valid();
                     await store.matrixSmejUsel(G1, G2, ves);
-                    await store.solutions(G1, G2);
+                    await store.matrixAndZone();
                     setRender_line(!render_line)
                 }}>Создать зону
                 </button>

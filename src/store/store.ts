@@ -7,7 +7,6 @@ import {IUser} from "../models/IUser";
 import {Rotation} from "../models/Rotation";
 
 
-
 export default class Store {
     // idGraph = [{} as Graph];
     idGraph: Graph[] = [];
@@ -36,12 +35,17 @@ export default class Store {
         this.idGraph[id].Y = Y;
     }
 
-    upgradeStoreRotation(){
+    upgradeStoreMatrix() {
+        let json = JSON.stringify(this.matrixsmesh);
+        sessionStorage.setItem("matrixSmej", json);
+    }
+
+    upgradeStoreRotation() {
         let Rotation = JSON.stringify(this.Rotation);
         sessionStorage.setItem("Rotation", Rotation);
     }
 
-    upgradeStore(){
+    upgradeStore() {
         let json = JSON.stringify(this.idGraph);
         sessionStorage.setItem("graph", json);
     }
@@ -59,7 +63,7 @@ export default class Store {
                     console.log("Найден и изменен")
                     return
                 }
-                if(this.Rotation.length-1 === i){
+                if (this.Rotation.length - 1 === i) {
                     const obj = {
                         idA: idA,
                         idB: idB,
@@ -204,8 +208,7 @@ export default class Store {
         }
 
         this.setMatrix(matrixSmej);
-        let json = JSON.stringify(this.matrixsmesh);
-        sessionStorage.setItem("matrixSmej", json);
+        this.upgradeStoreMatrix()
     }
 
     addGraph(OX: number, OY: number, num: number) {
@@ -237,7 +240,7 @@ export default class Store {
 
     editGraph(obj) {
         try {
-            console.log(obj, + "SSSSSSSSSSSSSSSSSS")
+            console.log(obj, +"SSSSSSSSSSSSSSSSSS")
             // arr.push(obj)
 
             for (let i = 0; i < obj.length; i++) {
@@ -452,16 +455,16 @@ export default class Store {
 
     solutions(G1, G2) {
 
-        let aSearc, bSearc;
+        let aSearc = G1, bSearc = G2;
 
-        for (let i = 0; i < this.idGraph.length; i++) {
-            if (this.idGraph[i].num == G1) {
-                aSearc = i;
-            }
-            if (this.idGraph[i].num == G2) {
-                bSearc = i;
-            }
-        }
+        // for (let i = 0; i < this.idGraph.length; i++) {
+        //     if (this.idGraph[i].num == G1) {
+        //         aSearc = i;
+        //     }
+        //     if (this.idGraph[i].num == G2) {
+        //         bSearc = i;
+        //     }
+        // }
         const x1 = this.idGraph[aSearc].X;
         const y1 = this.idGraph[aSearc].Y;
         const x2 = this.idGraph[bSearc].X;
@@ -471,15 +474,53 @@ export default class Store {
         const katet2 = y1 - y2;
 
         const long = Math.round(Math.sqrt(Math.pow(katet1, 2) + Math.pow(katet2, 2)))
-        const deg  = (180 / Math.PI * Math.atan2(katet2, katet1)) + 180;
-        const centerX = ((x1 + x2)/2) - (long/2) +(25/2)
-        const centerY = ((y1 + y2)/2)
-        this.setRotation(aSearc,  bSearc, long, deg, centerX, centerY)
+        const deg = (180 / Math.PI * Math.atan2(katet2, katet1)) + 180;
+        const centerX = ((x1 + x2) / 2) - (long / 2) + (25 / 2)
+        const centerY = ((y1 + y2) / 2)
+        this.setRotation(aSearc, bSearc, long, deg, centerX, centerY)
         this.upgradeStoreRotation();
         console.log(this.Rotation)
 
 
         // console.log(this.idGraph[aSearc].rotation.length)
+    }
+
+    matrixAndZone() {
+        this.Rotation = [];
+        for (let i = 0; i < this.matrixsmesh.length; i++) {
+            for (let j = 0; j < i; j++) {
+                if (this.matrixsmesh[i][j] < 9999) {
+                    this.solutions(i, j);
+                }
+            }
+        }
+    }
+
+    dellGraph(G) {
+        for (let i = 0; i < this.idGraph.length; i++) {
+            if (this.idGraph[i].num === G) {
+                G = i;
+                break;
+            }
+        }
+        this.idGraph.splice(G, 1);
+        this.matrixsmesh.splice(G, 1)
+        for(let i = 0; i < this.matrixsmesh.length; i++){
+            this.matrixsmesh[i].splice(G, 1)
+        }
+        const Rotation = Object.assign([], this.Rotation);
+        for(let i = 0; i < Rotation.length; i++){
+            if(Rotation[i].idA === G || Rotation[i].idB === G){
+                this.Rotation.splice(i)
+                console.log("EEE")
+            }
+
+        }
+        console.log(this.Rotation)
+
+        this.upgradeStore();
+        this.upgradeStoreMatrix();
+        this.upgradeStoreRotation()
     }
 
 }

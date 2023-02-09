@@ -7,8 +7,6 @@ import AreaMotion from "./areaMotion/areaMotion";
 import {Rotation} from "../../../../../models/Rotation";
 
 
-
-
 const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS, setEditNodeS}) => {
     const {store} = useContext(Context);
 
@@ -24,20 +22,13 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
     // let parent
     // let parentElement
     const [checkDrag, setCheckDrag] = useState(false)
-
+    const [ves, setVes] = useState(true)
+    const [line, setLine] = useState(true)
     const [nameVisible, setNameVisible] = useState(true)
     const [idVisible, setIdVisible] = useState(true)
     const [classeStyles, setClasseStyles] = useState({})
 
     const [otrisovka, setOtrisovka] = useState(false)
-
-
-
-
-
-
-
-
 
 
     let copy = Object.assign([], obj_Rotation)
@@ -130,13 +121,14 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
         console.log(obj)
         return;
     }
-    function editNodeDragF(id){
+
+    function editNodeDragF(id) {
         obj[id].X = offseteNode[id].Xoffs + obj[id].X;
         obj[id].Y = offseteNode[id].Yoffs + obj[id].Y;
 
     }
 
-    function editObj(id){
+    function editObj(id) {
         setObj_Rotation(copy);
     }
 
@@ -151,7 +143,7 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
 
     }
 
-    useEffect( () => {
+    useEffect(() => {
         console.log("ОБЪЕКТ ИЗМЕНИЛСЯ")
         store.update()
         setObj_Rotation(store.Rotation);
@@ -165,7 +157,7 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
                 {
                     store.idGraph.map((graph, id) =>
 
-                        <AreaMotion key ={id}
+                        <AreaMotion key={id}
                                     graph={graph}
                                     id={id}
                                     parentRef={parentRef}
@@ -181,13 +173,18 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
                 }
                 {
                     obj_Rotation.map((rotation, id) =>
-
-                        <div key={id} className={styles.line} style={{
+                        line ? <div key={id} className={styles.line} style={{
                             width: rotation.long + "px",
                             transform: "translateX(" + rotation.centerX + "px) translateY(" + rotation.centerY + "px) rotate(" + rotation.rotations + "deg)"
                         }}>
                             <div className={styles.lineVisible}></div>
-                        </div>
+                            {ves ? <div style={{
+                                transform: "rotate(" + -rotation.rotations + "deg)",
+                                position: "absolute",
+                                zIndex: 9999
+                            }}>{store.matrixsmesh[rotation.idA][rotation.idB]}</div> : null}
+
+                        </div> : null
                     )
                 }
             </div>
@@ -203,16 +200,25 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
                 </p>
                 <p>
                     <label>
-                        <input type="checkbox" disabled={checkDrag} defaultChecked={nameVisible}
+                        <input type="checkbox" defaultChecked={ves}
                                onChange={() => {
-                                   setNameVisible(!nameVisible);
+                                   setVes(!ves);
                                }}/>
-                        <span>name</span>
+                        <span>ves</span>
                     </label>
                 </p>
                 <p>
                     <label>
-                        <input type="checkbox" disabled={checkDrag} defaultChecked={idVisible}
+                        <input type="checkbox" defaultChecked={line}
+                               onChange={() => {
+                                   setLine(!line);
+                               }}/>
+                        <span>line</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input type="checkbox" defaultChecked={idVisible}
                                onChange={() => {
                                    setIdVisible(!idVisible);
                                }}/>
@@ -220,7 +226,16 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
                     </label>
                 </p>
                 <p>
-                    <button disabled={!checkDrag} onClick={async () => {
+                    <label>
+                        <input type="checkbox" defaultChecked={nameVisible}
+                               onChange={() => {
+                                   setNameVisible(!nameVisible);
+                               }}/>
+                        <span>name</span>
+                    </label>
+                </p>
+                <p>
+                    <button onClick={async () => {
 
 
                         console.log(obj)

@@ -478,7 +478,6 @@ export default class Store {
         const centerX = ((x1 + x2) / 2) - (long / 2) + (25 / 2)
         const centerY = ((y1 + y2) / 2)
         this.setRotation(aSearc, bSearc, long, deg, centerX, centerY)
-        this.upgradeStoreRotation();
         console.log(this.Rotation)
 
 
@@ -486,14 +485,18 @@ export default class Store {
     }
 
     matrixAndZone() {
+        console.log("J<")
         this.Rotation = [];
         for (let i = 0; i < this.matrixsmesh.length; i++) {
             for (let j = 0; j < i; j++) {
                 if (this.matrixsmesh[i][j] < 9999) {
+                    console.log(this.matrixsmesh[i][j], "AAAAAAAAAAAA")
                     this.solutions(i, j);
                 }
             }
         }
+        console.log(this.Rotation)
+        this.upgradeStoreRotation();
     }
 
     dellGraph(G) {
@@ -503,24 +506,30 @@ export default class Store {
                 break;
             }
         }
+        // const Rotation = Object.assign([], this.Rotation);
+        // for(let i = 0; i < Rotation.length; i++){
+        //     if(Rotation[i].idA === G || Rotation[i].idB === G){
+        //         this.Rotation.splice(i)
+        //         console.log("EEE")
+        //     }
+        //
+        // }
+        // this.upgradeStoreRotation();
+
         this.idGraph.splice(G, 1);
-        this.matrixsmesh.splice(G, 1)
+        this.matrixsmesh.splice(G, 1);
         for(let i = 0; i < this.matrixsmesh.length; i++){
             this.matrixsmesh[i].splice(G, 1)
         }
-        const Rotation = Object.assign([], this.Rotation);
-        for(let i = 0; i < Rotation.length; i++){
-            if(Rotation[i].idA === G || Rotation[i].idB === G){
-                this.Rotation.splice(i)
-                console.log("EEE")
-            }
 
-        }
         console.log(this.Rotation)
 
         this.upgradeStore();
         this.upgradeStoreMatrix();
-        this.upgradeStoreRotation()
+        this.matrixAndZone();
+
+        console.log("store END DELL - ", this.idGraph, this.Rotation)
+
     }
 
 }

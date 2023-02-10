@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import styles from './stylesBlock.module.sass'
 import {Context} from "../../../../../index";
 
-const Block = ({render_line, setRender_line}) => {
+const Block = ({render_line, setRender_line, setName, setVisibleDell}) => {
 
     const {store} = useContext(Context);
 
@@ -73,8 +73,12 @@ const Block = ({render_line, setRender_line}) => {
                     await valid();
                     await store.matrixSmejUsel(G1, G2, ves);
                     await store.matrixAndZone();
-                    setRender_line(!render_line)
+                    await setRender_line(!render_line)
                 }}>Создать зону
+                </button>
+                <button onClick={async () => {
+                    setVisibleDell(true)
+                }}>Открыть окно удаления зоны
                 </button>
             </div>
         </div>

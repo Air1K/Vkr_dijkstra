@@ -1,34 +1,21 @@
 import React, {createRef, useContext, useEffect, useMemo, useRef, useState} from 'react';
 import styles from './styleAreaAndZone.module.sass'
-import {motion, useDragControls} from "framer-motion"
 import {Context} from "../../../../../index";
-import {createUseStyles} from "react-jss";
 import AreaMotion from "./areaMotion/areaMotion";
 import {Rotation} from "../../../../../models/Rotation";
+import {Graph} from "../../../../../models/Graph";
 
 
 const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS, setEditNodeS}) => {
     const {store} = useContext(Context);
-
     const [obj_Rotation, setObj_Rotation] = useState<Rotation[]>(store.Rotation)
+    const [graph, setGraph] = useState<Graph[]>(store.idGraph)
     const parentRef = useRef<HTMLDivElement>(null)
-
-    // const [obj, setObj] = useState(store.idGraph);
-    //
-    // const [height, setHeight] = useState<number>();
-    // const [width, setWidth] = useState<number>();
-    // const [xParent, setXParent] = useState<number>();
-    // const [yParent, setYParent] = useState<number>();
-    // let parent
-    // let parentElement
     const [checkDrag, setCheckDrag] = useState(false)
     const [ves, setVes] = useState(true)
     const [line, setLine] = useState(true)
     const [nameVisible, setNameVisible] = useState(true)
     const [idVisible, setIdVisible] = useState(true)
-    const [classeStyles, setClasseStyles] = useState({})
-
-    const [otrisovka, setOtrisovka] = useState(false)
 
 
     let copy = Object.assign([], obj_Rotation)
@@ -53,7 +40,7 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
         })
     }
 
-
+    console.log("Рендер areaNodeAndZone")
     function EditLineDrag(id) {
 
         if (store?.Rotation?.length === 0) {
@@ -125,11 +112,11 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
     function editNodeDragF(id) {
         obj[id].X = offseteNode[id].Xoffs + obj[id].X;
         obj[id].Y = offseteNode[id].Yoffs + obj[id].Y;
-
     }
 
     function editObj(id) {
         setObj_Rotation(copy);
+        setGraph(obj);
     }
 
     const editNodeDreagEnd = async (info, id) => {
@@ -137,42 +124,36 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
         await editNodeDragF(id)
         await editObj(id);
         console.log(obj[id])
-        await store.editGraph(obj);
+        await store.editGraph(graph);
         await store.set_Rotation(obj_Rotation);
         // return
 
     }
 
-    useEffect(() => {
-        console.log("ОБЪЕКТ ИЗМЕНИЛСЯ")
-        store.update()
+    useEffect( () => {
+        console.log("ОБЪЕКТ ИЗМЕНИЛСЯ -----------------------")
         setObj_Rotation(store.Rotation);
-
-    }, [render_line]);
+        setGraph(store.idGraph);
+        // console.log(store.Rotation)
+    }, [render_line, editNodeS]);
 
     return (
         <div className={styles.main_app}>
             <div ref={parentRef} className={styles.mainAreaNodeAndZon}>
 
-                {
-                    store.idGraph.map((graph, id) =>
 
-                        <AreaMotion key={id}
-                                    graph={graph}
-                                    id={id}
+                        <AreaMotion
                                     parentRef={parentRef}
-                                    editNodeS={editNodeS}
                                     editNode={editNodeDreag}
                                     editNodeEnd={editNodeDreagEnd}
                                     checkDrag={checkDrag}
-                                    setEditNodeS={setEditNodeS}
                                     nameVisible={nameVisible}
                                     idVisible={idVisible}
+                                    graphEl = {graph}
                         />
-                    )
-                }
+
                 {
-                    obj_Rotation.map((rotation, id) =>
+                    store.Rotation.map((rotation, id) =>
                         line ? <div key={id} className={styles.line} style={{
                             width: rotation.long + "px",
                             transform: "translateX(" + rotation.centerX + "px) translateY(" + rotation.centerY + "px) rotate(" + rotation.rotations + "deg)"
@@ -182,7 +163,7 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
                                 transform: "rotate(" + -rotation.rotations + "deg)",
                                 position: "absolute",
                                 zIndex: 9999
-                            }}>{store.matrixsmesh[rotation.idA][rotation.idB]}</div> : null}
+                            }}>{store?.matrixsmesh[rotation?.idA][rotation?.idB]}</div> : null}
 
                         </div> : null
                     )

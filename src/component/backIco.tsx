@@ -6,9 +6,11 @@ import {Link} from "react-router-dom";
 
 const BackIco = () => {
     return (
-        <Link className={styless.a_ico} to = "/main">
-            <FontAwesomeIcon className={styless.ico} icon={faChevronLeft} />
-        </Link>
+        <div className={styless.container}>
+            <Link className={styless.a_ico} to = "/main">
+                <FontAwesomeIcon className={styless.ico} icon={faChevronLeft} />
+            </Link>
+        </div>
     );
 };
 

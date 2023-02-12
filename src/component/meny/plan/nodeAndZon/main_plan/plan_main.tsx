@@ -26,7 +26,6 @@ const PlanMain = () => {
             X: store.idGraph[j].X,
             Y: store.idGraph[j].Y,
             num: store.idGraph[j].num
-            // rotation: store.idGraph[j].rotation
         }
         console.log("Джопа")
     }

@@ -10,6 +10,7 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
     const {store} = useContext(Context);
     const [obj_Rotation, setObj_Rotation] = useState<Rotation[]>(store.Rotation)
     const [graph, setGraph] = useState<Graph[]>(store.idGraph)
+    console.log("Перезапись")
     const parentRef = useRef<HTMLDivElement>(null)
     const [checkDrag, setCheckDrag] = useState(false)
     const [ves, setVes] = useState(true)
@@ -81,7 +82,7 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
                     // obj2[i].long = long
                     // obj2[i].rotations = deg;
                     // let {centerX, centerY, long, rotations} = obj_Rotation[i];
-                    store.set_Rotation(cash_1);
+                    // store.set_Rotation(cash_1);
                     copy[i].long = longe;
                     copy[i].centerY = center_Y;
                     copy[i].centerX = center_X;
@@ -114,18 +115,18 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
         obj[id].Y = offseteNode[id].Yoffs + obj[id].Y;
     }
 
-    function editObj(id) {
-        setObj_Rotation(copy);
-        setGraph(obj);
+   async function editObj(id) {
+       await setObj_Rotation(copy);
+       await setGraph(obj);
     }
 
     const editNodeDreagEnd = async (info, id) => {
 
         await editNodeDragF(id)
         await editObj(id);
-        console.log(obj[id])
         await store.editGraph(graph);
         await store.set_Rotation(obj_Rotation);
+        console.log(obj, graph);
         // return
 
     }
@@ -133,7 +134,7 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
     useEffect( () => {
         console.log("ОБЪЕКТ ИЗМЕНИЛСЯ -----------------------")
         setObj_Rotation(store.Rotation);
-        setGraph(store.idGraph);
+        setGraph(obj);
         // console.log(store.Rotation)
     }, [render_line, editNodeS]);
 

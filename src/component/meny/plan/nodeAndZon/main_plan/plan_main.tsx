@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import BackIco from "../../../../backIco";
+import BackIco from "../../../../selector/backIco";
 import InputTochek from "../inputBlock/inputTochek";
 import Area from "../area/area";
 import Block from "../inputBlock/block";
@@ -57,7 +57,6 @@ const PlanMain = () => {
     }
     return (
         <div className={styles.mainNodeAndConnect}>
-            <BackIco/>
             <div className={styles.componentNodeAndConnect}>
                 <InputTochek
                     render_line={render_line}

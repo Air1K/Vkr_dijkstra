@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../../index";
 import styles from './stylesSearch.module.sass'
-import BackIco from "../backIco";
+import BackIco from "../selector/backIco";
 
 const Search = () => {
     const {store} = useContext(Context);

@@ -14,14 +14,28 @@ const Main = () => {
     const [visible, setVisible] = useState(false)
     const [visibleZon, setVisibleZon] = useState(false)
     const [auth, setAuth] = useState(store.isAuth)
-    const [role, setRole] = useState('')
+    const [role, setRole] = useState(store.user.role)
     useEffect(() => {
+        store.update()
         setAuth(store.isAuth);
-        setRole(store.user.role)
+        setRole(store.user.role);
+        RoleFunck();
+        // RenderLog()
     }, [])
-    console.log(store.isAuth);
+    console.log(role);
+
+    const RenderLog = () => {
+        if (!auth) {
+            return (<div className={styles.autorisation}>
+                Вы не прошли авторизацию
+                <Link to="/authorization">Авторизироваться</Link>
+                {/*<Navigate to={'/authorization'}/>*/}
+            </div>)
+        }
+    }
 
     const RoleFunck = () => {
+
         if (role === 'storekeeper') {
 
             return (<div className={styles.div_main}>
@@ -80,7 +94,7 @@ const Main = () => {
                 </ul>
             </div>)
         }
-        return <div/>
+        return null
     }
 
     return (
@@ -94,13 +108,9 @@ const Main = () => {
             <img className={styles.img} src={Fon} alt=""/>
             <div className={styles.fon}>
                 <h2 style={{textAlign: "center", margin: 0}}>Главное окно АС"Складская логистика"</h2>
-                {auth ? (
-                    <RoleFunck/>
-                ) : (
-                    <div>
-                        <Navigate to={'/authorization'}/>
-                    </div>
-                )}
+                {auth ?
+                (<RoleFunck/>) : (<RenderLog/>)}
+
             </div>
         </div>
     );

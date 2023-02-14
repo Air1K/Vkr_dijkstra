@@ -165,11 +165,17 @@ export default class Store {
             const Rotation = JSON.parse(sessionStorage.getItem("Rotation"))
             this.set_Rotation(Rotation)
         }
+        if (sessionStorage.getItem("Auth")) {
+            const Auth = JSON.parse(sessionStorage.getItem("Auth"))
+            this.setAuth(Auth);
+            console.log(Auth)
+        }
+        if (sessionStorage.getItem("user")) {
+            const user = JSON.parse(sessionStorage.getItem("user"))
+            this.setUser(user)
+        }
     }
 
-    updatepro() {
-
-    }
 
     async login(email: string, password: string) {
         try {
@@ -185,7 +191,12 @@ export default class Store {
             // localStorage.setItem('token', response.data.accessToken);
             this.setAuth(true);
             this.setUser(obj);
-
+            const Auth = JSON.stringify(true)
+            console.log(Auth)
+            sessionStorage.setItem('Auth', Auth);
+            const user = JSON.stringify(obj)
+            console.log(user)
+            sessionStorage.setItem('user', user);
 
         } catch (e) {
             console.log(e.response?.data?.message);

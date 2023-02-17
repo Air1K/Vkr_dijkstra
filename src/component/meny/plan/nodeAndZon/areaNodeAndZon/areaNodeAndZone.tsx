@@ -17,7 +17,7 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
     const [line, setLine] = useState(true)
     const [nameVisible, setNameVisible] = useState(true)
     const [idVisible, setIdVisible] = useState(true)
-
+    const [imgFon, setImgFon] = useState('');
 
     let copy = Object.assign([], obj_Rotation)
 
@@ -42,6 +42,7 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
     }
 
     console.log("Рендер areaNodeAndZone")
+
     function EditLineDrag(id) {
 
         if (store?.Rotation?.length === 0) {
@@ -115,9 +116,9 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
         obj[id].Y = offseteNode[id].Yoffs + obj[id].Y;
     }
 
-   async function editObj(id) {
-       await setObj_Rotation(copy);
-       await setGraph(obj);
+    async function editObj(id) {
+        await setObj_Rotation(copy);
+        await setGraph(obj);
     }
 
     const editNodeDreagEnd = async (info, id) => {
@@ -131,7 +132,7 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
 
     }
 
-    useEffect( () => {
+    useEffect(() => {
         console.log("ОБЪЕКТ ИЗМЕНИЛСЯ -----------------------")
         setObj_Rotation(store.Rotation);
         setGraph(obj);
@@ -141,17 +142,19 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
     return (
         <div className={styles.main_app}>
             <div ref={parentRef} className={styles.mainAreaNodeAndZon}>
+                <div className={styles.img_container}>
+                    <img className={styles.img} src={imgFon} alt=""/>
+                </div>
 
-
-                        <AreaMotion
-                                    parentRef={parentRef}
-                                    editNode={editNodeDreag}
-                                    editNodeEnd={editNodeDreagEnd}
-                                    checkDrag={checkDrag}
-                                    nameVisible={nameVisible}
-                                    idVisible={idVisible}
-                                    graphEl = {graph}
-                        />
+                <AreaMotion
+                    parentRef={parentRef}
+                    editNode={editNodeDreag}
+                    editNodeEnd={editNodeDreagEnd}
+                    checkDrag={checkDrag}
+                    nameVisible={nameVisible}
+                    idVisible={idVisible}
+                    graphEl={graph}
+                />
 
                 {
                     store.Rotation.map((rotation, id) =>
@@ -171,6 +174,15 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
                 }
             </div>
             <div className={styles.checkboxAndButton}>
+                <p>
+                    <label>
+                        <input accept="image/*" type='file' id="imgInp"
+                               onChange={(e) => {
+                                   setImgFon(URL.createObjectURL(e.target.files[0]))
+                                   console.log(imgFon)
+                               }}/>
+                    </label>
+                </p>
                 <p>
                     <label>
                         <input type="checkbox" defaultChecked={checkDrag}

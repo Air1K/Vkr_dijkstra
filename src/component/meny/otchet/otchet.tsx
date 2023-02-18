@@ -1,5 +1,5 @@
 import React from 'react';
-import BackIco from "../selector/backIco";
+import BackIco from "../../selector/backIco";
 import styles from './otchet.module.sass'
 import styles_1 from "../search/stylesSearch.module.sass";
 

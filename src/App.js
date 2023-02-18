@@ -6,8 +6,8 @@ import {BrowserRouter, Routes, Route,  Navigate} from "react-router-dom";
 import Authorization from "./component/autorization/autorization";
 import VvodPlana from "./component/vvodPlana";
 import NewComponentMain from "./component/newComponentMain";
-import Search from "./component/search/search";
-import Otchet from "./component/otchet/otchet";
+import Search from "./component/meny/search/search";
+import Otchet from "./component/meny/otchet/otchet";
 import './style/style.sass'
 import MyModal from "./component/meny/myModal/myModal";
 

@@ -4,7 +4,7 @@ import {Link, Navigate} from "react-router-dom";
 import './main_style.sass'
 import Fon from '../img/uborka-sklada-form2.jpg'
 import styles from './stylesMain_2.module.sass'
-import Otchet from "./otchet/otchet";
+import Otchet from "./meny/otchet/otchet";
 import MyModal from "./meny/myModal/myModal";
 import BlokNewPlan from "./meny/plan/blokNewPlan/blokNewPlan";
 import NewZone from "./meny/plan/newZone/newZone";

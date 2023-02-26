@@ -4,6 +4,7 @@ import {Context} from "../../../../../index";
 import AreaMotion from "./areaMotion/areaMotion";
 import {Rotation} from "../../../../../models/Rotation";
 import {Graph} from "../../../../../models/Graph";
+import Zone from "./zone/zone";
 
 
 const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS, setEditNodeS}) => {
@@ -14,6 +15,7 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
     const parentRef = useRef<HTMLDivElement>(null)
     const [checkDrag, setCheckDrag] = useState(false)
     const [ves, setVes] = useState(true)
+    const [zone, setZone] = useState(false)
     const [line, setLine] = useState(true)
     const [nameVisible, setNameVisible] = useState(true)
     const [idVisible, setIdVisible] = useState(true)
@@ -172,6 +174,8 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
                         </div> : null
                     )
                 }
+
+                <Zone/>
             </div>
             <div className={styles.checkboxAndButton}>
                 <p>
@@ -185,11 +189,20 @@ const AreaNodeAndZone = ({obj, objCache, render_line, setRender_line, editNodeS,
                 </p>
                 <p>
                     <label>
+                        <input type="checkbox" defaultChecked={zone}
+                               onChange={() => {
+                                   setZone(!zone);
+                               }}/>
+                        <span>edit zone</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
                         <input type="checkbox" defaultChecked={checkDrag}
                                onChange={() => {
                                    setCheckDrag(!checkDrag);
                                }}/>
-                        <span>edit</span>
+                        <span>edit node</span>
                     </label>
                 </p>
                 <p>

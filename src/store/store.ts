@@ -5,12 +5,14 @@ import {Session} from "inspector";
 // let arr: Graph[] = [];
 import {IUser} from "../models/IUser";
 import {Rotation} from "../models/Rotation";
+import {SizeZon} from "../models/SizeZon";
 
 
 export default class Store {
     // idGraph = [{} as Graph];
     idGraph: Graph[] = [];
     Rotation: Rotation[] = [];
+    sizeZon: SizeZon[] = [];
     user = {} as IUser
     a = null;
     b = null;
@@ -28,6 +30,10 @@ export default class Store {
 
     setAuth(bool: boolean) {
         this.isAuth = bool;
+    }
+
+    setSizeZon(sizeZon: []){
+        this.sizeZon = sizeZon;
     }
 
     setEditEl(id: number, X: number, Y: number) {

@@ -8,6 +8,7 @@ import AreaNodeAndZone from "../areaNodeAndZon/areaNodeAndZone";
 import {Context} from "../../../../../index";
 import MyModal from "../../../myModal/myModal";
 import DellBlock from "../inputBlock/dellBlock";
+import DellZone from "../areaNodeAndZon/zone/dellZone";
 
 
 const PlanMain = () => {
@@ -15,6 +16,7 @@ const PlanMain = () => {
     const [editNodeS, setEditNodeS] = useState(false);
     const [render_line, setRender_line] = useState(false);
     const [myModal, setMyModal] = useState(false)
+    const [myModalZone, setMyModalZone] = useState(false)
     const [myModalDell, setMyModalDell] = useState(false)
     const [name, setName] = useState([])
     const [visibleDell, setVisibleDell] = useState(false)
@@ -68,15 +70,16 @@ const PlanMain = () => {
                 <Block
                     render_line={render_line}
                     setRender_line={setRender_line}
-                    setName={setMyModalDell}
-                    setVisibleDell = {setVisibleDell}/>
+                    setVisibleDell = {setVisibleDell}
+                    setMyModalZone = {setMyModalZone}
+                />
                 <AreaNodeAndZone
                     obj={obj}
                     objCache={objCache}
                     render_line={render_line}
-                    setRender_line={setRender_line}
                     editNodeS={editNodeS}
-                    setEditNodeS={setEditNodeS}/>
+                    myModalZone = {myModalZone}
+                />
                 <Area/>
                 <MyModal visible={visibleDell} setVisible={setVisibleDell}>
                     <DellBlock setVisible={setVisibleDell}  setMyModal = {setMyModal} setName = {setName}/>
@@ -86,6 +89,11 @@ const PlanMain = () => {
                         <p>связь {name?.[0]} к {name?.[1]}</p>}</h6>
                     <button onClick={ ()=>{ func_async(); setVisibleDell(false);}}>Да</button>
                     <button onClick={()=>{ setMyModal(false); console.log(name)}}>Нет</button>
+                </MyModal>
+                <MyModal visible={myModalZone} setVisible={setMyModalZone}>
+                    <DellZone
+                        setMyModalZone = {setMyModalZone}
+                    />
                 </MyModal>
             </div>
         </div>

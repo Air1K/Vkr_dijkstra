@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import styles from './stylesBlock.module.sass'
 import {Context} from "../../../../../index";
 
-const Block = ({render_line, setRender_line, setName, setVisibleDell}) => {
+const Block = ({render_line, setRender_line, setVisibleDell, setMyModalZone}) => {
 
     const {store} = useContext(Context);
 
@@ -60,12 +60,12 @@ const Block = ({render_line, setRender_line, setName, setVisibleDell}) => {
                             <option>см.</option>
                             <option>дм.</option>
                         </select>
-                        Вид зоны
-                        <select style={{display: 'flex'}}>
-                            <option>Зона перевозки</option>
-                            <option>Зона погрузки</option>
-                            <option>Зона хранения</option>
-                        </select>
+                        {/*Вид зоны*/}
+                        {/*<select style={{display: 'flex'}}>*/}
+                        {/*    <option>Зона перевозки</option>*/}
+                        {/*    <option>Зона погрузки</option>*/}
+                        {/*    <option>Зона хранения</option>*/}
+                        {/*</select>*/}
                     </div>
                 </div>
                 <br/>
@@ -76,9 +76,13 @@ const Block = ({render_line, setRender_line, setName, setVisibleDell}) => {
                     await setRender_line(!render_line)
                 }}>Создать зону
                 </button>
-                <button onClick={async () => {
+                <button title="Удаление связи двух графов" onClick={async () => {
                     setVisibleDell(true)
-                }}>Открыть окно удаления зоны
+                }}>Открыть окно удаления пути
+                </button>
+                <button onClick={async () => {
+                    setMyModalZone(true)
+                }}>Открыть окно назначения зоны
                 </button>
             </div>
         </div>

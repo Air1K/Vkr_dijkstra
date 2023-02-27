@@ -32,8 +32,18 @@ export default class Store {
         this.isAuth = bool;
     }
 
-    setSizeZon(sizeZon: []){
-        this.sizeZon = sizeZon;
+    setSizeZon(quantity){
+        this.sizeZon = [];
+        let left = 0
+        for (let i = 0; i < quantity; i++){
+            this.sizeZon.push({
+                widtH: 200,
+                heighT: 100,
+                toP: 0,
+                lefT: left
+            })
+            left += 205
+        }
     }
 
     setEditEl(id: number, X: number, Y: number) {

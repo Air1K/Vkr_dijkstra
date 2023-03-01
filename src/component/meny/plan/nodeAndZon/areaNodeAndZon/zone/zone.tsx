@@ -5,35 +5,46 @@ import {SizeZon} from "../../../../../../models/SizeZon";
 import {motion, useDragControls} from "framer-motion";
 import { Resizable } from 'react-resizable';
 
-const Zone = ({myModalZone, parentRef}) => {
+const Zone = ({myModalZone, parentRef, setMyModalZone}) => {
     const controls = useDragControls()
     const {store} = useContext(Context);
     const [draggableEl, setDraggableEl] = useState(true)
     let initialState: SizeZon[] = store.sizeZon;
-    useEffect(() => {
-
+    useEffect( () => {
+        dispatch({type: 'dell'})
         dispatch({type: 'add'});
         console.log(store.sizeZon);
         console.log(state);
     }, [myModalZone])
 
-    const onResize = (event, {element, size, handle}) => {
-        dispatch({widtH_: size.width, heighT_: size.height, type: });
-    };
+
 
     function reducer(state, action) {
-        console.log("reducer: ", state.length)
+        console.log("reducer: ", action)
+        console.log(state)
+        if(state.length !== 0 && state[action?.id]?.widtH ===action?.widtH_) {
+            return state;
+        }
+        if(state.length !== 0 && state[action.id]?.heighT === action?.heighT_) {
+            return state;
+        }
         switch (action.type) {
             case 'top':
-                return [...state, state[action.id] = {heighT: 100}];
+                state[action.id].heighT = action.heighT_;
+                return [...state];
             case 'left':
-                return [...state, state[action.id] = {widtH: action.widtH_}];
+                state[action.id].widtH = action.widtH_
+                return [...state];
             case 'right':
-                return [...state, state[action.id] = {widtH: action.widtH_}];
+                state[action.id].widtH = action.widtH_
+                return [...state];
             case 'bottom':
-                return [...state, state[action.id] = {heighT: action.heighT_}];
+                state[action.id].heighT = action.heighT_;
+                return [...state];
             case 'add':
                 return store.sizeZon
+            case 'dell':
+                return []
             default:
                 throw new Error();
         }
@@ -51,7 +62,6 @@ const Zone = ({myModalZone, parentRef}) => {
                 throw new Error();
         }
     }
-
     // function changeHandler(){
     //     console.log("Change");
     // }
@@ -67,7 +77,6 @@ const Zone = ({myModalZone, parentRef}) => {
         <div>
             {(
                 state.map((zone, id) =>
-                    <Resizable height={zone.heighT} width={zone.widtH} onResize = {onResize}>
                     <motion.div
                         drag
                         dragControls={controls}
@@ -82,17 +91,16 @@ const Zone = ({myModalZone, parentRef}) => {
                         whileTap={{boxShadow: "0px 0px 15px rgba(0,0,0,0.2)", cursor: "grabbing"}}
                         dragMomentum={false}
                         dragElastic={.5}>
+                        Ширина: {zone.widtH} <br/> Высота: {zone.heighT}
                         <motion.div
                             drag={prov({pradXY: "y"})}
                             className={styles.topZon}
-                            onDrag={(event, info) => console.log("Event")}
+                            onDrag={(event, info) => {console.log("Event"); dispatch({type: 'top', heighT_: info.offset.y, id: id})}}
                             // dispatch({type: 'top', heighT_: info.offset.y, id: id})
                             onDragStart={() => {
                                 console.log("DragEnter")
                             }}
-                            onDragEnd={() => {
-                                console.log("DragEnd");
-                            }}
+                            // onDragEnd={(event, info) => {console.log("Event"); dispatch({type: 'top', heighT_: info.offset.y, id: id})}}
                             whileTap={{boxShadow: "0px 0px 15px rgba(0,0,0,0.2)", cursor: "grabbing"}}
                             dragMomentum={false}
                             dragElastic={.5}>
@@ -105,8 +113,8 @@ const Zone = ({myModalZone, parentRef}) => {
                             onDragStart={() => {
                                 console.log("DragEnter")
                             }}
-                            onDragEnd={() => {
-                                console.log("DragEnd");
+                            onDragEnd={(event, info) => {
+                                dispatch({type: 'left', widtH_: info.offset.x, id: id})
                             }}
                             className={styles.leftZon}
                             whileTap={{boxShadow: "0px 0px 15px rgba(0,0,0,0.2)", cursor: "grabbing"}}
@@ -142,7 +150,6 @@ const Zone = ({myModalZone, parentRef}) => {
                             dragElastic={.5}>
                         </motion.div>
                     </motion.div>
-                    </Resizable>
                 )
             )}
         </div>

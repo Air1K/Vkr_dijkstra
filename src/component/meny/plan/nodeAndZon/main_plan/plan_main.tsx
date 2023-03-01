@@ -72,6 +72,7 @@ const PlanMain = () => {
                     setRender_line={setRender_line}
                     setVisibleDell = {setVisibleDell}
                     setMyModalZone = {setMyModalZone}
+
                 />
                 <AreaNodeAndZone
                     obj={obj}
@@ -79,6 +80,9 @@ const PlanMain = () => {
                     render_line={render_line}
                     editNodeS={editNodeS}
                     myModalZone = {myModalZone}
+                    setMyModalZone = {setMyModalZone}
+
+
                 />
                 <Area/>
                 <MyModal visible={visibleDell} setVisible={setVisibleDell}>

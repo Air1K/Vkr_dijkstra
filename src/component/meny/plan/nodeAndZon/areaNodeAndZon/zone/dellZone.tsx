@@ -14,10 +14,10 @@ const DellZone = ({setMyModalZone}) => {
                     <br/>
                     Укажите кол-во зон:
                     <input type="number" placeholder="кол-во зон" value={quantity} onChange={event => setQuantity(event.target.value)}/>
-                    <button onClick={()=>{
+                    <button onClick={async ()=>{
                         let number: number = Number(quantity)
-                        store.setSizeZon(number)
-                        setMyModalZone(false);
+                        await store.setSizeZon(number)
+                        await setMyModalZone(false);
                         }}>Создать зону</button>
                     <button onClick={()=>{setMyModalZone(false);}}>Отменить создание</button>
                 </div>

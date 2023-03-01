@@ -7,7 +7,7 @@ import {Graph} from "../../../../../models/Graph";
 import Zone from "./zone/zone";
 
 
-const AreaNodeAndZone = ({obj, objCache, render_line, editNodeS, myModalZone}) => {
+const AreaNodeAndZone = ({obj, objCache, render_line, editNodeS, myModalZone, setMyModalZone}) => {
     const {store} = useContext(Context);
     const [obj_Rotation, setObj_Rotation] = useState<Rotation[]>(store.Rotation)
     const [graph, setGraph] = useState<Graph[]>(store.idGraph)
@@ -178,6 +178,8 @@ const AreaNodeAndZone = ({obj, objCache, render_line, editNodeS, myModalZone}) =
                 <Zone
                     myModalZone = {myModalZone}
                     parentRef={parentRef}
+                    setMyModalZone = {setMyModalZone}
+
                 />
             </div>
             <div className={styles.checkboxAndButton}>

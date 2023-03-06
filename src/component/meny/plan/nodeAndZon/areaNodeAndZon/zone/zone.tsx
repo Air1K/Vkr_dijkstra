@@ -5,7 +5,7 @@ import {SizeZon} from "../../../../../../models/SizeZon";
 import {motion, useDragControls} from "framer-motion";
 import {Resizable} from 'react-resizable';
 
-const Zone = ({myModalZone, parentRef, setMyModalZone, draggableEl, setDraggableEl}) => {
+const Zone = ({myModalZone, parentRef, setMyModalZone, draggableEl, setDraggableEl, visibleZon}) => {
     const controls = useDragControls()
     const {store} = useContext(Context);
 
@@ -110,13 +110,17 @@ const Zone = ({myModalZone, parentRef, setMyModalZone, draggableEl, setDraggable
 
 
                         className={styles.main}
-                        style={{width: zone.widtH + "px", height: zone.heighT + "px", backgroundColor: zone.color}}
+                        style={{width: zone.widtH + "px", height: zone.heighT + "px"}}
                         initial={{y: zone.toP, x: zone.lefT}}
                         // onDragEnd={()=>{setDraggableEl(false)}}
                         // onDoubleClick={()=>{setDraggableEl(true)}}
                     >
-                        Ширина: {zone.widtH} <br/> Высота: {zone.heighT}
+                        <div className={styles.content}>Ширина: {zone.widtH} <br/> Высота: {zone.heighT}</div>
 
+                        <div className={styles.main_absolute}
+                        style={{backgroundColor: zone.color, opacity: visibleZon / 100}}>
+
+                        </div>
                         {/*<motion.div*/}
                         {/*    drag*/}
                         {/*    className={styles.onClick_bottom_right}*/}

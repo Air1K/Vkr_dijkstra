@@ -10,6 +10,7 @@ import {SizeZon} from "../models/SizeZon";
 
 export default class Store {
     // idGraph = [{} as Graph];
+    left = 0;
     idGraph: Graph[] = [];
     Rotation: Rotation[] = [];
     sizeZon: SizeZon[] = [];
@@ -32,18 +33,16 @@ export default class Store {
         this.isAuth = bool;
     }
 
-    setSizeZon(quantity){
-        let left = 0
-        for (let i = 0; i < quantity; i++){
+    setSizeZon(color){
             this.sizeZon.push({
                 widtH: 200,
                 heighT: 100,
                 toP: 0,
-                lefT: left,
-                color: '#blue'
+                lefT: this.left,
+                color: color
             })
-            left += 205
-        }
+            this.left += 205
+
        this.upgradeSizeZon()
     }
 

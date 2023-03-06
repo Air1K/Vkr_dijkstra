@@ -63,7 +63,7 @@ const Block = ({render_line, setRender_line, setVisibleDell, setMyModalZone}) =>
                     await store.matrixSmejUsel(G1, G2, ves);
                     await store.matrixAndZone();
                     await setRender_line(!render_line)
-                }}>Создать зону
+                }}>Задать расстояние
                 </button>
                 <button title="Удаление связи двух графов" onClick={async () => {
                     setVisibleDell(true)

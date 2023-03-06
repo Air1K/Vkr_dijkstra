@@ -3,7 +3,8 @@ import {Context} from "../../../../../../index";
 
 const DellZone = ({setMyModalZone}) => {
     const {store} = useContext(Context);
-    const [quantity, setQuantity] = useState('')
+    const [name, setName] = useState('')
+    const [color, setColor] = useState('')
     return (
         <div>
             <div>
@@ -12,11 +13,18 @@ const DellZone = ({setMyModalZone}) => {
                 </h6>
                 <div>
                     <br/>
-                    Укажите кол-во зон:
-                    <input type="number" placeholder="кол-во зон" value={quantity} onChange={event => setQuantity(event.target.value)}/>
+                    Название зоны:
+                    <input type="text" placeholder="Название зоны" value={name} onChange={event => setName(event.target.value)}/>
+                    Вид зоны
+                    <select style={{display: 'flex'}}>
+                        <option>Зона перевозки</option>
+                        <option>Зона погрузки</option>
+                        <option>Зона хранения</option>
+                    </select>
+                    Цвет зоны: <br/>
+                    <input type="color" placeholder="Название зоны" value={color} onChange={event => setColor(event.target.value)}/><br/><br/>
                     <button onClick={async ()=>{
-                        let number: number = Number(quantity)
-                        await store.setSizeZon(number)
+                        await store.setSizeZon(color)
                         await setMyModalZone(false);
                         }}>Создать зону</button>
                     <button onClick={()=>{setMyModalZone(false);}}>Отменить создание</button>

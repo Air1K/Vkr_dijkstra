@@ -21,7 +21,7 @@ const AreaNodeAndZone = ({obj, objCache, render_line, editNodeS, myModalZone, se
     const [idVisible, setIdVisible] = useState(true)
     const [imgFon, setImgFon] = useState('');
     const [draggableEl, setDraggableEl] = useState(true)
-
+    const [visibleZon, setVisibleZon] = useState('50')
     let copy = Object.assign([], obj_Rotation)
 
     let offseteNode = []
@@ -157,6 +157,7 @@ const AreaNodeAndZone = ({obj, objCache, render_line, editNodeS, myModalZone, se
                     nameVisible={nameVisible}
                     idVisible={idVisible}
                     graphEl={graph}
+
                 />
 
                 {
@@ -177,14 +178,21 @@ const AreaNodeAndZone = ({obj, objCache, render_line, editNodeS, myModalZone, se
                 }
 
                 <Zone
-                    myModalZone = {myModalZone}
+                    myModalZone={myModalZone}
                     parentRef={parentRef}
-                    setMyModalZone = {setMyModalZone}
-                    draggableEl = {draggableEl}
-                    setDraggableEl = {setDraggableEl}
+                    setMyModalZone={setMyModalZone}
+                    draggableEl={draggableEl}
+                    setDraggableEl={setDraggableEl}
+                    visibleZon = {visibleZon}
                 />
             </div>
             <div className={styles.checkboxAndButton}>
+                <p title="Прозрачность зон" className="range-field" style={{transform: "rotate(-90deg)", top: "-606px", left:"55px", height:" 35px"}}>
+                    <input type="range"  id="test5" min="0" max="100" value={visibleZon} onChange={(e) => {
+                        setVisibleZon(e.target.value);
+                    }}
+                    />
+                </p>
                 <p>
                     <label>
                         <input accept="image/*" type='file' id="imgInp"
@@ -202,8 +210,8 @@ const AreaNodeAndZone = ({obj, objCache, render_line, editNodeS, myModalZone, se
                                onChange={() => {
                                    setDraggableEl(!draggableEl);
                                }}/>
-                            <span className="lever"></span>
-                            drag
+                        <span className="lever"></span>
+                        drag
                     </label>
                 </p>
                 <p>

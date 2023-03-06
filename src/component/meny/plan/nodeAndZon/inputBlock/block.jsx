@@ -6,20 +6,11 @@ const Block = ({render_line, setRender_line, setVisibleDell, setMyModalZone}) =>
 
     const {store} = useContext(Context);
 
-    // async function addGraph(x, y, num){
-    //     await store.addGraph(x, y, num)
-    //     // await console.log(store.idGraph[6].num)
-    //     await store.matrixSme()
-    // }
-
-
     const [G1, setG1] = useState('')
     const [G2, setG2] = useState('')
     const [ves, setVes] = useState('')
 
     const [nameS, setNameS] = useState('')
-
-
 
     const valid = () => {
         if (nameS == '') {
@@ -31,7 +22,7 @@ const Block = ({render_line, setRender_line, setVisibleDell, setMyModalZone}) =>
         <div className={styles.main}>
             <div className={styles.oknovvoda}>
                 <h6>
-                    Создание зон склада
+                    Задать растояние между двумя пунктами
                 </h6>
                 <div className={styles.box}>
 
@@ -40,8 +31,6 @@ const Block = ({render_line, setRender_line, setVisibleDell, setMyModalZone}) =>
                         <input type="text" value={nameS} onChange={(e) => {
                             setNameS(e.target.value)
                         }} placeholder='Название'/>
-                        Краткое название зоны (необязательно):
-                        <input type="text" placeholder='Краткое название (необязательно)'/>
                         Введите первый узел:
                         <input type="text" value={G1} onChange={event => setG1(event.target.value)}
                                placeholder="Введите первый узел"/>

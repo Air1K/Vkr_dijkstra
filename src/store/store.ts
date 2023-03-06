@@ -33,17 +33,42 @@ export default class Store {
     }
 
     setSizeZon(quantity){
-        this.sizeZon = [];
         let left = 0
         for (let i = 0; i < quantity; i++){
             this.sizeZon.push({
                 widtH: 200,
                 heighT: 100,
                 toP: 0,
-                lefT: left
+                lefT: left,
+                color: '#blue'
             })
             left += 205
         }
+       this.upgradeSizeZon()
+    }
+
+    setRead(zone, id, strinG){
+        switch (strinG){
+            case 'size':
+                const {widtH, heighT} = zone
+                this.sizeZon[id].widtH = widtH;
+                this.sizeZon[id].heighT = heighT;
+                this.upgradeSizeZon()
+                return
+            case 'position':
+                const {toP, lefT} = zone
+                this.sizeZon[id].toP = toP;
+                this.sizeZon[id].lefT = lefT;
+                this.upgradeSizeZon()
+                return;
+            case 'update':
+                this.sizeZon = zone;
+                return;
+            case Error:
+                console.log(Error)
+                return;
+        }
+
     }
 
     setEditEl(id: number, X: number, Y: number) {
@@ -64,6 +89,11 @@ export default class Store {
     upgradeStore() {
         let json = JSON.stringify(this.idGraph);
         sessionStorage.setItem("graph", json);
+    }
+
+    upgradeSizeZon() {
+        let json = JSON.stringify(this.sizeZon);
+        sessionStorage.setItem("sizeZon", json);
     }
 
     setRotation(idA: number, idB: number, long: number, rotade: number, centerX: number, centerY: number) {
@@ -189,6 +219,10 @@ export default class Store {
         if (sessionStorage.getItem("user")) {
             const user = JSON.parse(sessionStorage.getItem("user"))
             this.setUser(user)
+        }
+        if (sessionStorage.getItem("sizeZon")) {
+            const sizeZon = JSON.parse(sessionStorage.getItem("sizeZon"))
+            this.setRead(sizeZon, 0, 'update')
         }
     }
 

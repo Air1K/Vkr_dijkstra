@@ -3,4 +3,5 @@ export interface SizeZon{
     heighT: number
     toP: number;
     lefT: number;
+    color: string
 }

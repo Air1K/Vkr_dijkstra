@@ -20,6 +20,7 @@ const AreaNodeAndZone = ({obj, objCache, render_line, editNodeS, myModalZone, se
     const [nameVisible, setNameVisible] = useState(true)
     const [idVisible, setIdVisible] = useState(true)
     const [imgFon, setImgFon] = useState('');
+    const [draggableEl, setDraggableEl] = useState(true)
 
     let copy = Object.assign([], obj_Rotation)
 
@@ -179,7 +180,8 @@ const AreaNodeAndZone = ({obj, objCache, render_line, editNodeS, myModalZone, se
                     myModalZone = {myModalZone}
                     parentRef={parentRef}
                     setMyModalZone = {setMyModalZone}
-
+                    draggableEl = {draggableEl}
+                    setDraggableEl = {setDraggableEl}
                 />
             </div>
             <div className={styles.checkboxAndButton}>
@@ -190,6 +192,18 @@ const AreaNodeAndZone = ({obj, objCache, render_line, editNodeS, myModalZone, se
                                    setImgFon(URL.createObjectURL(e.target.files[0]))
                                    console.log(imgFon)
                                }}/>
+                    </label>
+                </p>
+                <p className="switch">
+                    <label>
+                        resize
+                        <input type="checkbox"
+                               defaultChecked={draggableEl}
+                               onChange={() => {
+                                   setDraggableEl(!draggableEl);
+                               }}/>
+                            <span className="lever"></span>
+                            drag
                     </label>
                 </p>
                 <p>
@@ -246,6 +260,7 @@ const AreaNodeAndZone = ({obj, objCache, render_line, editNodeS, myModalZone, se
                         <span>name</span>
                     </label>
                 </p>
+
                 <p>
                     <button onClick={async () => {
 

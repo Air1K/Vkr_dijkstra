@@ -13,11 +13,11 @@ import DellZone from "../areaNodeAndZon/zone/dellZone";
 
 const PlanMain = () => {
     const {store} = useContext(Context);
+    const edit = true
     const [editNodeS, setEditNodeS] = useState(false);
     const [render_line, setRender_line] = useState(false);
     const [myModal, setMyModal] = useState(false)
     const [myModalZone, setMyModalZone] = useState(false)
-    const [myModalDell, setMyModalDell] = useState(false)
     const [name, setName] = useState([])
     const [visibleDell, setVisibleDell] = useState(false)
     store.update();
@@ -29,7 +29,6 @@ const PlanMain = () => {
             Y: store.idGraph[j].Y,
             num: store.idGraph[j].num
         }
-        console.log("Джопа")
     }
 
     let objCache = []
@@ -81,9 +80,21 @@ const PlanMain = () => {
                     editNodeS={editNodeS}
                     myModalZone = {myModalZone}
                     setMyModalZone = {setMyModalZone}
-
+                    edit={edit}
 
                 />
+                <div className={styles.checkboxAndButton}>
+                    <p>
+                        <button onClick={async () => {
+
+
+                            console.log(obj)
+                            console.log(objCache)
+
+                        }}>Сохранить
+                        </button>
+                    </p>
+                </div>
                 <Area/>
                 <MyModal visible={visibleDell} setVisible={setVisibleDell}>
                     <DellBlock setVisible={setVisibleDell}  setMyModal = {setMyModal} setName = {setName}/>

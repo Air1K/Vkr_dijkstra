@@ -13,7 +13,7 @@ const BlokNewPlan = ({setVisible}) => {
                     <br/>
                     Название плана:
                     <input type="text" placeholder="Название плана" value={name_plan} onChange={event => setNamePlan(event.target.value)} />
-                    <button onClick={()=>{setVisible(false)}}>Создать план</button>
+                    <button onClick={()=>{ setVisible(false)}}>Создать план</button>
                 </div>
             </div>
         </div>

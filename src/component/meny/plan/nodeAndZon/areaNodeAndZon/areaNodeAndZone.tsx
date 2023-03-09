@@ -8,7 +8,7 @@ import Zone from "./zone/zone";
 import PanelLeft from "./zone/panelLeft/panelLeft";
 
 
-const AreaNodeAndZone = ({obj, objCache, render_line, editNodeS, myModalZone, setMyModalZone}) => {
+const AreaNodeAndZone = ({obj, objCache, render_line, editNodeS, myModalZone, setMyModalZone, edit}) => {
     const {store} = useContext(Context);
     const [obj_Rotation, setObj_Rotation] = useState<Rotation[]>(store.Rotation)
     const [graph, setGraph] = useState<Graph[]>(store.idGraph)
@@ -204,20 +204,10 @@ const AreaNodeAndZone = ({obj, objCache, render_line, editNodeS, myModalZone, se
                            idVisible={idVisible}
                            setIdVisible={setIdVisible}
                            nameVisible={nameVisible}
-                           setNameVisible={setNameVisible}/>
+                           setNameVisible={setNameVisible}
+                           edit={edit}/>
             </div>
-            <div className={styles.checkboxAndButton}>
-                <p>
-                    <button onClick={async () => {
 
-
-                        console.log(obj)
-                        console.log(objCache)
-
-                    }}>Сохранить
-                    </button>
-                </p>
-            </div>
         </div>
 
     );

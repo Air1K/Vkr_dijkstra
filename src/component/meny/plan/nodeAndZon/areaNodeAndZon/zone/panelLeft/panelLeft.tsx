@@ -11,37 +11,43 @@ const PanelLeft = ({
                        draggableEl, setDraggableEl, zone, setZone,
                        checkDrag, setCheckDrag, ves, setVes, line,
                        setLine, idVisible, setIdVisible, nameVisible,
-                       setNameVisible
+                       setNameVisible, edit
                    }) => {
 
     const [onClocChek, setOnClocChek] = useState(true)
     const [classStyle_leftBlokAnim, setClassStyle_leftBlokAnim] = useState(styles.main_left)
     const [classStyle_icoAnim, setClassStyle_icoAnim] = useState(styles.a_ico)
-    function effects(){
-            setOnClocChek(!onClocChek)
-            if(onClocChek){
-                setClassStyle_leftBlokAnim(classStyle_leftBlokAnim + ' ' + styles.main_left_onClik)
-                setClassStyle_icoAnim(classStyle_icoAnim + ' ' + styles.a_ico_onClick)
-            }else{
-                setClassStyle_leftBlokAnim(styles.main_left)
-                setClassStyle_icoAnim(styles.a_ico)
-            }
+
+    function effects() {
+        setOnClocChek(!onClocChek)
+        if (onClocChek) {
+            setClassStyle_leftBlokAnim(classStyle_leftBlokAnim + ' ' + styles.main_left_onClik)
+            setClassStyle_icoAnim(classStyle_icoAnim + ' ' + styles.a_ico_onClick)
+        } else {
+            setClassStyle_leftBlokAnim(styles.main_left)
+            setClassStyle_icoAnim(styles.a_ico)
+        }
     }
+
     return (
         <div className={classStyle_leftBlokAnim}>
             <div>
                 <p>
                     <label>
-                        <input accept="image/*" type='file' id="imgInp"
+                        <input accept="image/*"
+                               type='file'
+                               id="imgInp"
                                onChange={(e) => {
                                    setImgFon(URL.createObjectURL(e.target.files[0]))
-                               }}/>
+                               }}
+                               disabled={!edit}/>
                     </label>
                 </p>
                 <p className="switch">
                     <label>
                         Размер зоны
                         <input type="checkbox"
+                               disabled={!edit}
                                defaultChecked={draggableEl}
                                onChange={() => {
                                    setDraggableEl(!draggableEl);
@@ -52,7 +58,9 @@ const PanelLeft = ({
                 </p>
                 <p>
                     <label>
-                        <input type="checkbox" defaultChecked={zone}
+                        <input type="checkbox"
+                               defaultChecked={zone}
+                               disabled={!edit}
                                onChange={() => {
                                    setZone(!zone);
                                }}/>
@@ -61,7 +69,9 @@ const PanelLeft = ({
                 </p>
                 <p>
                     <label>
-                        <input type="checkbox" defaultChecked={checkDrag}
+                        <input type="checkbox"
+                               defaultChecked={checkDrag}
+                               disabled={!edit}
                                onChange={() => {
                                    setCheckDrag(!checkDrag);
                                }}/>
@@ -70,7 +80,8 @@ const PanelLeft = ({
                 </p>
                 <p>
                     <label>
-                        <input type="checkbox" defaultChecked={ves}
+                        <input type="checkbox"
+                               defaultChecked={ves}
                                onChange={() => {
                                    setVes(!ves);
                                }}/>
@@ -79,7 +90,8 @@ const PanelLeft = ({
                 </p>
                 <p>
                     <label>
-                        <input type="checkbox" defaultChecked={line}
+                        <input type="checkbox"
+                               defaultChecked={line}
                                onChange={() => {
                                    setLine(!line);
                                }}/>
@@ -88,7 +100,8 @@ const PanelLeft = ({
                 </p>
                 <p>
                     <label>
-                        <input type="checkbox" defaultChecked={idVisible}
+                        <input type="checkbox"
+                               defaultChecked={idVisible}
                                onChange={() => {
                                    setIdVisible(!idVisible);
                                }}/>
@@ -97,7 +110,8 @@ const PanelLeft = ({
                 </p>
                 <p>
                     <label>
-                        <input type="checkbox" defaultChecked={nameVisible}
+                        <input type="checkbox"
+                               defaultChecked={nameVisible}
                                onChange={() => {
                                    setNameVisible(!nameVisible);
                                }}/>
@@ -106,15 +120,21 @@ const PanelLeft = ({
                 </p>
 
                 <p title="Прозрачность зон" className="range-field">
-                    <input type="range" id="test5" min="0" max="100" value={visibleZon} onChange={(e) => {
+                    <input type="range"
+                           id="test5"
+                           min="0"
+                           max="100"
+                           value={visibleZon}
+                           onChange={(e) => {
                         setVisibleZon(e.target.value);
                     }}
                     />
                 </p>
             </div>
-            <div className={classStyle_icoAnim} onClick={effects}>
+            <div className={classStyle_icoAnim}
+                 onClick={effects}>
                 {/*<div className={styles.ico}></div>*/}
-                <FontAwesomeIcon className={styles.ico} icon={faAnglesLeft} />
+                <FontAwesomeIcon className={styles.ico} icon={faAnglesLeft}/>
             </div>
         </div>
 

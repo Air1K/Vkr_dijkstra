@@ -11,10 +11,6 @@ const Zone = ({myModalZone, parentRef, setMyModalZone, draggableEl, setDraggable
     const [state, setState] = useState(store.sizeZon)
     // let initialState: SizeZon[] = store.sizeZon;
     useEffect(() => {
-        // dispatch({type: 'dell'})
-        // dispatch({type: 'add'});
-        // console.log(store.sizeZon);
-        // console.log(state);
         setState(store.sizeZon)
     }, [myModalZone])
     const parent_Ref = useRef<HTMLDivElement>(null)

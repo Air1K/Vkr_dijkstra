@@ -10,6 +10,7 @@ import Search from "./component/meny/search/search";
 import Otchet from "./component/meny/otchet/otchet";
 import './style/style.sass'
 import MyModal from "./component/meny/myModal/myModal";
+import SearchRout from "./component/searchRout";
 
 function App() {
     const {store} = useContext(Context);
@@ -25,7 +26,7 @@ function App() {
                     <Route path="" element={<NewComponentMain/>}/>
                     <Route path="authorization" element={<Authorization/>}/>
                     <Route path="main" element={<Main/>}/>
-                    <Route path="main/search" element={<Search/>}/>
+                    <Route path="main/search" element={<SearchRout/>}/>
                     <Route path="main/plan" element={<VvodPlana/>}/>
                     <Route path="main/otchet" element={<Otchet/>}/>
                 </Routes>

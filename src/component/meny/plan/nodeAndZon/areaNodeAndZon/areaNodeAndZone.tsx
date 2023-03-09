@@ -5,6 +5,7 @@ import AreaMotion from "./areaMotion/areaMotion";
 import {Rotation} from "../../../../../models/Rotation";
 import {Graph} from "../../../../../models/Graph";
 import Zone from "./zone/zone";
+import PanelLeft from "./zone/panelLeft/panelLeft";
 
 
 const AreaNodeAndZone = ({obj, objCache, render_line, editNodeS, myModalZone, setMyModalZone}) => {
@@ -183,92 +184,29 @@ const AreaNodeAndZone = ({obj, objCache, render_line, editNodeS, myModalZone, se
                     setMyModalZone={setMyModalZone}
                     draggableEl={draggableEl}
                     setDraggableEl={setDraggableEl}
-                    visibleZon = {visibleZon}
+                    visibleZon={visibleZon}
+                    zon={zone}
                 />
+                <PanelLeft visibleZon={visibleZon}
+                           setVisibleZon={setVisibleZon}
+                           imgFon={imgFon}
+                           setImgFon={setImgFon}
+                           draggableEl={draggableEl}
+                           setDraggableEl={setDraggableEl}
+                           zone={zone}
+                           setZone={setZone}
+                           checkDrag={checkDrag}
+                           setCheckDrag={setCheckDrag}
+                           ves={ves}
+                           setVes={setVes}
+                           line={line}
+                           setLine={setLine}
+                           idVisible={idVisible}
+                           setIdVisible={setIdVisible}
+                           nameVisible={nameVisible}
+                           setNameVisible={setNameVisible}/>
             </div>
             <div className={styles.checkboxAndButton}>
-                <p title="Прозрачность зон" className="range-field" style={{transform: "rotate(-90deg)", top: "-606px", left:"55px", height:" 35px"}}>
-                    <input type="range"  id="test5" min="0" max="100" value={visibleZon} onChange={(e) => {
-                        setVisibleZon(e.target.value);
-                    }}
-                    />
-                </p>
-                <p>
-                    <label>
-                        <input accept="image/*" type='file' id="imgInp"
-                               onChange={(e) => {
-                                   setImgFon(URL.createObjectURL(e.target.files[0]))
-                                   console.log(imgFon)
-                               }}/>
-                    </label>
-                </p>
-                <p className="switch">
-                    <label>
-                        resize
-                        <input type="checkbox"
-                               defaultChecked={draggableEl}
-                               onChange={() => {
-                                   setDraggableEl(!draggableEl);
-                               }}/>
-                        <span className="lever"></span>
-                        drag
-                    </label>
-                </p>
-                <p>
-                    <label>
-                        <input type="checkbox" defaultChecked={zone}
-                               onChange={() => {
-                                   setZone(!zone);
-                               }}/>
-                        <span>edit zone</span>
-                    </label>
-                </p>
-                <p>
-                    <label>
-                        <input type="checkbox" defaultChecked={checkDrag}
-                               onChange={() => {
-                                   setCheckDrag(!checkDrag);
-                               }}/>
-                        <span>edit node</span>
-                    </label>
-                </p>
-                <p>
-                    <label>
-                        <input type="checkbox" defaultChecked={ves}
-                               onChange={() => {
-                                   setVes(!ves);
-                               }}/>
-                        <span>ves</span>
-                    </label>
-                </p>
-                <p>
-                    <label>
-                        <input type="checkbox" defaultChecked={line}
-                               onChange={() => {
-                                   setLine(!line);
-                               }}/>
-                        <span>line</span>
-                    </label>
-                </p>
-                <p>
-                    <label>
-                        <input type="checkbox" defaultChecked={idVisible}
-                               onChange={() => {
-                                   setIdVisible(!idVisible);
-                               }}/>
-                        <span>id</span>
-                    </label>
-                </p>
-                <p>
-                    <label>
-                        <input type="checkbox" defaultChecked={nameVisible}
-                               onChange={() => {
-                                   setNameVisible(!nameVisible);
-                               }}/>
-                        <span>name</span>
-                    </label>
-                </p>
-
                 <p>
                     <button onClick={async () => {
 
@@ -278,11 +216,6 @@ const AreaNodeAndZone = ({obj, objCache, render_line, editNodeS, myModalZone, se
 
                     }}>Сохранить
                     </button>
-                    {/*<button onClick={() => {*/}
-                    {/*    setOtrisovka(true);*/}
-                    {/*    setEditNodeS(true)*/}
-                    {/*}}>Отрисовать*/}
-                    {/*</button>*/}
                 </p>
             </div>
         </div>

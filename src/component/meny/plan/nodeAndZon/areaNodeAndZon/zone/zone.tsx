@@ -3,9 +3,8 @@ import styles from './stylesZone.module.sass'
 import {Context} from "../../../../../../index";
 import {SizeZon} from "../../../../../../models/SizeZon";
 import {motion, useDragControls} from "framer-motion";
-import {Resizable} from 'react-resizable';
 
-const Zone = ({myModalZone, parentRef, setMyModalZone, draggableEl, setDraggableEl, visibleZon}) => {
+const Zone = ({myModalZone, parentRef, setMyModalZone, draggableEl, setDraggableEl, visibleZon, zon}) => {
     const controls = useDragControls()
     const {store} = useContext(Context);
 
@@ -19,7 +18,15 @@ const Zone = ({myModalZone, parentRef, setMyModalZone, draggableEl, setDraggable
         setState(store.sizeZon)
     }, [myModalZone])
     const parent_Ref = useRef<HTMLDivElement>(null)
+    const [classStyles_main, setClassStyles_main] = useState(styles.main)
+    useEffect(()=>{
+        if(zon){
+            setClassStyles_main(styles.main)
+        }else{
+            setClassStyles_main(styles.main + ' ' + styles.main_zonEdit)
+        }
 
+    },[zon])
     // function reducer(state, action) {
     //     console.log("reducer: ", action)
     //     console.log(state)
@@ -73,7 +80,7 @@ const Zone = ({myModalZone, parentRef, setMyModalZone, draggableEl, setDraggable
                     <motion.div
                         key={id}
                         drag
-                        dragListener={draggableEl}
+                        dragListener={draggableEl && zon}
                         dragMomentum={false}
                         dragElastic={.5}
                         onClick={(e)=>{
@@ -109,7 +116,7 @@ const Zone = ({myModalZone, parentRef, setMyModalZone, draggableEl, setDraggable
                         dragConstraints={parent_Ref}
 
 
-                        className={styles.main}
+                        className={classStyles_main}
                         style={{width: zone.widtH + "px", height: zone.heighT + "px"}}
                         initial={{y: zone.toP, x: zone.lefT}}
                         // onDragEnd={()=>{setDraggableEl(false)}}

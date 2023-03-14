@@ -1,13 +1,9 @@
 import {Graph} from "../models/Graph";
 import {makeAutoObservable} from "mobx";
-import {IdGraph} from "../models/IdFraph";
-import {Session} from "inspector";
-// let arr: Graph[] = [];
 import {IUser} from "../models/IUser";
 import {Rotation} from "../models/Rotation";
 import {SizeZon} from "../models/SizeZon";
 
-let self;
 
 export default class Store {
     // idGraph = [{} as Graph];
@@ -28,7 +24,6 @@ export default class Store {
 
     constructor() {
         makeAutoObservable(this);
-       self = this;
     }
 
 
@@ -284,7 +279,7 @@ export default class Store {
         let i = this.matrixsmesh.length;
         matrixSmej[i] = []
         for (let j = 0; j < this.idGraph.length; j++) {
-            if (i == j) {
+            if (i === j) {
                 matrixSmej[i][j] = 0
             } else {
                 matrixSmej[i][j] = 99999
@@ -342,13 +337,13 @@ export default class Store {
     }
 
     matrixSme() {
-        if (this.matrixsmesh.length == 0) {
+        if (this.matrixsmesh.length === 0) {
             console.log(this.idGraph.length)
             const matrixSmej = []
             for (let i = 0; i < this.idGraph.length; i++) {
                 matrixSmej[i] = []
                 for (let j = 0; j < this.idGraph.length; j++) {
-                    if (i == j) {
+                    if (i === j) {
                         matrixSmej[i][j] = 0
                     } else {
                         matrixSmej[i][j] = 99999
@@ -402,15 +397,15 @@ export default class Store {
             return
         }
 
-        if (this.idGraph.length != this.matrixsmesh.length) {
+        if (this.idGraph.length !== this.matrixsmesh.length) {
             await this.matrixSme();
         }
 
         for (let i = 0; i < this.idGraph.length; i++) {
-            if (this.idGraph[i].num == G1) {
+            if (this.idGraph[i].num === G1) {
                 a = i;
             }
-            if (this.idGraph[i].num == G2) {
+            if (this.idGraph[i].num === G2) {
                 b = i;
             }
         }
@@ -442,10 +437,10 @@ export default class Store {
 
         //ПОИСК ID A1 и A2
         for (let i = 0; i < this.idGraph.length; i++) {
-            if (this.idGraph[i].num == A1) {
+            if (this.idGraph[i].num === A1) {
                 a = i;
             }
-            if (this.idGraph[i].num == A2) {
+            if (this.idGraph[i].num === A2) {
                 b = i;
             }
         }
@@ -470,12 +465,11 @@ export default class Store {
         console.log(this.matrixsmesh)
         //Поиск наименьших значений
 
-        let index_el = 0;
         while (!PutNaiden) {
             if (!PutNaiden) {
                 for (let j = 0; j < this.idGraph.length; j++) {
 
-                    if (mass[j][0] >= this.matrixsmesh[search_flag][j] + mass[search_flag][0] && this.matrixsmesh[search_flag][j] != 0 && !mass[j][2]) {
+                    if (mass[j][0] >= this.matrixsmesh[search_flag][j] + mass[search_flag][0] && this.matrixsmesh[search_flag][j] !== 0 && !mass[j][2]) {
 
                         mass[j][0] = this.matrixsmesh[search_flag][j] + mass[search_flag][0];
                         mass[j][1] = search_flag;
@@ -487,13 +481,12 @@ export default class Store {
                         search_flag = min_el;
 
 
-                        if (min_el == b) {
+                        if (min_el === b) {
 
                             console.log(mass_arr);
                             // this.setMass_putei(mass_arr);
                             PutNaiden = true;
                             if (PutNaiden) {
-                                let i = b;
                                 let search: (number | boolean) = mass[b][1];
                                 let arr_mass_exit = [b];
 

@@ -7,6 +7,7 @@ import {IUser} from "../models/IUser";
 import {Rotation} from "../models/Rotation";
 import {SizeZon} from "../models/SizeZon";
 
+let self;
 
 export default class Store {
     // idGraph = [{} as Graph];
@@ -27,7 +28,9 @@ export default class Store {
 
     constructor() {
         makeAutoObservable(this);
+       self = this;
     }
+
 
     setAuth(bool: boolean) {
         this.isAuth = bool;
@@ -93,6 +96,13 @@ export default class Store {
     upgradeSizeZon() {
         let json = JSON.stringify(this.sizeZon);
         sessionStorage.setItem("sizeZon", json);
+    }
+
+    upgradeAuth(state: boolean, obj:{}){
+        const Auth = JSON.stringify(state)
+        sessionStorage.setItem('Auth', Auth);
+        const user = JSON.stringify(obj)
+        sessionStorage.setItem('user', user);
     }
 
     setRotation(idA: number, idB: number, long: number, rotade: number, centerX: number, centerY: number) {
@@ -197,7 +207,7 @@ export default class Store {
     }
 
 
-    update() {
+    async update() {
         if (sessionStorage.getItem("graph")) {
             const mass = JSON.parse(sessionStorage.getItem("graph"))
             this.setGraph(mass)
@@ -228,29 +238,44 @@ export default class Store {
 
     async login(email: string, password: string) {
         try {
+            console.log(email)
+            let roles;
+            if(email === 'veremeenko_2001@bk.ru'){
+                roles = 'storekeeper'
+            }
+            else{
+                roles = 'Warehouse_Manager'
+            }
             const obj = {
                 email: email,
                 id: 'default',
                 username: 'default',
                 name: 'default',
-                role: 'storekeeper'
+                role: roles
             }
             // const response = await AuthService.login(email, password);
             // console.log(response);
             // localStorage.setItem('token', response.data.accessToken);
             this.setAuth(true);
             this.setUser(obj);
-            const Auth = JSON.stringify(true)
-            console.log(Auth)
-            sessionStorage.setItem('Auth', Auth);
-            const user = JSON.stringify(obj)
-            console.log(user)
-            sessionStorage.setItem('user', user);
-
+            this.upgradeAuth(true, obj);
+            console.log(this)
         } catch (e) {
             console.log(e.response?.data?.message);
             this.setMessages(e.response?.data?.message);
         }
+    }
+
+   async logoutE(){
+       try {
+           this.setAuth(false);
+           this.setUser(undefined);
+           this.upgradeAuth(false, this.user);
+
+       }
+       catch (next){
+           console.log(next)
+       }
     }
 
     addMatrixEl() {

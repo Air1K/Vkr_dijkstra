@@ -10,8 +10,6 @@ const Authorization = () => {
 
     const {store} = useContext(Context);
 
-    const [link_main, setLink_main] = useState(false);
-
 
     const [email, setEmail] = useState(``);
     const [password, setPassword] = useState(``);
@@ -114,7 +112,6 @@ const Authorization = () => {
                     <div className="conteiner_Log_reg">
                         <div className={styles.buttom_div}>
                             <Link to="/main" onClick={server} className="button8">Войти</Link>
-                            {link_main ? <Navigate to="/"/> : <div/>}
                             <div className="passwordError" style={{color: 'red'}}>{store.messages}</div>
                         </div>
                         {/*<div className="bottom_registr">*/}

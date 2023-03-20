@@ -4,10 +4,10 @@ import {Link, Navigate} from "react-router-dom";
 import './main_style.sass'
 import Fon from '../img/uborka-sklada-form2.jpg'
 import styles from './stylesMain_2.module.sass'
-import Otchet from "./meny/otchet/otchet";
 import MyModal from "./meny/myModal/myModal";
 import BlokNewPlan from "./meny/plan/blokNewPlan/blokNewPlan";
 import NewZone from "./meny/plan/newZone/newZone";
+
 
 const Main = () => {
     const {store} = useContext(Context);
@@ -19,8 +19,6 @@ const Main = () => {
         store.update()
         setAuth(store.isAuth);
         setRole(store.user.role);
-        RoleFunck();
-        // RenderLog()
     }, [])
     console.log(role);
 
@@ -92,10 +90,10 @@ const Main = () => {
                     <nav role="navigation" className="primary-navigation">
 
                         <ul>
-                            <li><a href="#" data-hover="Show">Показать план склада</a></li>
-                            <li><a href="#" data-hover="List">Журнал перевозок</a></li>
-                            <li><a href="#" data-hover="Form">Аналитика перевозок</a></li>
-                            <li><Link to="/authorization" data-hover="Exit" onClick={store.logoutE}>Выйти из системы</Link></li>
+                            <li><Link to="plan_status" data-hover="Show">Показать план склада</Link></li>
+                            <li><Link to="main/list" data-hover="List">Журнал перевозок</Link></li>
+                            <li><Link to="main/analytics" data-hover="Form">Аналитика перевозок</Link></li>
+                            <li><Link to="/authorization" data-hover="Exit" onClick={()=>{store.logoutE()}}>Выйти из системы</Link></li>
                             <li style={{height: "64px"}} className={styles.div_li}>
                                 <div className={'input-field '} style={{display: "flex", alignItems: "center"}}>
                                     <select className="browser-default" style={{
@@ -121,7 +119,7 @@ const Main = () => {
                 </div>
             )
         }
-        return null
+        return (<div></div>)
     }
 
     return (
@@ -140,6 +138,7 @@ const Main = () => {
 
             </div>
         </div>
+
     );
 };
 

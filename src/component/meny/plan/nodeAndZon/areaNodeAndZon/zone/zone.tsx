@@ -23,50 +23,6 @@ const Zone = ({myModalZone, parentRef, setMyModalZone, draggableEl, setDraggable
         }
 
     },[zon])
-    // function reducer(state, action) {
-    //     console.log("reducer: ", action)
-    //     console.log(state)
-    //     if(state.length !== 0 && state[action?.id]?.widtH ===action?.widtH_) {
-    //         return state;
-    //     }
-    //     if(state.length !== 0 && state[action.id]?.heighT === action?.heighT_) {
-    //         return state;
-    //     }
-    //     switch (action.type) {
-    //         case 'top':
-    //             state[action.id].heighT = action.heighT_;
-    //             return [...state];
-    //         case 'left':
-    //             state[action.id].widtH = action.widtH_
-    //             return [...state];
-    //         case 'right':
-    //             state[action.id].widtH = action.widtH_
-    //             return [...state];
-    //         case 'bottom':
-    //             state[action.id].heighT = action.heighT_;
-    //             return [...state];
-    //         case 'add':
-    //             return store.sizeZon
-    //         case 'dell':
-    //             return []
-    //         default:
-    //             throw new Error();
-    //     }
-    // }
-
-    // const [state, dispatch] = useReducer(reducer, initialState);
-
-    // const prov = (action) => {
-    //     switch (action.pradXY) {
-    //         case 'y':
-    //             return 'y';
-    //         case 'x':
-    //             return 'x';
-    //         default:
-    //             throw new Error();
-    //     }
-    // }
-
 
     return (
         <div ref={parent_Ref}

@@ -23,11 +23,12 @@ function App() {
     useEffect(() => {
         store.update()
         console.log("Обновил !!!!!!!!!!!");
+        setRoles(store.user.role)
 
     }, [])
     const Role = () => {
         {
-            setRoles(store.user.role)
+
         }
         if (roles === 'storekeeper') {
             return (

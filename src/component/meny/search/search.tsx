@@ -1,11 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../../../index";
 import styles from './stylesSearch.module.sass'
-import BackIco from "../../selector/backIco";
 import AreaNodeAndZone from "../plan/nodeAndZon/areaNodeAndZon/areaNodeAndZone";
-import AreaMotion from "../plan/nodeAndZon/areaNodeAndZon/areaMotion/areaMotion";
-import {Graph} from "../../../models/Graph";
-
+import Selected from "../../tag/select/select";
 const Search = () => {
     const {store} = useContext(Context);
     const [G1, setG1] = useState('')
@@ -20,7 +17,7 @@ const Search = () => {
 
     let objCache = []
 
-    useEffect(()=>{
+    useEffect(() => {
         for (let j = 0; j < store.idGraph.length; j++) {
             objCache[j] = {
                 id: j,
@@ -37,6 +34,7 @@ const Search = () => {
                 num: store.idGraph[j].num
             }
             console.log("Джопа")
+
         }
         setRender_line(true)
         setMyModalZone(true)
@@ -45,7 +43,7 @@ const Search = () => {
     const Strelka = (props) => {
         const index_ = props.ellement;
         console.log(index_, store.mass_putei_exit.length - 1)
-        if (index_ < store.mass_putei_exit.length - 1) {
+        if (index_ < store.mass_putei_exit[0].interval_node.length - 1) {
             return (<span>➜</span>)
         }
         return null;
@@ -91,11 +89,21 @@ const Search = () => {
                 </button>
             </div>
             <div className={styles.main}>
-                <h5>Результат поиска</h5>
-                {activ ? (<div><span>Длина найденого маршрута: </span> <Otvet/> <br/>
-                    <span>Маршрут: </span> &nbsp; {(store.mass_putei_exit.map((node_, indexe) => <span
-                        className={styles.puti} key={node_}> {store.idGraph[node_].num}&nbsp; <Strelka
-                        ellement={indexe}/> &nbsp;</span>))} <br/></div>) : (<div/>)}
+                <h5>Сводка о маршруте</h5>
+                <div className={styles.stringLable}>
+                    <div>
+                    <span>Выберите кротчайший маршрут: &nbsp; &nbsp;</span>
+                        <Selected/>
+                    </div>
+                    <span>Длина найденого маршрута: </span>
+                    <Otvet/>
+                    <br/>
+                    <span>Маршрут: </span> &nbsp;
+                    {(store.mass_putei_exit[0]?.interval_node.map((node_, indexe) => <span
+                    className={styles.puti} key={indexe}> {store.idGraph[node_].num}&nbsp; <Strelka
+                    ellement={indexe}/> &nbsp;</span>))}
+                    <br/>
+                </div>
             </div>
 
             <AreaNodeAndZone
@@ -107,7 +115,6 @@ const Search = () => {
                 setMyModalZone={setMyModalZone}
                 edit={edit}
             />
-
         </div>
     );
 };

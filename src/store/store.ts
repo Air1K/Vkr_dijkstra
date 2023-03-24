@@ -3,6 +3,7 @@ import {makeAutoObservable} from "mobx";
 import {IUser} from "../models/IUser";
 import {Rotation} from "../models/Rotation";
 import {SizeZon} from "../models/SizeZon";
+import {Route} from "../models/Route";
 
 
 export default class Store {
@@ -20,7 +21,7 @@ export default class Store {
     arr: Graph[] = [];
     matrixsmesh = [];
     mass_putei = [];
-    mass_putei_exit = [];
+    mass_putei_exit: Route[] = [];
 
     constructor() {
         makeAutoObservable(this);
@@ -190,7 +191,7 @@ export default class Store {
     }
 
     setMass_putei_exit(setMass_putei_exit) {
-        this.mass_putei_exit = setMass_putei_exit;
+        this.mass_putei_exit.push(setMass_putei_exit);
     }
 
     setMessages(message: string) {
@@ -488,18 +489,29 @@ export default class Store {
                             PutNaiden = true;
                             if (PutNaiden) {
                                 let search: (number | boolean) = mass[b][1];
-                                let arr_mass_exit = [b];
+                                let arr_mass_exit = [];
 
-                                while (arr_mass_exit[arr_mass_exit.length - 1] !== a) {
+                                while (arr_mass_exit[arr_mass_exit.length - 1] !== a && search !== a) {
                                     arr_mass_exit.push(search);
 
                                     const ass = Number(search)
                                     search = Number(mass[ass][1]);
                                 }
-                                this.setMass_putei_exit(arr_mass_exit.reverse())
+                                const route = {
+                                    name: 'name',
+                                    A: a,
+                                    B: b,
+                                    interval_node: arr_mass_exit.reverse(),
+                                    long: this.mass_putei[b][0]
+                                }
+                                this.setMass_putei_exit(route)
+
+                                // this.setMass_putei_exit(arr_mass_exit.reverse())
 
                                 this.setA(a);
                                 this.setB(b);
+                                console.log(arr_mass_exit)
+                                console.log(this.mass_putei)
                             }
                         }
                     }

@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../index";
-import {Link, Navigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import './main_style.sass'
 import Fon from '../img/uborka-sklada-form2.jpg'
 import styles from './stylesMain_2.module.sass'
@@ -56,7 +56,7 @@ const Main = () => {
                                 </ul>
                             </li>
                             <li><Link to="search" data-hover="Найти оптимальный маршрут">Оптимальный маршрут</Link></li>
-                            <li><Link to="otchet" data-hover="Сформировать отчет">Формирование отчета</Link></li>
+                            <li><Link to="otchet" data-hover="Сформировать отчет">Отчеты о маршрутах</Link></li>
                             <li><Link to="/authorization" data-hover="Exit" onClick={()=>{store.logoutE()}}>Выйти из системы</Link></li>
                             <li style={{height: "64px"}} className={styles.div_li}>
                                 <div className={'input-field '} style={{display: "flex", alignItems: "center"}}>
@@ -74,11 +74,6 @@ const Main = () => {
                         </ul>
 
                     </nav>
-
-                    {/*<a href="#">Ввод плана склада</a>*/}
-                    {/*<a href="#">Поиск оптимального маршрута</a>*/}
-                    {/*<a href="#">Формирование отчета</a>*/}
-                    {/*<a href="#">Выйти из системы</a>*/}
 
                 </div>)
         }
@@ -110,11 +105,6 @@ const Main = () => {
                         </ul>
 
                     </nav>
-
-                    {/*<a href="#">Ввод плана склада</a>*/}
-                    {/*<a href="#">Поиск оптимального маршрута</a>*/}
-                    {/*<a href="#">Формирование отчета</a>*/}
-                    {/*<a href="#">Выйти из системы</a>*/}
 
                 </div>
             )

@@ -1,17 +1,12 @@
 import React from 'react';
-import BackIco from "../../selector/backIco";
-import styles from './otchet.module.sass'
+import BackIco from "../../tag/backIco";
+import styles from '../../vvodPlanaStyle.module.sass'
 import styles_1 from "../search/stylesSearch.module.sass";
 
 const Otchet = () => {
     return (
         <div className={styles.main}>
-            <div className={`box-block ${styles.block}`}>
-                <h6>Формирование отчета</h6>
-                <input type="text" placeholder="Введите название созданного маршрута"/>
-                <div className={styles.button}><button>Сформировать отчет</button></div>
-
-            </div>
+            <BackIco/>
             <div className={styles_1.table}>
                 <table>
                     <thead style={{display: "table-row"}}>
@@ -30,7 +25,7 @@ const Otchet = () => {
                     </tr>
                 </table>
             </div>
-            <BackIco/>
+
         </div>
     );
 };

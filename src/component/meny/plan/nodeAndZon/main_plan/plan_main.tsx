@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import BackIco from "../../../../selector/backIco";
+import BackIco from "../../../../tag/backIco";
 import InputTochek from "../inputBlock/inputTochek";
 import Area from "../area/area";
 import Block from "../inputBlock/block";

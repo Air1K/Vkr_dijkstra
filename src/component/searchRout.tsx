@@ -1,5 +1,5 @@
 import React from 'react';
-import BackIco from "./selector/backIco";
+import BackIco from "./tag/backIco";
 import Search from "./meny/search/search";
 import styles from "./vvodPlanaStyle.module.sass";
 

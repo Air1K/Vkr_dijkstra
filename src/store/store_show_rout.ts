@@ -14,4 +14,7 @@ export default class Store_show_rout {
     add(){
         console.log(store.idGraph)
     }
+    show_route(){
+
+    }
 }

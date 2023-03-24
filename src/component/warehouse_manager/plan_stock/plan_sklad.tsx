@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from "../../vvodPlanaStyle.module.sass";
-import BackIco from "../../selector/backIco";
+import BackIco from "../../tag/backIco";
 import PlanStock from "./plan_stock";
 
 

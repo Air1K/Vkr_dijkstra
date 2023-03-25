@@ -7,23 +7,25 @@ import styles from './stylesMain_2.module.sass'
 import MyModal from "./meny/myModal/myModal";
 import BlokNewPlan from "./meny/plan/blokNewPlan/blokNewPlan";
 import NewZone from "./meny/plan/newZone/newZone";
+import {observer} from "mobx-react-lite";
 
 
-const Main = () => {
+const Main = observer(() => {
     const {store} = useContext(Context);
     const [visible, setVisible] = useState(false)
     const [visibleZon, setVisibleZon] = useState(false)
-    const [auth, setAuth] = useState(store.isAuth)
-    const [role, setRole] = useState(store.user.role)
+    // const [auth, setAuth] = useState(store.isAuth)
+    // const [role, setRole] = useState(store.user.role)
+    // const [activeUrl, setUrl] = useState(undefined);
     useEffect(() => {
         store.update()
-        setAuth(store.isAuth);
-        setRole(store.user.role);
+        // setAuth(store.isAuth);
+        // setRole(store.user.role);
     }, [])
-    console.log(role);
-
+    // console.log(role);
+console.log(store.stock_active)
     const RenderLog = () => {
-        if (!auth) {
+        if (!store.isAuth) {
             return (<div className={styles.autorisation}>
                 Вы не прошли авторизацию
                 <Link to="/authorization">Авторизироваться</Link>
@@ -32,13 +34,23 @@ const Main = () => {
         }
     }
 
+
+    const planStock = (event)=>{
+
+        store.setStockActive(event.target.value);
+        // setUrl(store.stock_active);
+
+    }
+
+
+
     const RoleFunck = () => {
 
-        if (role === 'storekeeper') {
+        if (store.user.role === 'storekeeper') {
 
             return (
                 <div className={styles.div_main}>
-
+                    {/*{store.stock_active}*/}
                     <nav role="navigation" className="primary-navigation">
 
                         <ul>
@@ -47,7 +59,7 @@ const Main = () => {
                                     <li><a href="#" onClick={() => {
                                         setVisible(true)
                                     }}>Создать план</a></li>
-                                    <li><Link to="plan">Создать точки и зоны</Link></li>
+                                    <li><Link to={"plan/" + store.stock_active + "plan"}>Создать точки и зоны</Link></li>
                                     <li><a href="#" onClick={() => {
                                         setVisibleZon(true)
                                     }}>Добавить тип зоны</a></li>
@@ -55,19 +67,22 @@ const Main = () => {
                                     <li><a href="#">Отобразить план</a></li>
                                 </ul>
                             </li>
-                            <li><Link to="search" data-hover="Найти оптимальный маршрут">Оптимальный маршрут</Link></li>
-                            <li><Link to="otchet" data-hover="Сформировать отчет">Отчеты о маршрутах</Link></li>
+                            <li><Link to={"plan/" + store.stock_active + "search"} data-hover="Найти оптимальный маршрут">Оптимальный маршрут</Link></li>
+                            <li><Link to={"plan/" + store.stock_active + "otchet"} data-hover="Сформировать отчет">Отчеты о маршрутах</Link></li>
                             <li><Link to="/authorization" data-hover="Exit" onClick={()=>{store.logoutE()}}>Выйти из системы</Link></li>
                             <li style={{height: "64px"}} className={styles.div_li}>
                                 <div className={'input-field '} style={{display: "flex", alignItems: "center"}}>
                                     <select className="browser-default" style={{
                                         backgroundColor: "rgb(255 255 255 / 0%)",
-                                        border: '1px solid #f2f2f200'
-                                    }}>
-                                        <option value="" disabled selected>Выбрать план склада</option>
-                                        <option value="1">Option 1</option>
-                                        <option value="2">Option 2</option>
-                                        <option value="3">Option 3</option>
+                                        border: '1px solid #f2f2f200',
+                                        minWidth: "200px"
+                                    }}
+                                    onChange={(event)=>{planStock(event)}}
+                                    >
+                                        {store.stock_active ?<option value={store.stock_active} disabled selected>{store.stock_active}.&nbsp;{store.plan[store.stock_active].name}</option> :<option value="" disabled selected>Выбрать план склада</option>}
+                                        {store.plan.map((plan, index) =>
+                                            <option key={index} value={plan.id}>{plan.id}.&nbsp;{plan.name}</option>
+                                        )}
                                     </select>
                                 </div>
                             </li>
@@ -77,7 +92,7 @@ const Main = () => {
 
                 </div>)
         }
-        if (role === 'Warehouse_Manager') {
+        if (store.user.role === 'Warehouse_Manager') {
             return (
 
                 <div className={styles.div_main}>
@@ -85,9 +100,9 @@ const Main = () => {
                     <nav role="navigation" className="primary-navigation">
 
                         <ul>
-                            <li><Link to="plan_status" data-hover="Show">Показать план склада</Link></li>
-                            <li><Link to="main/list" data-hover="List">Журнал перевозок</Link></li>
-                            <li><Link to="main/analytics" data-hover="Form">Аналитика перевозок</Link></li>
+                            <li><Link to={"plan/" + store.stock_active + "plan_status"} data-hover="Show">Показать план склада</Link></li>
+                            <li><Link to={"plan/" + store.stock_active + "main/list"} data-hover="List">Журнал перевозок</Link></li>
+                            <li><Link to={"plan/" + store.stock_active + "main/analytics"} data-hover="Form">Аналитика перевозок</Link></li>
                             <li><Link to="/authorization" data-hover="Exit" onClick={()=>{store.logoutE()}}>Выйти из системы</Link></li>
                             <li style={{height: "64px"}} className={styles.div_li}>
                                 <div className={'input-field '} style={{display: "flex", alignItems: "center"}}>
@@ -96,9 +111,9 @@ const Main = () => {
                                         border: '1px solid #f2f2f200'
                                     }}>
                                         <option value="" disabled selected>Выбрать план склада</option>
-                                        <option value="1">Option 1</option>
-                                        <option value="2">Option 2</option>
-                                        <option value="3">Option 3</option>
+                                        {store.plan.map((plan, index) =>
+                                        <option key={index} value={plan.name}>{plan.name}</option>
+                                            )}
                                     </select>
                                 </div>
                             </li>
@@ -123,13 +138,13 @@ const Main = () => {
             <img className={styles.img} src={Fon} alt=""/>
             <div className={styles.fon}>
                 <h2 style={{textAlign: "center", margin: 0}}>Главное окно АС"Складская логистика"</h2>
-                {auth ?
+                {store.isAuth ?
                     (<RoleFunck/>) : (<RenderLog/>)}
 
             </div>
         </div>
 
     );
-};
+});
 
 export default Main;

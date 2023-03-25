@@ -4,6 +4,7 @@ import {IUser} from "../models/IUser";
 import {Rotation} from "../models/Rotation";
 import {SizeZon} from "../models/SizeZon";
 import {Route} from "../models/Route";
+import {Plan} from "../models/Plan";
 
 
 export default class Store {
@@ -22,6 +23,8 @@ export default class Store {
     matrixsmesh = [];
     mass_putei = [];
     mass_putei_exit: Route[] = [];
+    plan: Plan[] = [];
+    stock_active: number
 
     constructor() {
         makeAutoObservable(this);
@@ -30,6 +33,27 @@ export default class Store {
 
     setAuth(bool: boolean) {
         this.isAuth = bool;
+    }
+
+    setStockActive(stock_active: number){
+        this.stock_active = stock_active;
+        this.upgradePlanActive();
+        console.log("Отработал актив")
+    }
+
+    setPlanAdd(name){
+        const id = this.plan.length;
+        const obj = {
+            id: id,
+            name: name
+        }
+        this.plan.push(obj);
+        this.upgradePlan();
+        console.log(this.plan);
+    }
+
+    setPlan(obj: Plan[]){
+        this.plan = obj;
     }
 
     setSizeZon(color){
@@ -99,6 +123,15 @@ export default class Store {
         sessionStorage.setItem('Auth', Auth);
         const user = JSON.stringify(obj)
         sessionStorage.setItem('user', user);
+    }
+
+    upgradePlan() {
+        let json = JSON.stringify(this.plan);
+        sessionStorage.setItem("plan", json);
+    }
+    upgradePlanActive() {
+        let json = JSON.stringify(this.stock_active);
+        sessionStorage.setItem("stock_active", json);
     }
 
     setRotation(idA: number, idB: number, long: number, rotade: number, centerX: number, centerY: number) {
@@ -228,6 +261,14 @@ export default class Store {
         if (sessionStorage.getItem("sizeZon")) {
             const sizeZon = JSON.parse(sessionStorage.getItem("sizeZon"))
             this.setRead(sizeZon, 0, 'update')
+        }
+        if (sessionStorage.getItem("plan")) {
+            const plan = JSON.parse(sessionStorage.getItem("plan"))
+            this.setPlan(plan)
+        }
+        if (sessionStorage.getItem("stock_active")) {
+            const stock_active = JSON.parse(sessionStorage.getItem("stock_active"))
+            this.setStockActive(stock_active)
         }
     }
 

@@ -6,7 +6,7 @@ import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
 import styles from './stuleAuth.module.sass'
 
-const Authorization = ({setRoles}) => {
+const Authorization = () => {
 
     const {store} = useContext(Context);
 
@@ -61,8 +61,7 @@ const Authorization = ({setRoles}) => {
 
         if (!(emailError || passwordError)) {
             await store.login(email, password);
-            setRoles(store.user.role)
-            // await setLink_main(store.isAuth);
+
             console.log(store.isAuth);
         }
 

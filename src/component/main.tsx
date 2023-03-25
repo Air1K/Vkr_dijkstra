@@ -59,7 +59,7 @@ console.log(store.stock_active)
                                     <li><a href="#" onClick={() => {
                                         setVisible(true)
                                     }}>Создать план</a></li>
-                                    <li><Link to={"plan/" + store.stock_active + "plan"}>Создать точки и зоны</Link></li>
+                                    <li><Link to={"plan/" + store.plan[store.stock_active]?.name + "/plan"}>Создать точки и зоны</Link></li>
                                     <li><a href="#" onClick={() => {
                                         setVisibleZon(true)
                                     }}>Добавить тип зоны</a></li>
@@ -67,8 +67,8 @@ console.log(store.stock_active)
                                     <li><a href="#">Отобразить план</a></li>
                                 </ul>
                             </li>
-                            <li><Link to={"plan/" + store.stock_active + "search"} data-hover="Найти оптимальный маршрут">Оптимальный маршрут</Link></li>
-                            <li><Link to={"plan/" + store.stock_active + "otchet"} data-hover="Сформировать отчет">Отчеты о маршрутах</Link></li>
+                            <li><Link to={"plan/" + store.plan[store.stock_active]?.name + "/search"} data-hover="Найти оптимальный маршрут">Оптимальный маршрут</Link></li>
+                            <li><Link to={"plan/" + store.plan[store.stock_active]?.name + "/otchet"} data-hover="Сформировать отчет">Отчеты о маршрутах</Link></li>
                             <li><Link to="/authorization" data-hover="Exit" onClick={()=>{store.logoutE()}}>Выйти из системы</Link></li>
                             <li style={{height: "64px"}} className={styles.div_li}>
                                 <div className={'input-field '} style={{display: "flex", alignItems: "center"}}>
@@ -100,9 +100,9 @@ console.log(store.stock_active)
                     <nav role="navigation" className="primary-navigation">
 
                         <ul>
-                            <li><Link to={"plan/" + store.stock_active + "plan_status"} data-hover="Show">Показать план склада</Link></li>
-                            <li><Link to={"plan/" + store.stock_active + "main/list"} data-hover="List">Журнал перевозок</Link></li>
-                            <li><Link to={"plan/" + store.stock_active + "main/analytics"} data-hover="Form">Аналитика перевозок</Link></li>
+                            <li><Link to={"plan/" + store.plan[store.stock_active]?.name + "/plan_status"} data-hover="Show">Показать план склада</Link></li>
+                            <li><Link to={"plan/" + store.plan[store.stock_active]?.name + "/main/list"} data-hover="List">Журнал перевозок</Link></li>
+                            <li><Link to={"plan/" + store.plan[store.stock_active]?.name + "/main/analytics"} data-hover="Form">Аналитика перевозок</Link></li>
                             <li><Link to="/authorization" data-hover="Exit" onClick={()=>{store.logoutE()}}>Выйти из системы</Link></li>
                             <li style={{height: "64px"}} className={styles.div_li}>
                                 <div className={'input-field '} style={{display: "flex", alignItems: "center"}}>

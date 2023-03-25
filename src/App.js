@@ -15,54 +15,55 @@ import PlanSklad from "./component/warehouse_manager/plan_stock/plan_sklad";
 import Analitics from "./component/warehouse_manager/analytics/analitics";
 import List_rout from "./component/warehouse_manager/list_rout/list_rout";
 import ListRout from "./component/warehouse_manager/list_rout/list_rout";
+import {observer} from "mobx-react-lite";
 
-function App() {
+const App = observer(()=> {
     const {store} = useContext(Context);
-    const [roles, setRoles] = useState(store.user.role);
+    // const [roles, setRoles] = useState(store.user.role);
 
     useEffect(() => {
         store.update()
         console.log("Обновил !!!!!!!!!!!");
-        setRoles(store.user.role)
+        // setRoles(store.user.role)
 
-    }, [])
+    }, [store.stock_active])
     const Role = () => {
         {
 
         }
-        if (roles === 'storekeeper') {
+        if (store.user?.role === 'storekeeper') {
             return (
                 <Routes>
                     <Route path="" element={<NewComponentMain/>}/>
-                    <Route path="authorization" element={<Authorization setRoles={setRoles}/>}/>
+                    <Route path="authorization" element={<Authorization/>}/>
                     <Route path="main" element={<Main/>}/>
-                    <Route path="main/search" element={<SearchRout/>}/>
-                    <Route path="main/plan" element={<VvodPlana/>}/>
-                    <Route path="main/otchet" element={<Otchet/>}/>
+                    <Route path={store.stock_active ? "main/plan/" + store.plan[store.stock_active]?.name + "/search" : "main/search"} element={<SearchRout/>}/>
+                    <Route path={store.stock_active ? "main/plan/" + store.plan[store.stock_active]?.name + "/plan" : "main/plan"} element={<VvodPlana/>}/>
+                    <Route path={store.stock_active ? "main/plan/" + store.plan[store.stock_active]?.name + "/otchet" : "main/otchet" } element={<Otchet/>}/>
                 </Routes>
             )
         }
-        if (roles === 'Warehouse_Manager') {
+        if (store.user?.role === 'Warehouse_Manager') {
             return (
 
                     <Routes>
                         <Route path="" element={<NewComponentMain/>}/>
-                        <Route path="authorization" element={<Authorization setRoles={setRoles}/>}/>
+                        <Route path="authorization" element={<Authorization/>}/>
                         <Route path="main" element={<Main/>}/>
-                        <Route path="main/plan_status" element={<PlanSklad/>}/>
-                        <Route path="main/list" element={<ListRout/>}/>
-                        <Route path="main/analytics" element={<Analitics/>}/>
+                        <Route path={store.stock_active ? "main/plan/" + store.plan[store.stock_active]?.name + "/plan_status" : "main/plan_status"} element={<PlanSklad/>}/>
+                        <Route path={store.stock_active ? "main/plan/" + store.plan[store.stock_active]?.name + "/list" : "main/list"} element={<ListRout/>}/>
+                        <Route path={store.stock_active ? "main/plan/" + store.plan[store.stock_active]?.name + "/analytics" : "main/analytics"} element={<Analitics/>}/>
                     </Routes>
 
             )
         }
-        if (roles === undefined) {
+        if (store.user?.role === undefined) {
             return (
 
 
                     <Routes>
                         <Route path="" element={<NewComponentMain/>}/>
-                        <Route path="authorization" element={<Authorization setRoles={setRoles}/>}/>
+                        <Route path="authorization" element={<Authorization/>}/>
                         <Route path="main" element={<Main/>}/>
                     </Routes>
 
@@ -77,6 +78,6 @@ function App() {
 
         </div>
     );
-}
+})
 
 export default App;

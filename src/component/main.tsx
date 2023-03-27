@@ -135,7 +135,7 @@ console.log(store.stock_active)
             <MyModal visible={visibleZon} setVisible={setVisibleZon}>
                 <NewZone setVisible={setVisibleZon}/>
             </MyModal>
-            <img className={styles.img} src={Fon} alt=""/>
+            <div className={styles.imgContainer}> <img className={styles.img} src={Fon} alt=""/></div>
             <div className={styles.fon}>
                 <h2 style={{textAlign: "center", margin: 0}}>Главное окно АС"Складская логистика"</h2>
                 {store.isAuth ?

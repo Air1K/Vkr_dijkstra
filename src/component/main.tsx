@@ -108,12 +108,15 @@ console.log(store.stock_active)
                                 <div className={'input-field '} style={{display: "flex", alignItems: "center"}}>
                                     <select className="browser-default" style={{
                                         backgroundColor: "rgb(255 255 255 / 0%)",
-                                        border: '1px solid #f2f2f200'
-                                    }}>
-                                        <option value="" disabled selected>Выбрать план склада</option>
+                                        border: '1px solid #f2f2f200',
+                                        minWidth: "200px"
+                                    }}
+                                            onChange={(event)=>{planStock(event)}}
+                                    >
+                                        {store.stock_active ?<option value={store.stock_active} disabled selected>{store.stock_active}.&nbsp;{store.plan[store.stock_active].name}</option> :<option value="" disabled selected>Выбрать план склада</option>}
                                         {store.plan.map((plan, index) =>
-                                        <option key={index} value={plan.name}>{plan.name}</option>
-                                            )}
+                                            <option key={index} value={plan.id}>{plan.id}.&nbsp;{plan.name}</option>
+                                        )}
                                     </select>
                                 </div>
                             </li>
@@ -135,7 +138,7 @@ console.log(store.stock_active)
             <MyModal visible={visibleZon} setVisible={setVisibleZon}>
                 <NewZone setVisible={setVisibleZon}/>
             </MyModal>
-            <div className={styles.imgContainer}> <img className={styles.img} src={Fon} alt=""/></div>
+           <div className={styles.img}></div>
             <div className={styles.fon}>
                 <h2 style={{textAlign: "center", margin: 0}}>Главное окно АС"Складская логистика"</h2>
                 {store.isAuth ?

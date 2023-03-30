@@ -3,7 +3,9 @@ import {Context} from "../../../index";
 import styles from './stylesSearch.module.sass'
 import AreaNodeAndZone from "../plan/nodeAndZon/areaNodeAndZon/areaNodeAndZone";
 import Selected from "../../tag/select/select";
-const Search = () => {
+import {observer} from "mobx-react-lite";
+
+const Search = observer(() => {
     const {store} = useContext(Context);
     const [G1, setG1] = useState('')
     const [G2, setG2] = useState('')
@@ -12,9 +14,11 @@ const Search = () => {
     const [render_line, setRender_line] = useState(false);
     const [editNodeS, setEditNodeS] = useState(false);
     const [myModalZone, setMyModalZone] = useState(false)
-
+    const [name_route, setNameRoute] = useState('')
+    const [activeId, setActiveID] = useState(0);
+    const [active, setActive] = useState(false);
     let obj = []
-
+    // const [active_route, setActive_route] = useState()
     let objCache = []
 
     useEffect(() => {
@@ -43,36 +47,28 @@ const Search = () => {
     const Strelka = (props) => {
         const index_ = props.ellement;
         console.log(index_, store.mass_putei_exit.length - 1)
-        if (index_ < store.mass_putei_exit[0].interval_node.length - 1) {
+        if (index_ < store.mass_putei_exit[activeId].interval_node.length - 1) {
             return (<span>➜</span>)
         }
         return null;
     }
-    const [activ, setActiv] = useState(false)
+
     const Otvet = () => {
 
         if (store.b != null) {
             console.log(store.mass_putei_exit)
-            return (<span> = &nbsp; {store.mass_putei[store.b][0]}</span>)
+            return (<span> &nbsp; {store.mass_putei_exit[activeId].long}</span>)
         }
         return null;
     }
-
-    function updateBlock() {
-        setActiv(true)
-    }
-
-    function noupdateBlock() {
-        setActiv(false)
-    }
-
 
     return (
         <div className={styles.block}>
             <div className={styles.main}>
                 <h5>Поиск маршрута</h5>
                 Введите краткое название для маршрута
-                <input type="text" name="" id="" placeholder='Краткое название маршрута'/>
+                <input type="text" name={name_route} id="" onChange={event => setNameRoute(event.target.value)}
+                       placeholder='Краткое название маршрута'/>
                 Введите начальную точку
                 <input type="text" value={G1} onChange={event => setG1(event.target.value)}
                        placeholder="Введите первый граф"/>
@@ -82,27 +78,40 @@ const Search = () => {
                 Дата формирования
                 <input type="date"/>
                 <button onClick={async () => {
-                    await noupdateBlock();
-                    await store.search(G1, G2);
-                    await updateBlock()
+                    try {
+                        await store.search(G1, G2, name_route);
+                        setActiveID(store.mass_putei_exit[store.mass_putei_exit.length - 1].id)
+                        setActive(true)
+                    } catch (e) {
+                        console.log(e);
+                    }
+
                 }}>Найти
                 </button>
             </div>
             <div className={styles.main}>
-                <h5>Сводка о маршруте</h5>
+                <h5>Сводка о маршруте {active?('"' + store.mass_putei_exit[activeId].name+'"'):(null)}</h5>
                 <div className={styles.stringLable}>
                     <div>
-                    <span>Выберите кротчайший маршрут: &nbsp; &nbsp;</span>
-                        <Selected/>
+                        <span>Выберите кротчайший маршрут: &nbsp; &nbsp;</span>
+                        <Selected activeId={activeId} setActiveID={setActiveID} setActive={setActive}/>
                     </div>
-                    <span>Длина найденого маршрута: </span>
-                    <Otvet/>
-                    <br/>
-                    <span>Маршрут: </span> &nbsp;
-                    {(store.mass_putei_exit[0]?.interval_node.map((node_, indexe) => <span
-                    className={styles.puti} key={indexe}> {store.idGraph[node_].num}&nbsp; <Strelka
-                    ellement={indexe}/> &nbsp;</span>))}
-                    <br/>
+                    {active ? (
+                        <div style={{display: "block"}}>
+                            <div>
+                                <span>Длина найденого маршрута: </span>
+                                <Otvet/>
+                                <br/>
+                            </div>
+                            <div>
+                                <span>Маршрут: </span> &nbsp;
+                                    {(store.mass_putei_exit[activeId]?.interval_node.map((node_, indexe) => <span
+                                        className={styles.puti} key={indexe}> {store.idGraph[node_]?.num}&nbsp; <Strelka
+                                        ellement={indexe}/> &nbsp;</span>))}
+                            </div>
+
+                        </div>
+                    ) : (null)}
                 </div>
             </div>
 
@@ -114,9 +123,11 @@ const Search = () => {
                 myModalZone={myModalZone}
                 setMyModalZone={setMyModalZone}
                 edit={edit}
+                activeId={activeId}
+                active ={active}
             />
         </div>
     );
-};
+});
 
 export default Search;

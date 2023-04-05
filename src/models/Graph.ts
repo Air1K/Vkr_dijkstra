@@ -1,4 +1,3 @@
-import {Rotation} from "./Rotation";
 
 export class Graph{
     X: number;

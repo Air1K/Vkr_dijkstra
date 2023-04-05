@@ -81,7 +81,8 @@ const PlanMain = () => {
                     myModalZone = {myModalZone}
                     setMyModalZone = {setMyModalZone}
                     edit={edit}
-
+                    activeId={-999}
+                    active={false}
                 />
                 <div className={styles.checkboxAndButton}>
                     <p>

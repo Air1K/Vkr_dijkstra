@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -6,8 +6,9 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import NativeSelect from '@mui/material/NativeSelect';
-const Selected = () => {
-
+import {Context} from "../../../index";
+const Selected = ({activeId, setActiveID, setActive}) => {
+    const {store} = useContext(Context);
 
 
 
@@ -17,16 +18,18 @@ const Selected = () => {
             <Select
                 labelId="demo-simple-select-standard-label"
                 id="demo-simple-select-standard"
-                // value={age}
-                // onChange={handleChange}
-                label="Age"
+                onChange={(e)=>{if(e.target.value !== "none"){setActiveID(e.target.value); setActive(true)} else {setActive(false)}}}
+                label="Имя пути"
             >
-                <MenuItem value="">
+                <MenuItem value={"none"}>
                     <em>None</em>
                 </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                {store.mass_putei_exit.map((route, index)=>
+                    <MenuItem key={index} value={route.id}>{route.id}.&nbsp;{route.name}</MenuItem>
+                )}
+                {/*<MenuItem value={10}>Ten</MenuItem>*/}
+                {/*<MenuItem value={20}>Twenty</MenuItem>*/}
+                {/*<MenuItem value={30}>Thirty</MenuItem>*/}
             </Select>
         </FormControl>
     );

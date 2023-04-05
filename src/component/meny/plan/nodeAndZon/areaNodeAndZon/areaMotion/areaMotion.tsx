@@ -1,10 +1,21 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import styles from "../styleAreaAndZone.module.sass";
 import {motion, useDragControls} from "framer-motion";
+import {Context} from "../../../../../../index";
 
 
-const AreaMotion = ({ parentRef, editNode, editNodeEnd, checkDrag, nameVisible, idVisible, graphEl}) => {
+const AreaMotion = ({ parentRef, editNode, editNodeEnd, checkDrag, nameVisible, idVisible, graphEl,activeId, active}) => {
     const controls = useDragControls()
+    const {store} = useContext(Context);
+
+    const classStyle = (ids)=>{
+        if(ids === store.mass_putei_exit[activeId]?.A && active){
+            return {backgroundColor: "green"}
+        }
+        if(ids === store.mass_putei_exit[activeId]?.B){
+            return {backgroundColor: "green"}
+        }
+    }
     return (
 
             graphEl.map((graph, ids) =>
@@ -32,7 +43,9 @@ const AreaMotion = ({ parentRef, editNode, editNodeEnd, checkDrag, nameVisible, 
                     scale: 1.1,
                     transition: { duration: 0.1 },
                 }}
+                style={active?classStyle(ids):{}}
                 className={styles.node}>
+
                 <div className={styles.idVisible}>{idVisible ? (ids) : null}</div>
                 <div className={styles.numNode}>
                     {nameVisible ? (graph.num) : null}

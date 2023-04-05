@@ -8,7 +8,7 @@ import Zone from "./zone/zone";
 import PanelLeft from "./zone/panelLeft/panelLeft";
 
 
-const AreaNodeAndZone = ({obj, objCache, render_line, editNodeS, myModalZone, setMyModalZone, edit}) => {
+const AreaNodeAndZone = ({obj, objCache, render_line, editNodeS, myModalZone, setMyModalZone, edit, activeId, active}) => {
     const {store} = useContext(Context);
     const [obj_Rotation, setObj_Rotation] = useState<Rotation[]>(store.Rotation)
     const [graph, setGraph] = useState<Graph[]>(store.idGraph)
@@ -140,8 +140,19 @@ const AreaNodeAndZone = ({obj, objCache, render_line, editNodeS, myModalZone, se
         console.log("ОБЪЕКТ ИЗМЕНИЛСЯ -----------------------")
         setObj_Rotation(store.Rotation);
         setGraph(obj);
+
         // console.log(store.Rotation)
     }, [render_line, editNodeS]);
+
+    const lineActive = (rotation)=>{
+        for(let i =0; i<store.mass_putei_exit[activeId]?.interval_node.length; i++){
+            if(((rotation.idA === store.mass_putei_exit[activeId]?.interval_node[i]) && (rotation.idB === store.mass_putei_exit[activeId]?.interval_node[i+1])) || ((rotation.idB === store.mass_putei_exit[activeId]?.interval_node[i]) && (rotation.idA === store.mass_putei_exit[activeId]?.interval_node[i+1]))){
+                return {backgroundColor: 'green'}
+            }
+        }
+    }
+
+
 
     return (
         <div className={styles.main_app}>
@@ -158,7 +169,8 @@ const AreaNodeAndZone = ({obj, objCache, render_line, editNodeS, myModalZone, se
                     nameVisible={nameVisible}
                     idVisible={idVisible}
                     graphEl={graph}
-
+                    activeId={activeId}
+                    active={active}
                 />
 
                 {
@@ -167,7 +179,7 @@ const AreaNodeAndZone = ({obj, objCache, render_line, editNodeS, myModalZone, se
                             width: rotation.long + "px",
                             transform: "translateX(" + rotation.centerX + "px) translateY(" + rotation.centerY + "px) rotate(" + rotation.rotations + "deg)"
                         }}>
-                            <div className={styles.lineVisible}></div>
+                            <div className={styles.lineVisible} style={active?lineActive(rotation):{}}></div>
                             {ves ? <div style={{
                                 transform: "rotate(" + -rotation.rotations + "deg)",
                                 position: "absolute",

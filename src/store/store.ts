@@ -471,7 +471,7 @@ export default class Store {
     }
 
 
-    search(A1, A2) {
+    search(A1, A2, name_route) {
         let mass: (boolean | number) [][] = []
         let a, b;
         let PutNaiden = false;
@@ -525,21 +525,31 @@ export default class Store {
 
                         if (min_el === b) {
 
-                            console.log(mass_arr);
+                            console.log(mass);
                             // this.setMass_putei(mass_arr);
+
                             PutNaiden = true;
                             if (PutNaiden) {
                                 let search: (number | boolean) = mass[b][1];
-                                let arr_mass_exit = [];
+                                let arr_mass_exit = [b];
 
-                                while (arr_mass_exit[arr_mass_exit.length - 1] !== a && search !== a) {
+                                while (arr_mass_exit[arr_mass_exit.length - 1] !== a) {
                                     arr_mass_exit.push(search);
-
                                     const ass = Number(search)
+                                    console.log(ass)
                                     search = Number(mass[ass][1]);
                                 }
+                                let id
+                                if(this.mass_putei_exit.length===0){
+                                    id = 0;
+                                }
+                                else {
+                                    id = this.mass_putei_exit[this.mass_putei_exit.length - 1].id + 1;
+                                }
+
                                 const route = {
-                                    name: 'name',
+                                    id: id,
+                                    name: name_route,
                                     A: a,
                                     B: b,
                                     interval_node: arr_mass_exit.reverse(),
@@ -552,7 +562,7 @@ export default class Store {
                                 this.setA(a);
                                 this.setB(b);
                                 console.log(arr_mass_exit)
-                                console.log(this.mass_putei)
+                                console.log(this.mass_putei_exit)
                             }
                         }
                     }
